@@ -1,0 +1,19 @@
+---
+title: "Tutorials week 9"
+---
+
+▶ 👨‍🏫 [CSS](https://github.com/SQ4007-2025/website/raw/refs/heads/master/tutorials/week_9/9.css.pdf)
+
+▶ 👨‍🏫 [DOM](https://github.com/SQ4007-2025/website/raw/refs/heads/master/tutorials/week_9/9.dom.pdf)
+
+▶ 👨‍🏫 [HTML](https://github.com/SQ4007-2025/website/raw/refs/heads/master/tutorials/week_9/9.html.pdf)
+
+▶ 👨‍🏫 [HTTP](https://github.com/SQ4007-2025/website/raw/refs/heads/master/tutorials/week_9/9.http.pdf)
+
+▶ 👨‍🏫 [Internet primer](https://github.com/SQ4007-2025/website/raw/refs/heads/master/tutorials/week_9/9.internet_primer.pdf)
+
+▶ 👨‍🏫 [IP](https://github.com/SQ4007-2025/website/raw/refs/heads/master/tutorials/week_9/9.ip.pdf)
+
+▶ 👨‍🏫 [JavaScript](https://github.com/SQ4007-2025/website/raw/refs/heads/master/tutorials/week_9/9.javascript.pdf)
+
+▶ 👨‍🏫 [TCP](https://github.com/SQ4007-2025/website/raw/refs/heads/master/tutorials/week_9/9.tcp.pdf)

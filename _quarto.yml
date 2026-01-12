@@ -1,0 +1,185 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+  title: "Computing Technology"
+  description: "Computing Technology is an introduction to computer science through a range of programming languages, suitable for those with or without prior programming experience. This module emphasizes problem-solving, focusing on correctness, design, and style. The module demonstrates concepts using various programming languages."
+  site-url: "https://SQ4007-2025.github.io/website/"
+  favicon: "images/favicon.ico"
+
+  repo-url: https://github.com/SQ4007-2025/website
+  repo-branch: master
+  repo-actions: [edit, issue]
+
+  open-graph: true
+
+  twitter-card:
+    creator: "@EdHarris9000"
+    image: "images/twitter-card.png"
+
+  page-footer:
+    left: "&copy; 2025 🐊 [W. Edwin Harris](https://weharris.me)"
+    center: "📊 [The Statistics Lab](https://thestatisticslab.com)"
+    right: "🚀 Built with [Quarto](https://quarto.org/)."
+    background: "#D9E3E4"
+
+  sidebar:
+    background: "#D9E3E4"
+    logo: "images/logo.png"
+    pinned: true
+    align: center
+    tools:
+      - icon: github
+        href: https://github.com/weharris
+        text: "Course GitHub repo"
+      - icon: youtube
+        href: https://youtube.com/@TheStatisticsLab
+        text: "YouTube"
+      - icon: discord
+        href: https://discord.gg/dnNTE6xhhu
+        text: "Join our Discord"
+
+    style: "docked"
+    search: true
+    collapse-level: 1 
+    contents:
+      - href: index.qmd
+        text: Welcome!
+      - href: module-schedule.qmd
+        text: Schedule
+      - href: module-syllabus.qmd
+        text: Syllabus
+      - href: module-links.qmd
+        text: Useful links
+      - href: module-faq.qmd
+        text: FAQ
+      - href: module-project.qmd
+        text: Final Project
+      - section: "Lectures"
+        contents:
+          - href: lectures/slides_1.pptx
+            text: "Lecture 01 🐈"
+          - href: lectures/slides_2.pptx
+            text: "Lecture 02 🟢"
+          - href: lectures/slides_3.pptx
+            text: "Lecture 03 🟢"
+          - href: lectures/slides_4.pptx
+            text: "Lecture 04 🟢"
+          - href: lectures/slides_5.pptx
+            text: "Lecture 05 🟢"
+          - href: lectures/slides_6.pptx
+            text: "Lecture 06 🟢"
+          - href: lectures/slides_7.pptx
+            text: "Lecture 07 🐍"
+          - href: lectures/slides_8.pptx
+            text: "Lecture 08 📊"
+          - href: lectures/slides_9.pptx
+            text: "Lecture 09 🌐"
+          - href: lectures/slides_10.pptx
+            text: "Lecture 10 🐍"
+          - href: lectures/slides_11.pptx
+            text: "Lecture 11 👋"
+      - section: "Notes"
+        contents:
+          - href: notes/notes_1.md
+            text: "Notes 01 🐈"
+          - href: notes/notes_2.md
+            text: "Notes 02 🟢"
+          - href: notes/notes_3.md
+            text: "Notes 03 🟢"
+          - href: notes/notes_4.md
+            text: "Notes 04 🟢"
+          - href: notes/notes_5.md
+            text: "Notes 05 🟢"
+          - href: notes/notes_6.md
+            text: "Notes 06 🟢"
+          - href: notes/notes_7.md
+            text: "Notes 07 🐍"
+          - href: notes/notes_8.md
+            text: "Notes 08 📊"
+          - href: notes/notes_9.md
+            text: "Notes 09 🌐"
+          - href: notes/notes_10.md
+            text: "Notes 10 🐍"
+          - href: notes/notes_11.md
+            text: "Notes 11 👋"
+      - section: "Code"
+        contents:
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src1
+            text: "Code 01 🐈"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src2
+            text: "Code 02 🟢"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src3
+            text: "Code 03 🟢"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src4
+            text: "Code 04 🟢"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src5
+            text: "Code 05 🟢"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src6
+            text: "Code 06 🟢"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src7
+            text: "Code 07 🐍"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src8
+            text: "Code 08 📊"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src9
+            text: "Code 09 🌐"
+          - href: https://github.com/SQ4007-2025/website/tree/master/code/src10
+            text: "Code 10 🐍"
+      - section: "Tutorials"
+        contents:
+          - href: tutorials/tutorial-week-2.qmd
+            text: "Tutorial 02 🟢"
+          - href: tutorials/tutorial-week-3.qmd
+            text: "Tutorial 03 🟢"
+          - href: tutorials/tutorial-week-4.qmd
+            text: "Tutorial 04 🟢"
+          - href: tutorials/tutorial-week-5.qmd
+            text: "Tutorial 05 🟢"
+          - href: tutorials/tutorial-week-6.qmd
+            text: "Tutorial 06 🟢"
+          - href: tutorials/tutorial-week-7.qmd
+            text: "Tutorial 07 🐍"
+          - href: tutorials/tutorial-week-8.qmd
+            text: "Tutorial 08 📊"
+          - href: tutorials/tutorial-week-9.qmd
+            text: "Tutorial 09 🌐"
+          - href: tutorials/tutorial-week-10.qmd
+            text: "Tutorial 10 🐍"
+      - section: "Problem Sets"
+        contents:
+          - href: homework/hw_1.md
+            text: "Problem Set 01 🐈"
+          - href: homework/hw_2.md
+            text: "Problem Set 02 🟢"
+          - href: homework/hw_3.md
+            text: "Problem Set 03 🟢"
+          - href: homework/hw_4.md
+            text: "Problem Set 04 🟢"
+          - href: homework/hw_5.md
+            text: "Problem Set 05 🟢"
+          - href: homework/hw_6.md
+            text: "Problem Set 06 🟢"
+          - href: homework/hw_7.md
+            text: "Problem Set 07 🐍"
+          - href: homework/hw_8.md
+            text: "Problem Set 08 📊"
+          - href: homework/hw_9.md
+            text: "Problem Set 09 🌐"
+          - href: homework/hw_10.md
+            text: "Problem Set 10 🐍"
+
+format:
+  html:
+    theme:
+      light: [cosmo, theme.scss]
+      dark: [cosmo, theme-dark.scss]
+    mainfont: "Atkinson Hyperlegible"
+    code-copy: true
+    code-overflow: wrap
+    toc: true
+
+freeze: auto
+
+editor: visual
