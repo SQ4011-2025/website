@@ -4,12 +4,12 @@ project:
 
 website:
   page-navigation: true
-  title: "Computing Technology"
-  description: "Computing Technology is an introduction to computer science through a range of programming languages, suitable for those with or without prior programming experience. This module emphasizes problem-solving, focusing on correctness, design, and style. The module demonstrates concepts using various programming languages."
+  title: "Programming Concepts"
+  description: "This module offers an engaging introduction and an overview to programming, utilising a modern programming language (typically Python). Designed to accommodate both novices and those with some programming background, it covers a spectrum of fundamental concepts of coding. Key topics include reading and writing code, testing, debugging, and utilising Python-specific features. This module provides essential underpinning skills for other computer science modules. The content will be highly relevant and adaptable, enhancing employability and professional development in technology-driven industries.  This module focusses on a single programming language such as Python as a modern, scalable toolbox, building on The Computing Technology module which is an overview of basic algorithms and a survey of many different computational language implementations."
   site-url: "https://SQ4011-2025.github.io/website/"
   favicon: "images/favicon.ico"
 
-  repo-url: https://github.com/SQ4007-2025/website
+  repo-url: https://github.com/SQ4011-2025/website
   repo-branch: master
   repo-actions: [edit, issue]
 
@@ -20,7 +20,7 @@ website:
     image: "images/twitter-card.png"
 
   page-footer:
-    left: "&copy; 2025 🐊 [W. Edwin Harris](https://weharris.me)"
+    left: "&copy; 2026 🐊 [W. Edwin Harris](https://weharris.me)"
     center: "📊 [The Statistics Lab](https://thestatisticslab.com)"
     right: "🚀 Built with [Quarto](https://quarto.org/)."
     background: "#D9E3E4"
