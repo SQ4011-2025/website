@@ -6,7 +6,7 @@ website:
   page-navigation: true
   title: "Computing Technology"
   description: "Computing Technology is an introduction to computer science through a range of programming languages, suitable for those with or without prior programming experience. This module emphasizes problem-solving, focusing on correctness, design, and style. The module demonstrates concepts using various programming languages."
-  site-url: "https://SQ4007-2025.github.io/website/"
+  site-url: "https://SQ4011-2025.github.io/website/"
   favicon: "images/favicon.ico"
 
   repo-url: https://github.com/SQ4007-2025/website
