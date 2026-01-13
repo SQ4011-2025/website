@@ -1,548 +1,308 @@
-# Lecture 4 Notes
+# Week 4 Notes
 
-* [Welcome!](#welcome)
-* [Linear Search](#linear-search)
-* [Binary Search](#binary-search)
-* [Running Time](#running-time)
-* [search.c](#searchc)
-* [phonebook.c](#phonebookc)
-* [Structs](#structs)
-* [Sorting](#sorting)
-* [Bubble Sort](#bubble-sort)
-* [Recursion](#recursion)
-* [Merge Sort](#merge-sort)
+**CS50p 2025 - Week 4**
+
+Source: https://cs50.harvard.edu/python/notes/4/
+
+---
+
+# Lecture 4
+
+* [Libraries](#libraries)
+* [Random](#random)
+* [Statistics](#statistics)
+* [Command-Line Arguments](#command-line-arguments)
+* [`slice`](#slice)
+* [Packages](#packages)
+* [APIs](#apis)
+* [Making Your Own Libraries](#making-your-own-libraries)
 * [Summing Up](#summing-up)
 
-## Welcome!
+## Libraries
 
-* In week zero, we introduced the idea of an *algorithm*: a black box that may take an input and create an output.
-* This week, we are going to expand upon our understanding of algorithms through pseudocode and into code itself.
-* Also, we are going to consider the efficiency of these algorithms. Indeed, we are going to be building upon our understanding of how to use some of the concepts we discussed last week in building algorithms.
-* Recall back to earlier in the course when we introduced the following graph:
+* Generally, libraries are bits of code written by you or others that you can use in your program.
+* Python allows you to share functions or features with others as “modules”.
+* If you copy and paste code from an old project, chances are you can create such a module or library that you could bring into your new project.
 
-  ![chart with: "size of problem" as x-axis; "time to solve" as y-axis; red, steep straight line from origin to top of graph close to yellow, less-steep straight line from origin to top of graph, both labeled "n"; green, curved line that gets less and less steep from origin to right of graph, labeled "log n"](images/week_3/Week3Slide010.png)
-* As we step into this week, you should consider how the way an algorithm works with a problem may determine the time it takes to solve a problem! Algorithms can be designed to be more and more efficient to a limit.
-* Today, we will focus on the design of algorithms and how to measure their efficiency.
+## Random
 
-## Linear Search
-
-* Recall that last week, you were introduced to the idea of an *array*, blocks of memory that are consecutive: side-by-side with one another.
-* You can metaphorically imagine an array like a series of seven red lockers as follows:
-
-  ![Seven red lockers side by side](images/week_3/Week3Slide018.png)
-* The far-left position is called *location 0* or *the beginning of the array*. The far-right position is *location 7* or *the end of the array*.
-* We can imagine that we have an essential problem of wanting to know, “Is the number 50 inside an array?” A computer must look at each locker to be able to see if the number 50 is inside. We call this process of finding such a number, character, string, or other item *searching*.
-* We can potentially hand our array to an algorithm, wherein our algorithm will search through our lockers to see if the number 50 is behind one of the doors, returning the value `true` or `false`.
-
-  ![seven red lockers pointing to an empty box. Out of the empty box comes an output of bool](images/week_3/Week3Slide022.png)
-* We can imagine various instructions we might provide our algorithm to undertake this task as follows:
+* `random` is a library that comes with Python that you could import into your own project.
+* It’s easier as a coder to stand on the shoulders of prior coders.
+* So, how do you load a module into your own program? You can use the word `import` in your program.
+* Inside the `random` module, there is a built-in function called `random.choice(seq)`. `random` is the module you are importing. Inside that module, there is the `choice` function. That function takes into it a `seq` or sequence that is a list.
+* In your terminal window type `code generate.py`. In your text editor, code as follows:
 
   ```
-  For each door from left to right
-      If 50 is behind door
-          Return true
-  Return false
+  import random
 
+  coin = random.choice(["heads", "tails"])
+  print(coin)
   ```
 
-  Notice that the above instructions are called *pseudocode*: A human-readable version of the instructions that we could provide the computer.
-* A computer scientist could translate that pseudocode as follows:
+  Notice that the list within `choice` has square braces, quotes, and a comma. Since you have passed in two items, Python does the math and gives a 50% chance for heads and tails. Running your code, you will notice that this code, indeed, does function well!
+* We can improve our code. `from` allows us to be very specific about what we’d like to import. Prior, our `import` line of code is bringing the entire contents of the functions of `random`. However, what if we want to only load a small part of a module? Modify your code as follows:
 
   ```
-  For i from 0 to n-1
-      If 50 is behind doors[i]
-          Return true
-  Return false
+  from random import choice
 
+  coin = choice(["heads", "tails"])
+  print(coin)
   ```
 
-  Notice that the above is still not code, but it is a pretty close approximation of what the final code might look like.
-
-## Binary Search
-
-* *Binary search* is another *search algorithm* that could be employed in our task of finding the 50.
-* Assuming that the values within the lockers have been arranged from smallest to largest, the pseudocode for binary search would appear as follows:
+  Notice that we now can import just the `choice` function of `random`. From that point forward, we no longer need to code `random.choice`. We can now only code `choice` alone. `choice` is loaded explicitly into our program. This saves system resources and potentially can make our code run faster!
+* Moving on, consider the function `random.randint(a, b)`. This function will generate a random number between `a` and `b`. Modify your code as follows:
 
   ```
-  If no doors left
-      Return false
-  If 50 is behind middle door
-      Return true
-  Else if 50 < middle door
-      Search left half
-  Else if 50 > middle door
-      Search right half
+  import random
 
-  ```
-* Using the nomenclature of code, we can further modify our algorithm as follows:
-
-  ```
-  If no doors left
-      Return false
-  If 50 is behind doors[middle]
-      Return true
-  Else if 50 < doors[middle]
-      Search doors[0] through doors[middle - 1]
-  Else if 50 > doors[middle]
-      Search doors[middle + 1] through doors[n - 1]
-
+  number = random.randint(1, 10)
+  print(number)
   ```
 
-  Notice that by looking at this approximation of code, you can nearly imagine what this might look like in actual code.
-
-## Running Time
-
-* You can consider how much time it takes an algorithm to solve a problem.
-* *running time* involves an analysis using *big O* notation. Take a look at the following graph:
-
-  ![chart with: "size of problem" as x-axis; "time to solve" as y-axis; red, steep straight line from origin to top of graph close to yellow, less-steep straight line from origin to top of graph, both labeled "O(n)"; green, curved line that gets less and less steep from origin to right of graph, labeled "O(log n"](images/week_3/Week3Slide042.png)
-* Rather than being ultra-specific about the mathematical efficiency of an algorithm, computer scientists discuss efficiency in terms of *the order of* various running times.
-* In the above graph, the first algorithm is \(O(n)\) or *in the order of n*. The second is in \(O(n)\) as well. The third is in \(O(\log n)\).
-* It’s the shape of the curve that shows the efficiency of an algorithm. Some common running times we may see are:
-
-  + \(O(n^2)\)
-  + \(O(n \log n)\)
-  + \(O(n)\)
-  + \(O(\log n)\)
-  + \(O(1)\)
-* Of the running times above, \(O(n^2)\) is considered the slowest running time. \(O(1)\) is the fastest.
-* Linear search was of order \(O(n)\) because it could take *n* steps in the worst-case to run.
-* Binary search was of order \(O(\log n)\) because it would take fewer and fewer steps to run, even in the worst-case.
-* Programmers are interested in both the worst-case, or *upper bound*, and the best-case, or *lower bound*.
-* The \(\Omega\) symbol is used to denote the best-case of an algorithm, such as \(\Omega(\log n)\).
-* The \(\Theta\) symbol is used to denote where the upper bound and lower bound are the same: Where the best-case and the worst-case running times are the same.
-* *Asymptotic notation* is the measure of how well algorithms perform as the input gets larger and larger.
-* As you continue to develop your knowledge in computer science, you will explore these topics in more detail in future courses.
-
-## search.c
-
-* You can implement linear search by typing `code search.c` in your terminal window and by writing code as follows:
+  Notice that our code will randomly generate a number between `1` and `10`.
+* We can introduce the function `random.shuffle(x)`, which shuffles a list into a random order.
 
   ```
-  // Implements linear search for integers
+  import random
 
-  #include <cs50.h>
-  #include <stdio.h>
-
-  int main(void)
-  {
-      // An array of integers
-      int numbers[] = {20, 500, 10, 5, 100, 1, 50};
-
-      // Search for number
-      int n = get_int("Number: ");
-      for (int i = 0; i < 7; i++)
-      {
-          if (numbers[i] == n)
-          {
-              printf("Found\n");
-              return 0;
-          }
-      }
-      printf("Not found\n");
-      return 1;
-  }
-
+  cards = ["jack", "queen", "king"]
+  random.shuffle(cards)
+  for card in cards:
+      print(card)
   ```
 
-  Notice that the line beginning with `int numbers[]` allows us to define the values of each element of the array as we create it. Then, in the `for` loop, we have an implementation of linear search. `return 0` is used to indicate success and exit the program. `return 1` is used to exit the program with an error (failure).
-* We have now implemented linear search ourselves in C!
-* What if we wanted to search for a string within an array? Modify your code as follows:
+  Notice that `random.shuffle` will shuffle the cards in place. Unlike other functions, it will not return a value. Instead, it will take the `cards` list and shuffle them inside that list. Run your code a few times to see the code functioning.
+* We now have these three ways above to generate random information.
+* You can learn more in Python’s documentation of [`random`](https://docs.python.org/3/library/random.html).
+
+## Statistics
+
+* Python comes with a built-in `statistics` library. How might we use this module?
+* `mean` is a function of this library that is quite useful. In your terminal window, type `code average.py`. In the text editor window, modify your code as follows:
 
   ```
-  // Implements linear search for strings
+  import statistics
 
-  #include <cs50.h>
-  #include <stdio.h>
-  #include <string.h>
-
-  int main(void)
-  {
-      // An array of strings
-      string strings[] = {"battleship", "boot", "cannon", "iron", "thimble", "top hat"};
-
-      // Search for string
-      string s = get_string("String: ");
-      for (int i = 0; i < 6; i++)
-      {
-          if (strcmp(strings[i], s) == 0)
-          {
-              printf("Found\n");
-              return 0;
-          }
-      }
-      printf("Not found\n");
-      return 1;
-  }
-
+  print(statistics.mean([100, 90]))
   ```
 
-  Notice that we cannot utilize `==` as in our previous iteration of this program. Instead, we use `strcmp`, which comes from the `string.h` library. `strcmp` will return `0` if the strings are the same. Also, notice that the string length of `6` is hard-coded, which is not good programming practice.
-* Indeed, running this code allows us to iterate over this array of strings to see if a certain string is within it. However, if you see a *segmentation fault*, where a part of memory was touched by your program that it should not have access to, do make sure you have `i < 6` noted above instead of `i < 7`.
-* You can learn more about `strcmp` at the [CS50 Manual Pages](https://manual.cs50.io/3/strcmp).
+  Notice that we imported a different library called `statistics`. The `mean` function takes a list of values. This will print the average of these values. In your terminal window, type `python average.py`.
+* Consider the possibilities of using the `statistics` module in your own programs.
+* You can learn more in Python’s documentation of [`statistics`](https://docs.python.org/3/library/statistics.html).
 
-## phonebook.c
+## Command-Line Arguments
 
-* We can combine these ideas of both numbers and strings into a single program. Type `code phonebook.c` into your terminal window and write code as follows:
-
-  ```
-  // Implements a phone book without structs
-
-  #include <cs50.h>
-  #include <stdio.h>
-  #include <string.h>
-
-  int main(void)
-  {
-      // Arrays of strings
-      string names[] = {"Yuliia", "David", "John"};
-      string numbers[] = {"+1-617-495-1000", "+1-617-495-1000", "+1-949-468-2750"};
-
-      // Search for name
-      string name = get_string("Name: ");
-      for (int i = 0; i < 3; i++)
-      {
-          if (strcmp(names[i], name) == 0)
-          {
-              printf("Found %s\n", numbers[i]);
-              return 0;
-          }
-      }
-      printf("Not found\n");
-      return 1;
-  }
+* So far, we have been providing all values within the program that we have created. What if we wanted to be able to take input from the command-line? For example, rather than typing `python average.py` in the terminal, what if we wanted to be able to type `python average.py 100 90` and be able to get the average between `100` and `90`?
+* `sys` is a module that allows us to take arguments at the command line.
+* `argv` is a list within the `sys` module that records what the user typed on the command line.
+* Notice how you will see `sys.argv` utilized in the code below. In the terminal window, type `code name.py`. In the text editor, code as follows:
 
   ```
+  import sys
 
-  Notice that Yuliia’s number begins with `+1-617`, David’s phone number starts with `+1-617`, and John’s number starts with `+1-949`. Therefore, `names[0]` is Yuliia, and `numbers[0]` is Yuliia’s number. This code will allow us to search the phonebook for a person’s specific number.
-* While this code works, there are numerous inefficiencies. Indeed, there is a chance that names and phone numbers may not correspond to one another. Wouldn’t it be nice if we could create our own data type where we could associate a person with the phone number?
-
-## Structs
-
-* It turns out that C allows us to create our own data types via a `struct`.
-* Would it not be useful to create our own data type called a `person` that has inside of it a `name` and `number`? Consider the following:
-
-  ```
-  typedef struct
-  {
-      string name;
-      string number;
-  } person;
-
+  print("hello, my name is", sys.argv[1])
   ```
 
-  Notice how this represents our own datatype called a `person` that has a string called `name` and another string called `number`.
-* We can improve our prior code by modifying our phonebook program as follows:
+  Notice that the program is going to look at what the user typed in the command line. Currently, if you type `python name.py David` into the terminal window, you will see `hello, my name is David`. Notice that `sys.argv[1]` is where `David` is being stored. Why is that? Well, in prior lessons, you might remember that lists start at the `0`th element. What do you think is held currently in `sys.argv[0]`? If you guessed `name.py`, you would be correct!
+* There is a small problem with our program as it stands. What if the user does not type in the name at the command line? Try it yourself. Type `python name.py` into the terminal window. An error `list index out of range` will be presented by the interpreter. The reason for this is that there is nothing at `sys.argv[1]` because nothing was typed! Here’s how we can protect our program from this type of error:
 
   ```
-  // Implements a phone book with structs
+  import sys
 
-  #include <cs50.h>
-  #include <stdio.h>
-  #include <string.h>
-
-  typedef struct
-  {
-      string name;
-      string number;
-  } person;
-
-  int main(void)
-  {
-      person people[3];
-
-      people[0].name = "Yuliia";
-      people[0].number = "+1-617-495-1000";
-
-      people[1].name = "David";
-      people[1].number = "+1-617-495-1000";
-
-      people[2].name = "John";
-      people[2].number = "+1-949-468-2750";
-
-      // Search for name
-      string name = get_string("Name: ");
-      for (int i = 0; i < 3; i++)
-      {
-          if (strcmp(people[i].name, name) == 0)
-          {
-              printf("Found %s\n", people[i].number);
-              return 0;
-          }
-      }
-      printf("Not found\n");
-      return 1;
-  }
-
+  try:
+      print("hello, my name is", sys.argv[1])
+  except IndexError:
+      print("Too few arguments")
   ```
 
-  Notice that the code begins with `typedef struct` where a new datatype called `person` is defined. Inside a `person` is a string called `name` and a `string` called number. In the `main` function, begin by creating an array called `people` that is of type `person` that is a size of 3. Then, we update the names and phone numbers of the two people in our `people` array. Most importantly, notice how the *dot notation*, such as `people[0].name`, allows us to access the `person` at the 0th location and assign that individual a name.
-
-## Sorting
-
-* *Sorting* is the act of taking an unsorted list of values and transforming this list into a sorted one.
-* When a list is sorted, searching that list is far less taxing on the computer. Recall that we can use binary search on a sorted list but not on an unsorted one.
-* It turns out that there are many different types of sorting algorithms.
-* *Selection sort* is one such sorting algorithm.
-* We can represent an array as follows:
-
-  ![Seven red lockers side by side with the last labeled as n-1](images/week_3/Week3Slide104.png)
-* The algorithm for selection sort in pseudocode is:
+  Notice that the user will now be prompted with a useful hint about how to make the program work if they forget to type in a name. However, could we be more defensive to ensure the user inputs the right values?
+* Our program can be improved as follows:
 
   ```
-  For i from 0 to n–1
-      Find smallest number between numbers[i] and numbers[n-1]
-      Swap smallest number with numbers[i]
+  import sys
 
-  ```
-* Summarizing those steps, the first time iterating through the list took `n - 1` steps. The second time, it took `n - 2` steps. Carrying this logic forward, the steps required could be represented as follows:
-
-  ```
-  (n - 1) + (n - 2) + (n - 3) + ... + 1
-
-  ```
-* This could be simplified to n(n-1)/2 or, more simply, \(O(n^2)\). In the worst-case or upper-bound, selection sort is in the order of \(O(n^2)\). In the best-case, or lower-bound, selection sort is in the order of \(\Omega(n^2)\).
-
-## Bubble Sort
-
-* *Bubble sort* is another sorting algorithm that works by repeatedly swapping elements to “bubble” larger elements to the end.
-* The pseudocode for bubble sort is:
-
-  ```
-  Repeat n-1 times
-      For i from 0 to n–2
-          If numbers[i] and numbers[i+1] out of order
-              Swap them
-      If no swaps
-          Quit
-
-  ```
-* As we further sort the array, we know more and more of it becomes sorted, so we only need to look at the pairs of numbers that haven’t been sorted yet.
-* Bubble sort can be analyzed as follows:
-
-  ```
-    (n – 1) × (n – 1)
-    n2 – 1n – 1n + 1
-    n2 – 2n + 1
-
+  if len(sys.argv) < 2:
+      print("Too few arguments")
+  elif len(sys.argv) > 2:
+      print("Too many arguments")
+  else:
+      print("hello, my name is", sys.argv[1])
   ```
 
-  or, more simply \(O(n^2)\).
-* In the worst-case, or upper-bound, bubble sort is in the order of \(O(n^2)\). In the best-case, or lower-bound, bubble sort is in the order of \(\Omega(n)\).
-* You can [visualize](https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html) a comparison of these algorithms.
-
-## Recursion
-
-* How could we improve our efficiency in our sorting?
-* *Recursion* is a concept within programming where a function calls itself. We saw this earlier when we saw…
+  Notice how if you test your code, you will see how these exceptions are handled, providing the user with more refined advice. Even if the user types in too many or too few arguments, the user is provided clear instructions about how to fix the issue.
+* Right now, our code is logically correct. However, there is something very nice about keeping our error checking separate from the remainder of our code. How could we separate out our error handling? Modify your code as follows:
 
   ```
-  If no doors left
-      Return false
-  If number behind middle door
-      Return true
-  Else if number < middle door
-      Search left half
-  Else if number > middle door
-      Search right half
+  import sys
 
+  if len(sys.argv) < 2:
+      sys.exit("Too few arguments")
+  elif len(sys.argv) > 2:
+      sys.exit("Too many arguments")
+
+  print("hello, my name is", sys.argv[1])
   ```
 
-  Notice that we are calling `search` on smaller and smaller iterations of this problem.
-* Similarly, in our pseudocode for Week 0, you can see where recursion was implemented:
+  Notice how we are using a built-in function of `sys` called `exit` that allows us to exit the program if an error was introduced by the user. We can rest assured now that the program will never execute the final line of code and trigger an error. Therefore, `sys.argv` provides a way by which users can introduce information from the command line. `sys.exit` provides a means by which the program can exit if an error arises.
+* You can learn more in Python’s documentation of [`sys`](https://docs.python.org/3/library/sys.html).
+
+## `slice`
+
+* `slice` is a command that allows us to take a `list` and tell the interpreter where we want the interpreter to consider the start of the `list` and the end of the `list`. For example, modify your code as follows:
 
   ```
-  1  Pick up phone book
-  2  Open to middle of phone book
-  3  Look at page
-  4  If person is on page
-  5      Call person
-  6  Else if person is earlier in book
-  7      Open to middle of left half of book
-  8      Go back to line 3
-  9  Else if person is later in book
-  10     Open to middle of right half of book
-  11     Go back to line 3
-  12 Else
-  13     Quit
+  import sys
 
-  ```
-* This code could have been simplified to highlight its recursive properties as follows:
+  if len(sys.argv) < 2:
+      sys.exit("Too few arguments")
 
-  ```
-  1  Pick up phone book
-  2  Open to middle of phone book
-  3  Look at page
-  4  If person is on page
-  5      Call person
-  6  Else if person is earlier in book
-  7      Search left half of book
-  9  Else if person is later in book
-  10     Search right half of book
-  12 Else
-  13     Quit
-
-  ```
-* Consider how in Week 1 we wanted to create a pyramid structure as follows:
-
-  ```
-    #
-    ##
-    ###
-    ####
-
-  ```
-* Type `code iteration.c` into your terminal window and write code as follows:
-
-  ```
-  // Draws a pyramid using iteration
-
-  #include <cs50.h>
-  #include <stdio.h>
-
-  void draw(int n);
-
-  int main(void)
-  {
-      // Get height of pyramid
-      int height = get_int("Height: ");
-
-      // Draw pyramid
-      draw(height);
-  }
-
-  void draw(int n)
-  {
-      // Draw pyramid of height n
-      for (int i = 0; i < n; i++)
-      {
-          for (int j = 0; j < i + 1; j++)
-          {
-              printf("#");
-          }
-          printf("\n");
-      }
-  }
-
+  for arg in sys.argv:
+      print("hello, my name is", arg)
   ```
 
-  Notice that this code builds the pyramid by looping.
-* To implement this using recursion, type `code iteration.c` into your terminal window and write code as follows:
+  Notice that if you type `python name.py David Carter Rongxin` into the terminal window, the interpreter will output not just the intended output of the names, but also `hello, my name is name.py`. How then could we ensure that the interpreter ignores the first element of the list where `name.py` is currently being stored?
+* `slice` can be employed in our code to start the list somewhere different! Modify your code as follows:
 
   ```
-  // Draws a pyramid using recursion
+  import sys
 
-  #include <cs50.h>
-  #include <stdio.h>
+  if len(sys.argv) < 2:
+      sys.exit("Too few arguments")
 
-  void draw(int n);
-
-  int main(void)
-  {
-      // Get height of pyramid
-      int height = get_int("Height: ");
-
-      // Draw pyramid
-      draw(height);
-  }
-
-  void draw(int n)
-  {
-      // If nothing to draw
-      if (n <= 0)
-      {
-          return;
-      }
-
-      // Draw pyramid of height n - 1
-      draw(n - 1);
-
-      // Draw one more row of width n
-      for (int i = 0; i < n; i++)
-      {
-          printf("#");
-      }
-      printf("\n");
-  }
-
+  for arg in sys.argv[1:]:
+      print("hello, my name is", arg)
   ```
 
-  Notice the *base case* will ensure the code does not run forever. The line `if (n <= 0)` terminates the recursion because the problem has been solved. Every time, `draw` calls itself, it calls itself by `n-1`. At some point, `n-1` will equal `0`, resulting in the `draw` function returning, and the program will end.
+  Notice that rather than starting the list at `0`, we use square brackets to tell the interpreter to start at `1` and go to the end using the `1:` argument. Running this code, you’ll notice that we can improve our code using relatively simple syntax.
 
-## Merge Sort
+## Packages
 
-* We can now leverage recursion in our quest for a more efficient sort algorithm and implement what is called *merge sort*, a very efficient sort algorithm.
-* The pseudocode for merge sort is quite short:
-
-  ```
-  If only one number
-      Quit
-  Else
-      Sort left half of number
-      Sort right half of number
-      Merge sorted halves
+* One of the reasons Python is so popular is that there are numerous powerful third-party libraries that add functionality. We call these third-party libraries, implemented as a folder, “packages”.
+* PyPI is a repository or directory of all available third-party packages currently available.
+* `cowsay` is a well-known package that allows a cow to talk to the user.
+* Python has a package manager called `pip` that allows you to install packages quickly onto your system.
+* In the terminal window, you can install the `cowsay` package by typing `pip install cowsay`. After a bit of output, you can now go about using this package in your code.
+* In your terminal window type `code say.py`. In the text editor, code as follows:
 
   ```
-* Consider the following list of the numbers:
+  import cowsay
+  import sys
+
+  if len(sys.argv) == 2:
+      cowsay.cow("hello, " + sys.argv[1])
+  ```
+
+  Notice that the program first checks that the user inputted at least two arguments at the command line. Then, the cow should speak to the user. Type `python say.py David` and you’ll see a cow saying “hello” to David.
+* Further modify your code:
 
   ```
-    6341
+  import cowsay
+  import sys
+
+  if len(sys.argv) == 2:
+      cowsay.trex("hello, " + sys.argv[1])
+  ```
+
+  Notice that a t-rex is now saying “hello”.
+* You now can see how you could install third-party packages.
+* You can learn more on PyPI’s entry for [`cowsay`](https://pypi.org/project/cowsay/)
+* You can find other third-party packages at [PyPI](https://pypi.org/)
+
+## APIs
+
+* APIs or “application program interfaces” allow you to connect to the code of others.
+* `requests` is a package that allows your program to behave as a web browser would.
+* In your terminal, type `pip install requests`. Then, type `code itunes.py`.
+* It turns out that Apple iTunes has its own API that you can access in your programs. In your internet browser, you can visit <https://itunes.apple.com/search?entity=song&limit=1&term=weezer> and a text file will be downloaded. David constructed this URL by reading Apple’s API documentation. Notice how this query is looking for a `song`, with a `limit` of one result, that relates to the `term` called `weezer`. Looking at this text file that is downloaded, you might find the format to be similar to that we’ve programmed previously in Python.
+* The format in the downloaded text file is called JSON, a text-based format that is used to exchange text-based data between applications. Literally, Apple is providing a JSON file that we could interpret in our own Python program.
+* In the terminal window, type `code itunes.py`. Code as follows:
 
   ```
-* First, merge sort asks, “is this one number?” The answer is “no,” so the algorithm continues.
+  import requests
+  import sys
+
+  if len(sys.argv) != 2:
+      sys.exit()
+
+  response = requests.get("https://itunes.apple.com/search?entity=song&limit=1&term=" + sys.argv[1])
+  print(response.json())
+  ```
+
+  Notice how the returned value of `requests.get` will be stored in `response`. David, having read the Apple documentation about this API, knows that what is returned is a JSON file. Running `python itunes.py weezer`, you will see the JSON file returned by Apple. However, the JSON response is converted by Python into a dictionary. Looking at the output, it can be quite dizzying!
+* It turns out that Python has a built-in JSON library that can help us interpret the data received. Modify your code as follows:
 
   ```
-    6341
+  import json
+  import requests
+  import sys
+
+  if len(sys.argv) != 2:
+      sys.exit()
+
+  response = requests.get("https://itunes.apple.com/search?entity=song&limit=1&term=" + sys.argv[1])
+  print(json.dumps(response.json(), indent=2))
+  ```
+
+  Notice that `json.dumps` is implemented such that it utilizes `indent` to make the output more readable. Running `python itunes.py weezer`, you will see the same JSON file. However, this time, it is much more readable. Notice now that you will see a dictionary called `results` inside the output. Inside that dictionary called `results` there are numerous keys present. Look at the `trackName` value in the output. What track name do you see in your results?
+* How could we simply output the name of just that track name? Modify your code as follows:
 
   ```
-* Second, merge sort will now split the numbers down the middle (or as close as it can get) and sort the left half of numbers.
+  import json
+  import requests
+  import sys
+
+  if len(sys.argv) != 2:
+      sys.exit()
+
+  response = requests.get("https://itunes.apple.com/search?entity=song&limit=50&term=" + sys.argv[1])
+
+  o = response.json()
+  for result in o["results"]:
+      print(result["trackName"])
+  ```
+
+  Notice how we are taking the result of `response.json()` and storing it in `o` (as in the lowercase letter). Then, we are iterating through the `results` in `o` and printing each `trackName`. Also notice how we have increased the limit number of results to `50`. Run your program. See the results.
+* You can learn more about `requests` through the [library’s documentation](https://docs.python-requests.org/).
+* You can learn more about JSON in Python’s documentation of [JSON](https://docs.python.org/3/library/json.html).
+
+## Making Your Own Libraries
+
+* You have the ability as a Python programmer to create your own library!
+* Imagine situations where you may want to re-use bits of code time and time again or even share them with others!
+* We have been writing lots of code to say “hello” so far in this course. Let’s create a package to allow us to say “hello” and “goodbye”. In your terminal window, type `code sayings.py`. In the text editor, code as follows:
 
   ```
-    63|41
+  def hello(name):
+      print(f"hello, {name}")
+
+
+  def goodbye(name):
+      print(f"goodbye, {name}")
+  ```
+
+  Notice that this code in and of itself does not do anything for the user. However, if a programmer were to import this package into their own program, the abilities created by the functions above could be implemented in their code.
+* Let’s see how we could implement code utilizing this package that we created. In the terminal window, type `code say.py`. In this new file in your text editor, type the following:
 
   ```
-* Third, merge sort would look at these numbers on the left and ask, “is this one number?” Since the answer is no, it would then split the numbers on the left down the middle.
+  import sys
 
-  ```
-    6|3
+  from sayings import goodbye
 
+  if len(sys.argv) == 2:
+      goodbye(sys.argv[1])
   ```
-* Fourth, merge sort will again ask, “is this one number?” The answer is yes this time! Therefore, it will quit this task and return to the last task it was running at this point:
 
-  ```
-    63|41
-
-  ```
-* Fifth, merge sort will sort the numbers on the left.
-
-  ```
-    36|41
-
-  ```
-* Now, we return to where we left off in the pseudocode now that the left side has been sorted. A similar process of steps 3-5 will occur with the right-hand numbers. This will result in:
-
-  ```
-    36|14
-
-  ```
-* Both halves are now sorted. Finally, the algorithm will merge both sides. It will look at the first number on the left and the first number on the right. It will put the smaller number first, then the second smallest. The algorithm will repeat this for all numbers, resulting in:
-
-  ```
-    1346
-
-  ```
-* Merge sort is complete, and the program quits.
-* Merge sort is a very efficient sort algorithm with a worst-case of \(O(n \log n)\). The best-case is still \(\Omega(n \log n)\) because the algorithm still must visit each place in the list. Therefore, merge sort is also \(\Theta(n \log n)\) since the best-case and worst-case are the same.
-* A final [visualization](https://www.youtube.com/watch?v=ZZuD6iUe3Pc) was shared.
+  Notice that this code imports the abilities of `goodbye` from the `sayings` package. If the user inputted at least two arguments at the command line, it will say “goodbye” along with the string inputted at the command line.
 
 ## Summing Up
 
-In this lesson, you learned about algorithmic thinking and building your own data types. Specifically, you learned…
+Libraries extend the abilities of Python. Some libraries are included by default with Python and simply need to be imported. Others are third-party packages that need to be installed using `pip`. You can make your own packages for use by yourself or others! In this lecture, you learned about…
 
-* Algorithms.
-* Big *O* notation.
-* Binary search and linear search.
-* Various sort algorithms, including bubble sort, selection sort, and merge sort.
-* Recursion.
-
-See you next time!
+* Libraries
+* Random
+* Statistics
+* Command-Line Arguments
+* Slice
+* Packages
+* APIs
+* Making Your Own Libraries

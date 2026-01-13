@@ -1,594 +1,762 @@
-# Lecture 8 Notes
+# Week 8 Notes
 
-* [Welcome!](#welcome)
-* [Flat-File Database](#flat-file-database)
-* [Relational Databases](#relational-databases)
-* [SELECT](#select)
-* [INSERT](#insert)
-* [DELETE](#delete)
-* [UPDATE](#update)
-* [IMDb](#imdb)
-* [`JOIN`s](#joins)
-* [Indexes](#indexes)
-* [Using SQL in Python](#using-sql-in-python)
-* [Race Conditions](#race-conditions)
-* [SQL Injection Attacks](#sql-injection-attacks)
+**CS50p 2025 - Week 8**
+
+Source: https://cs50.harvard.edu/python/notes/8/
+
+---
+
+# Lecture 8
+
+* [Object-Oriented Programming](#object-oriented-programming)
+* [Classes](#classes)
+* [`raise`](#raise)
+* [Decorators](#decorators)
+* [Connecting to Previous Work in this Course](#connecting-to-previous-work-in-this-course)
+* [Class Methods](#class-methods)
+* [Static Methods](#static-methods)
+* [Inheritance](#inheritance)
+* [Inheritance and Exceptions](#inheritance-and-exceptions)
+* [Operator Overloading](#operator-overloading)
 * [Summing Up](#summing-up)
 
-## Welcome!
+## Object-Oriented Programming
 
-* In previous weeks, we introduced you to Python, a high-level programming language that utilized the same building blocks we learned in C. However, we introduced this new language not for the purpose of learning “just another language.” Instead, we do so because some tools are better for some jobs and not so great for others!
-* This week, we will be continuing more syntax related to Python.
-* Further, we will be integrating this knowledge with data.
-* Finally, we will be discussing *SQL* or *Structured Query Language*, a domain-specific way by which we can interact with and modify data.
-* Overall, one of the goals of this course is to learn to program generally – not simply how to program in the languages described in this course.
-
-## Flat-File Database
-
-* As you have likely seen before, data can often be described in patterns of columns and rows.
-* Spreadsheets like those created in Microsoft Excel and Google Sheets can be outputted to a `csv` or *comma-separated values* file.
-* If you look at a `csv` file, you’ll notice that the file is flat in that all of our data is stored in a single table represented by a text file. We call this form of data a *flat-file database*.
-* All data is stored row by row. Each column is separated by a comma or another value.
-* Python comes with native support for `csv` files.
-* First, download [favorites.csv](https://raw.githubusercontent.com/SQ4007-2025/website/master/data/favorites.csv?download) (right click, save as...) and upload it to your file explorer inside [our VS Code Sandbox](https://classroom.github.com/a/zT0wsGr1). Second, examining this data, notice that the first row is special in that it defines each column. Then, each record is stored row by row.
-* In your terminal window, type `code favorites.py` and write code as follows:
+* There are different paradigms of programming. As you learn other languages, you will start recognizing patterns like these.
+* Up until this point, you have worked procedurally step-by-step.
+* Object-oriented programming (OOP) is a compelling solution to programming-related problems.
+* To begin, type `code student.py` in the terminal window and code as follows:
 
   ```
-  # Prints all favorites in CSV using csv.reader
-
-  import csv
-
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
-
-      # Create reader
-      reader = csv.reader(file)
-
-      # Skip header row
-      next(reader)
-
-      # Iterate over CSV file, printing each favorite
-      for row in reader:
-          print(row[1])
-
+  name = input("Name: ")
+  house = input("House: ")
+  print(f"{name} from {house}")
   ```
 
-  Notice that the `csv` library is imported. Further, we created a `reader` that will hold the result of `csv.reader(file)`. The `csv.reader` function reads each row from the file, and in our code, we store the results in `reader`. `print(row[1])`, therefore, will print the language from the `favorites.csv` file.
-* You can improve your code as follows:
+  Notice that this program follows a procedural, step-by-step paradigm: Much like you have seen in prior parts of this course.
+* Drawing on our work from previous weeks, we can create functions to abstract away parts of this program.
 
   ```
-  # Stores favorite in a variable
+  def main():
+      name = get_name()
+      house = get_house()
+      print(f"{name} from {house}")
 
-  import csv
 
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
+  def get_name():
+      return input("Name: ")
 
-      # Create reader
-      reader = csv.reader(file)
 
-      # Skip header row
-      next(reader)
+  def get_house():
+      return input("House: ")
 
-      # Iterate over CSV file, printing each favorite
-      for row in reader:
-          favorite = row[1]
-          print(favorite)
 
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that `favorite` is stored and then printed. Also, notice that we use the `next` function to skip to the next line of our reader.
-* One of the disadvantages of the above approach is that we are trusting that `row[1]` is always the favorite. However, what would happen if the columns had been moved around?
-* We can fix this potential issue. Python also allows you to index by the keys of a list. Modify your code as follows:
+  Notice how `get_name` and `get_house` abstract away some of the needs of our `main` function. Further, notice how the final lines of the code above tell the interpreter to run the `main` function.
+* We can further simplify our program by storing the student as a `tuple`. A `tuple` is a sequence of values. Unlike a `list`, a `tuple` can’t be modified. In spirit, we are returning two values.
 
   ```
-  # Prints all favorites in CSV using csv.DictReader
+  def main():
+      name, house = get_student()
+      print(f"{name} from {house}")
 
-  import csv
 
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return name, house
 
-      # Create DictReader
-      reader = csv.DictReader(file)
 
-      # Iterate over CSV file, printing each favorite
-      for row in reader:
-          favorite = row["language"]
-          print(favorite)
-
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that this example directly utilizes the `language` key in the print statement. `favorite` indexes into the `reader` dictionary of `row["language"]`.
-* This could be further simplified to:
+  Notice how `get_student` returns `name, house`.
+* Packing that `tuple`, such that we are able to return both items to a variable called `student`, we can modify our code as follows.
 
   ```
-  # Prints all favorites in CSV using csv.DictReader
+  def main():
+      student = get_student()
+      print(f"{student[0]} from {student[1]}")
 
-  import csv
 
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return (name, house)
 
-      # Create DictReader
-      reader = csv.DictReader(file)
 
-      # Iterate over CSV file, printing each favorite
-      for row in reader:
-          print(row["language"])
-
-  ```
-* To count the number of favorite languages expressed in the `csv` file, we can do the following:
-
-  ```
-  # Counts favorites using variables
-
-  import csv
-
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
-
-      # Create DictReader
-      reader = csv.DictReader(file)
-
-      # Counts
-      scratch, c, python = 0, 0, 0
-
-      # Iterate over CSV file, counting favorites
-      for row in reader:
-          favorite = row["language"]
-          if favorite == "Scratch":
-              scratch += 1
-          elif favorite == "C":
-              c += 1
-          elif favorite == "Python":
-              python += 1
-
-  # Print counts
-  print(f"Scratch: {scratch}")
-  print(f"C: {c}")
-  print(f"Python: {python}")
-
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that each language is counted using `if` statements. Further, notice the double equal `==` signs in those `if` statements.
-* Python allows us to use a dictionary to count the `counts` of each language. Consider the following improvement upon our code:
+  Notice that `(name, house)` explicitly tells anyone reading our code that we are returning two values within one. Further, notice how we can index into `tuple`s using `student[0]` or `student[1]`.
+* `tuple`s are immutable, meaning we cannot change those values. Immutability is a way by which we can program defensively.
 
   ```
-  # Counts favorites using dictionary
+  def main():
+      student = get_student()
+      if student[0] == "Padma":
+          student[1] = "Ravenclaw"
+      print(f"{student[0]} from {student[1]}")
 
-  import csv
 
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return name, house
 
-      # Create DictReader
-      reader = csv.DictReader(file)
 
-      # Counts
-      counts = {}
-
-      # Iterate over CSV file, counting favorites
-      for row in reader:
-          favorite = row["language"]
-          if favorite in counts:
-              counts[favorite] += 1
-          else:
-              counts[favorite] = 1
-
-  # Print counts
-  for favorite in counts:
-      print(f"{favorite}: {counts[favorite]}")
-
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that the value in `counts` with the key `favorite` is incremented when it exists already. If it does not exist, we define `counts[favorite]` and set it to 1. Further, the formatted string has been improved to present the `counts[favorite]`.
-* Python also allows sorting `counts`. Improve your code as follows:
+  Notice that this code produces an error. Since `tuple`s are immutable, we’re not able to reassign the value of `student[1]`.
+* If we wanted to provide our fellow programmers flexibility, we could utilize a `list` as follows.
 
   ```
-  # Sorts favorites by key
+  def main():
+      student = get_student()
+      if student[0] == "Padma":
+          student[1] = "Ravenclaw"
+      print(f"{student[0]} from {student[1]}")
 
-  import csv
 
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return [name, house]
 
-      # Create DictReader
-      reader = csv.DictReader(file)
 
-      # Counts
-      counts = {}
-
-      # Iterate over CSV file, counting favorites
-      for row in reader:
-          favorite = row["language"]
-          if favorite in counts:
-              counts[favorite] += 1
-          else:
-              counts[favorite] = 1
-
-  # Print counts
-  for favorite in sorted(counts):
-      print(f"{favorite}: {counts[favorite]}")
-
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice the `sorted(counts)` at the bottom of the code.
-* If you look at the parameters for the `sorted` function in the Python documentation, you will find it has many built-in parameters. You can leverage some of these built-in parameters as follows:
+  Note that lists are mutable. That is, the order of `house` and `name` can be switched by a programmer. You might decide to utilize this in some cases where you want to provide more flexibility at the cost of the security of your code. After all, if the order of those values is changeable, programmers that work with you could make mistakes down the road.
+* A dictionary could also be utilized in this implementation. Recall that dictionaries provide a key-value pair.
 
   ```
-  # Sorts favorites by value using .get
+  def main():
+      student = get_student()
+      print(f"{student['name']} from {student['house']}")
 
-  import csv
 
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
+  def get_student():
+      student = {}
+      student["name"] = input("Name: ")
+      student["house"] = input("House: ")
+      return student
 
-      # Create DictReader
-      reader = csv.DictReader(file)
 
-      # Counts
-      counts = {}
-
-      # Iterate over CSV file, counting favorites
-      for row in reader:
-          favorite = row["language"]
-          if favorite in counts:
-              counts[favorite] += 1
-          else:
-              counts[favorite] = 1
-
-  # Print counts
-  for favorite in sorted(counts, key=counts.get, reverse=True):
-      print(f"{favorite}: {counts[favorite]}")
-
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice the arguments passed to `sorted`. The `key` argument allows you to tell Python the method you wish to use to sort items. In this case `counts.get` is used to sort by the values. `reverse=True` tells `sorted` to sort from largest to smallest.
-* Python has numerous libraries that we can utilize in our code. One of these libraries is `collections`, from which we can import `Counter`. `Counter` will allow you to access the counts of each language without the headaches of all the `if` statements seen in our previous code. You can implement as follows:
+  Notice in this case, two key-value pairs are returned. An advantage of this approach is that we can index into this dictionary using the keys.
+* Still, our code can be further improved. Notice that there is an unneeded variable. We can remove `student = {}` because we don’t need to create an empty dictionary.
 
   ```
-  # Sorts favorites by value using .get
+  def main():
+      student = get_student()
+      print(f"{student['name']} from {student['house']}")
 
-  import csv
 
-  from collections import Counter
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return {"name": name, "house": house}
 
-  # Open CSV file
-  with open("favorites.csv", "r") as file:
 
-      # Create DictReader
-      reader = csv.DictReader(file)
-
-      # Counts
-      counts = Counter()
-
-      # Iterate over CSV file, counting favorites
-      for row in reader:
-          favorite = row["language"]
-          counts[favorite] += 1
-
-  # Print counts
-  for favorite, count in counts.most_common():
-      print(f"{favorite}: {count}")
-
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice how `counts = Counter()` enables the use of this imported `Counter` class from `collections`.
-* You can learn more about [sorted](https://docs.python.org/3/howto/sorting.html) in the [Python Documentation](https://docs.python.org/3/howto/sorting.html).
-
-## Relational Databases
-
-* Google, X, and Meta all use relational databases to store their information at scale.
-* Relational databases store data in rows and columns in structures called *tables*.
-* SQL allows for four types of commands:
+  Notice we can utilize `{}` braces in the `return` statement to create the dictionary and return it all in the same line.
+* We can provide our special case with Padma in our dictionary version of our code.
 
   ```
-    Create
-    Read
-    Update
-    Delete
+  def main():
+      student = get_student()
+      if student["name"] == "Padma":
+          student["house"] = "Ravenclaw"
+      print(f"{student['name']} from {student['house']}")
 
-  ```
-* These four operations are affectionately called *CRUD*.
-* We can create a database with the SQL syntax `CREATE TABLE table (column type, ...);`. But where do you run this command?
-* `sqlite3` is a type of SQL database that has the core features required for this course.
-* We can create a SQL database at the terminal by typing `sqlite3 favorites.db`. Upon being prompted, we will agree that we want to create `favorites.db` by pressing `y`.
-* You will notice a different prompt as we are now using a program called `sqlite`.
-* We can put `sqlite` into `csv` mode by typing `.mode csv`. Then, we can import our data from our `csv` file by typing `.import favorites.csv favorites`. It seems that nothing has happened!
-* We can type `.schema` to see the structure of the database.
-* You can read items from a table using the syntax `SELECT columns FROM table`.
-* For example, you can type `SELECT * FROM favorites;` which will print every row in `favorites`.
-* You can get a subset of the data using the command `SELECT language FROM favorites;`.
-* SQL supports many commands to access data, including:
 
-  ```
-    AVG
-    COUNT
-    DISTINCT
-    LOWER
-    MAX
-    MIN
-    UPPER
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return {"name": name, "house": house}
 
-  ```
-* For example, you can type `SELECT COUNT(*) FROM favorites;`. Further, you can type `SELECT DISTINCT language FROM favorites;` to get a list of the individual languages within the database. You could even type `SELECT COUNT(DISTINCT language) FROM favorites;` to get a count of those.
-* SQL offers additional commands we can utilize in our queries:
 
-  ```
-    WHERE       -- adding a Boolean expression to filter our data
-    LIKE        -- filtering responses more loosely
-    ORDER BY    -- ordering responses
-    LIMIT       -- limiting the number of responses
-    GROUP BY    -- grouping responses together
-
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that we use `--` to write a comment in SQL.
+  Notice how, similar in spirit to our previous iterations of this code, we can utilize the key names to index into our student dictionary.
 
-## SELECT
+## Classes
 
-* For example, we can execute `SELECT COUNT(*) FROM favorites WHERE language = 'C';`. A count is presented.
-* Further, we could type `SELECT COUNT(*) FROM favorites WHERE language = 'C' AND problem = 'Hello, World';`. Notice how the `AND` is utilized to narrow our results.
-* Similarly, we could execute `SELECT language, COUNT(*) FROM favorites GROUP BY language;`. This would offer a temporary table that would show the language and count.
-* We could improve this by typing `SELECT language, COUNT(*) FROM favorites GROUP BY language ORDER BY COUNT(*);`. This will order the resulting table by the `count`.
-* Likewise, we could execute `SELECT COUNT(*) FROM favorites WHERE language = 'C' AND (problem = 'Hello, World' OR problem = 'Hello, It''s Me');`. Do notice that there are two `''` marks as to allow the use of single quotes in a way that does not confuse SQL.
-* Further, we could execute `SELECT COUNT(*) FROM favorites WHERE language = 'C' AND problem LIKE 'Hello, %';` to find any problems that start with `Hello,`  (including a space).
-* We can also group the values of each language by executing `SELECT language, COUNT(*) FROM favorites GROUP BY language;`.
-* We can order the output as follows: `SELECT language, COUNT(*) FROM favorites GROUP BY language ORDER BY COUNT(*) DESC;`.
-* We can even create aliases, like variables in our queries: `SELECT language, COUNT(*) AS n FROM favorites GROUP BY language ORDER BY n DESC;`.
-* Finally, we can limit our output to 1 or more values: `SELECT language, COUNT(*) AS n FROM favorites GROUP BY language ORDER BY n DESC LIMIT 1;`.
-
-## INSERT
-
-* We can also `INSERT` into a SQL database utilizing the form `INSERT INTO table (column...) VALUES(value, ...);`.
-* We can execute `INSERT INTO favorites (language, problem) VALUES ('SQL', 'Fiftyville');`.
-* You can verify the addition of this favorite by executing `SELECT * FROM favorites;`.
-
-## DELETE
-
-* `DELETE` allows you to delete parts of your data. For example, you could `DELETE FROM favorites WHERE Timestamp IS NULL;`. This deletes any record where the `Timestamp` is `NULL`.
-
-## UPDATE
-
-* We can also utilize the `UPDATE` command to update your data.
-* For example, you can execute `UPDATE favorites SET language = 'SQL', problem = 'Fiftyville';`. This will result in overwriting all previous statements where C and Scratch were the favorite programming language.
-* Notice that these queries have immense power. Accordingly, in the real-world setting, you should consider who has permissions to execute certain commands and if you have backups available!
-
-## IMDb
-
-* We can imagine a database that we might want to create to catalog various TV shows. We could create a spreadsheet with columns like `title`, `star`, `star`, `star`, `star`, and more stars. A problem with this approach is that it has a lot of wasted space. Some shows may have one star. Others may have dozens.
-* We could separate our database into multiple sheets. We could have a `shows` sheet, a `stars` sheet, and a `people` sheet. On the `people` sheet, each person could have a unique `id`. On the `shows` sheet, each show could have a unique `id` too. On a third sheet called `stars` we could relate how each show has people for each show by having a `show_id` and `person_id`. While this is an improvement, this is not an ideal database.
-* IMDb offers a database of people, shows, writers, stars, genres, and ratings. Each of these tables is related to one another as follows:
-
-  ![six boxes that represent various sql tables arrows are drawn to each showing their many relationships with one another](images/week_7/Week7Slide025.png)
-* After downloading [`shows.db`](https://cdn.cs50.net/2024/fall/lectures/7/src7/imdb/shows.db), you can execute `sqlite3 shows.db` in your terminal window.
-* Let’s zero in on the relationship between two tables within the database called `shows` and `ratings`. The relationship between these two tables can be illustrated as follows:
-
-  ![two boxes one called shows and the other called ratings](images/week_7/Week7Slide032.png)
-* To illustrate the relationship between these tables, we could execute the following command: `SELECT * FROM ratings LIMIT 10;`. Examining the output, we could execute `SELECT * FROM shows LIMIT 10;`.
-* Examining `shows` and `rating`, we can see these have a one-to-one relationship: One show has one rating.
-* To understand the database, upon executing `.schema` you will find not only each of the tables but the individual fields inside each of these fields.
-* More specifically, you could execute `.schema shows` to understand the fields inside `shows`. You can also execute `.schema ratings` to see the fields inside `ratings`.
-* As you can see, `show_id` exists in all of the tables. In the `shows` table, it is simply called `id`. This common field between all the fields is called a *key*. Primary keys are used to identify a unique record in a table. *Foreign keys* are used to build relationships between tables by pointing to the primary key in another table. You can see in the schema of `ratings` that `show_id` is a foreign key that references `id` in `shows`.
-* By storing data in a relational database, as above, data can be more efficiently stored.
-* In *sqlite*, we have five data types, including:
+* Classes are a way by which, in object-oriented programming, we can create our own type of data and give them names.
+* A class is like a mold for a type of data – where we can invent our own data type and give them a name.
+* We can modify our code as follows to implement our own class called `Student`:
 
   ```
-    BLOB       -- binary large objects that are groups of ones and zeros
-    INTEGER    -- an integer
-    NUMERIC    -- for numbers that are formatted specially like dates
-    REAL       -- like a float
-    TEXT       -- for strings and the like
+  class Student:
+      ...
 
-  ```
-* Additionally, columns can be set to add special constraints:
 
-  ```
-    NOT NULL
-    UNIQUE
+  def main():
+      student = get_student()
+      print(f"{student.name} from {student.house}")
 
-  ```
-* We can further play with this data to understand these relationships. Execute `SELECT * FROM ratings;`. There are a lot of ratings!
-* We can further limit this data down by executing `SELECT show_id FROM ratings WHERE rating >= 6.0 LIMIT 10;`. From this query, you can see that there are 10 shows presented. However, we don’t know what show each `show_id` represents.
-* You can discover what shows these are by executing `SELECT * FROM shows WHERE id = 626124;`
-* We can further our query to be more efficient by executing:
 
-  ```
-  SELECT title
-  FROM shows
-  WHERE id IN (
-      SELECT show_id
-      FROM ratings
-      WHERE rating >= 6.0
-      LIMIT 10
-  )
+  def get_student():
+      student = Student()
+      student.name = input("Name: ")
+      student.house = input("House: ")
+      return student
 
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that this query nests together two queries. An inner query is used by an outer query.
-
-## `JOIN`s
-
-* We are pulling data from `shows` and `ratings`. Notice how both `shows` and `ratings` have an `id` in common.
-* How could we combine tables temporarily? Tables could be joined together using the `JOIN` command.
-* Execute the following command:
+  Notice by convention that `Student` is capitalized. Further, notice the `...` simply means that we will later return to finish that portion of our code. Further, notice that in `get_student`, we can create a `student` of class `Student` using the syntax `student = Student()`. Further, notice that we utilize “dot notation” to access attributes of this variable `student` of class `Student`.
+* Any time you create a class and you utilize that blueprint to create something, you create what is called an “object” or an “instance”. In the case of our code, `student` is an object.
+* Further, we can lay some groundwork for the attributes that are expected inside an object whose class is `Student`. We can modify our code as follows:
 
   ```
-  SELECT * FROM shows
-    JOIN ratings on shows.id = ratings.show_id
-    WHERE rating >= 6.0
-    LIMIT 10;
+  class Student:
+      def __init__(self, name, house):
+          self.name = name
+          self.house = house
 
+
+  def main():
+      student = get_student()
+      print(f"{student.name} from {student.house}")
+
+
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      student = Student(name, house)
+      return student
+
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice this results in a wider table than we have previously seen.
-* Where the previous queries have illustrated the *one-to-one* relationship between these keys, let’s examine some *one-to-many* relationships. Focusing on the `genres` table, execute the following:
+  Notice that within `Student`, we standardize the attributes of this class. We can create a function within `class Student`, called a “method”, that determines the behavior of an object of class `Student`. Within this function, it takes the `name` and `house` passed to it and assigns these variables to this object. Further, notice how the constructor `student = Student(name, house)` calls this function within the `Student` class and creates a `student`. `self` refers to the current object that was just created.
+* We can simplify our code as follows:
 
   ```
-  SELECT * FROM genres
-  LIMIT 10;
+  class Student:
+      def __init__(self, name, house):
+          self.name = name
+          self.house = house
 
+
+  def main():
+      student = get_student()
+      print(f"{student.name} from {student.house}")
+
+
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return Student(name, house)
+
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice how this provides us a sense of the raw data. You might notice that one show has three values. This is a one-to-many relationship.
-* We can learn more about the `genres` table by typing `.schema genres`.
-* Execute the following command to learn more about the various comedies in the database:
+  Notice how `return Student(name, house)` simplifies the previous iteration of our code where the constructor statement was run on its own line.
+* You can learn more in Python’s documentation of [classes](https://docs.python.org/3/tutorial/classes.html).
+
+## `raise`
+
+* Object-oriented programming encourages you to encapsulate all the functionality of a class within the class definition. What if something goes wrong? What if someone tries to type in something random? What if someone tries to create a student without a name? Modify your code as follows:
 
   ```
-  SELECT title FROM shows
-  WHERE id IN (
-    SELECT show_id FROM genres
-    WHERE genre = 'Comedy'
-    LIMIT 10
-  );
+  class Student:
+      def __init__(self, name, house):
+          if not name:
+              raise ValueError("Missing name")
+          if house not in ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]:
+              raise ValueError("Invalid house")
+          self.name = name
+          self.house = house
 
+
+  def main():
+      student = get_student()
+      print(f"{student.name} from {student.house}")
+
+
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return Student(name, house)
+
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice how this produces a list of comedies, including *Catweazle*.
-* To learn more about Catweazle, by joining various tables through a join:
+  Notice how we check now that a name is provided and a proper house is designated. It turns out we can create our own exceptions that alerts the programmer to a potential error created by the user called `raise`. In the case above, we raise `ValueError` with a specific error message.
+* It just so happens that Python allows you to create a specific function by which you can print the attributes of an object. Modify your code as follows:
 
   ```
-  SELECT * FROM shows
-  JOIN genres
-  ON shows.id = genres.show_id
-  WHERE id = 63881;
+  class Student:
+      def __init__(self, name, house, patronus):
+          if not name:
+              raise ValueError("Missing name")
+          if house not in ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]:
+              raise ValueError("Invalid house")
+          self.name = name
+          self.house = house
+          self.patronus = patronus
 
+      def __str__(self):
+          return f"{self.name} from {self.house}"
+
+
+  def main():
+      student = get_student()
+      print(student)
+
+
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      patronus = input("Patronus: ")
+      return Student(name, house, patronus)
+
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that this results in a temporary table. It is fine to have a duplicate table.
-* In contrast to one-to-one and one-to-many relationships, there may be *many-to-many* relationships.
-* We can learn more about the show *The Office* and the actors in that show by executing the following command:
+  Notice how `def __str__(self)` provides a means by which a student is returned when called. Therefore, you can now, as the programmer, print an object, its attributes, or almost anything you desire related to that object.
+* `__str__` is a built-in method that comes with Python classes. It just so happens that we can create our own methods for a class as well! Modify your code as follows:
 
   ```
-  SELECT name FROM people WHERE id IN 
-      (SELECT person_id FROM stars WHERE show_id = 
-          (SELECT id FROM shows WHERE title = 'The Office' AND year = 2005));
+  class Student:
+      def __init__(self, name, house, patronus=None):
+          if not name:
+              raise ValueError("Missing name")
+          if house not in ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]:
+              raise ValueError("Invalid house")
+          if patronus and patronus not in ["Stag", "Otter", "Jack Russell terrier"]:
+              raise ValueError("Invalid patronus")
+          self.name = name
+          self.house = house
+          self.patronus = patronus
 
+      def __str__(self):
+          return f"{self.name} from {self.house}"
+
+      def charm(self):
+          match self.patronus:
+              case "Stag":
+                  return "🐴"
+              case "Otter":
+                  return "🦦"
+              case "Jack Russell terrier":
+                  return "🐶"
+              case _:
+                  return "🪄"
+
+
+  def main():
+      student = get_student()
+      print("Expecto Patronum!")
+      print(student.charm())
+
+
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      patronus = input("Patronus: ") or None
+      return Student(name, house, patronus)
+
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that this results in a table that includes the names of various stars through nested queries.
-* We find all the shows in which Steve Carell starred:
+  Notice how we define our own method `charm`. Unlike dictionaries, classes can have built-in functions called methods. In this case, we define our `charm` method where specific cases have specific results. Further, notice that Python has the ability to utilize emojis directly in our code.
+* Before moving forward, let us remove our patronus code. Modify your code as follows:
 
   ```
-  SELECT title FROM shows WHERE id IN 
-      (SELECT show_id FROM stars WHERE person_id = 
-          (SELECT id FROM people WHERE name = 'Steve Carell'));
+  class Student:
+      def __init__(self, name, house):
+          if not name:
+              raise ValueError("Invalid name")
+          if house not in ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]:
+              raise ValueError("Invalid house")
+          self.name = name
+          self.house = house
 
+      def __str__(self):
+          return f"{self.name} from {self.house}"
+
+
+  def main():
+      student = get_student()
+      student.house = "Number Four, Privet Drive"
+      print(student)
+
+
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return Student(name, house)
+
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  This results in a list of titles of shows wherein Steve Carell starred.
-* This could also be expressed in this way:
+  Notice how we have only two methods: `__init__` and `__str__`.
+
+## Decorators
+
+* Properties can be utilized to harden our code. In Python, we define properties using function “decorators”, which begin with `@`. Modify your code as follows:
 
   ```
-  SELECT title FROM shows, stars, people 
-  WHERE shows.id = stars.show_id
-  AND people.id = stars.person_id
-  AND name = 'Steve Carell';
+  class Student:
+      def __init__(self, name, house):
+          if not name:
+              raise ValueError("Invalid name")
+          self.name = name
+          self.house = house
 
-  ```
-* The wildcard `%` operator can be used to find all people whose names start with `Steve C` one could employ the syntax `SELECT * FROM people WHERE name LIKE 'Steve C%';`.
+      def __str__(self):
+          return f"{self.name} from {self.house}"
 
-## Indexes
+      # Getter for house
+      @property
+      def house(self):
+          return self._house
 
-* While relational databases have the ability to be faster and more robust than utilizing a `CSV` file, data can be optimized within a table using *indexes*.
-* Indexes can be utilized to speed up our queries.
-* We can track the speed of our queries by executing `.timer on` in `sqlite3`.
-* To understand how indexes can speed up our queries, run the following: `SELECT * FROM shows WHERE title = 'The Office';` Notice the time that displays after the query executes.
-* Then, we can create an index with the syntax `CREATE INDEX title_index ON shows (title);`. This tells `sqlite3` to create an index and perform some special under-the-hood optimization relating to this column `title`.
-* This will create a data structure called a *B Tree*, a data structure that looks similar to a binary tree. However, unlike a binary tree, there can be more than two child nodes.
+      # Setter for house
+      @house.setter
+      def house(self, house):
+          if house not in ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]:
+              raise ValueError("Invalid house")
+          self._house = house
 
-  ![one node at the top from which come four children and below that there are three children coming from one of the nodes and two from another two from another and three from another](images/week_7/Week7Slide039.png)
-* Further, we can create indexes as follows:
 
-  ```
-  CREATE INDEX name_index ON people (name);
-  CREATE INDEX person_index ON stars (person_id);
+  def main():
+      student = get_student()
+      print(student)
 
-  ```
-* Running the query and you will notice that the query runs much more quickly!
 
-  ```
-  SELECT title FROM shows WHERE id IN 
-      (SELECT show_id FROM stars WHERE person_id = 
-          (SELECT id FROM people WHERE name = 'Steve Carell'));
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return Student(name, house)
 
-  ```
-* Unfortunately, indexing all columns would result in utilizing more storage space. Therefore, there is a tradeoff for enhanced speed.
 
-## Using SQL in Python
-
-* To assist in working with SQL in this course, the CS50 Library can be utilized as follows in your code:
-
-  ```
-  from cs50 import SQL
-
-  ```
-* Similar to previous uses of the CS50 Library, this library will assist with the complicated steps of utilizing SQL within your Python code.
-* You can read more about the CS50 Library’s SQL functionality in the [documentation](https://cs50.readthedocs.io/libraries/cs50/python/#cs50.SQL).
-* Using our new knowledge of SQL, we can now leverage Python alongside.
-* Modify your code for `favorites.py` as follows:
-
-  ```
-  # Searches database popularity of a problem
-
-  from cs50 import SQL
-
-  # Open database
-  db = SQL("sqlite:///favorites.db")
-
-  # Prompt user for favorite
-  favorite = input("Favorite: ")
-
-  # Search for title
-  rows = db.execute("SELECT COUNT(*) AS n FROM favorites WHERE language = ?", favorite)
-
-  # Get first (and only) row
-  row = rows[0]
-
-  # Print popularity
-  print(row["n"])
-
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that `db = SQL("sqlite:///favorites.db")` provides Python the location of the database file. Then, the line that begins with `rows` executes SQL commands utilizing `db.execute`. Indeed, this command passes the syntax within the quotation marks to the `db.execute` function. We can issue any SQL command using this syntax. Further, notice that `rows` is returned as a list of dictionaries. In this case, there is only one result, one row, returned to the rows list as a dictionary.
-
-## Race Conditions
-
-* Utilization of SQL can sometimes result in some problems.
-* You can imagine a case where multiple users could be accessing the same database and executing commands at the same time.
-* This could result in glitches where code is interrupted by other people’s actions. This could result in a loss of data.
-* Built-in SQL features such as `BEGIN TRANSACTION`, `COMMIT`, and `ROLLBACK` help avoid some of these race condition problems.
-
-## SQL Injection Attacks
-
-* Now, still considering the code above, you might be wondering what the `?` question marks do above. One of the problems that can arise in real-world applications of SQL is what is called an *injection attack*. An injection attack is where a malicious actor could input malicious SQL code.
-* For example, consider a login screen as follows:
-
-  ![harvard key login screen with username and password fields](images/week_7/Week7Slide051.png)
-* Without the proper protections in our own code, a bad actor could run malicious code. Consider the following:
+  Notice how we’ve written `@property` above a function called `house`. Doing so defines `house` as a property of our class. With `house` as a property, we gain the ability to define how some attribute of our class, `_house`, should be set and retrieved. Indeed, we can now define a function called a “setter”, via `@house.setter`, which will be called whenever the house property is set—for example, with `student.house = "Gryffindor"`. Here, we’ve made our setter validate values of `house` for us. Notice how we raise a `ValueError` if the value of `house` is not any of the Harry Potter houses, otherwise, we’ll use `house` to update the value of `_house`. Why `_house` and not `house`? `house` is a property of our class, with functions via which a user attempts to set our class attribute. `_house` is that class attribute itself. The leading underscore, `_`, indicates to users they need not (and indeed, shouldn’t!) modify this value directly. `_house` should *only* be set through the `house` setter. Notice how the `house` property simply returns that value of `_house`, our class attribute that has presumably been validated using our `house` setter. When a user calls `student.house`, they’re getting the value of `_house` through our `house` “getter”.
+* In addition to the name of the house, we can protect the name of our student as well. Modify your code as follows:
 
   ```
-  rows = db.execute("SELECT COUNT(*) FROM users WHERE username = ? AND password = ?", username, password)
+  class Student:
+      def __init__(self, name, house):
+          self.name = name
+          self.house = house
 
+      def __str__(self):
+          return f"{self.name} from {self.house}"
+
+      # Getter for name
+      @property
+      def name(self):
+          return self._name
+
+      # Setter for name
+      @name.setter
+      def name(self, name):
+          if not name:
+              raise ValueError("Invalid name")
+          self._name = name
+
+      @property
+      def house(self):
+          return self._house
+
+      @house.setter
+      def house(self, house):
+          if house not in ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]:
+              raise ValueError("Invalid house")
+          self._house = house
+
+
+  def main():
+      student = get_student()
+      print(student)
+
+
+  def get_student():
+      name = input("Name: ")
+      house = input("House: ")
+      return Student(name, house)
+
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that because the `?` is in place, validation can be run on `favorite` before it is blindly accepted by the query.
-* You never want to utilize formatted strings in queries as above or blindly trust the user’s input.
-* Utilizing the CS50 Library, the library will *sanitize* and remove any potentially malicious characters.
+  Notice how, much like the previous code, we provide a getter and setter for the name.
+* You can learn more in Python’s documentation of [methods](https://docs.python.org/3/tutorial/classes.html).
+
+## Connecting to Previous Work in this Course
+
+* While not explicitly stated in past portions of this course, you have been using classes and objects the whole way through.
+* If you dig into the documentation of `int`, you’ll see that it is a class with a constructor. It’s a blueprint for creating objects of type `int`. You can learn more in Python’s documentation of [`int`](https://docs.python.org/3/library/functions.html#int).
+* Strings too are also a class. If you have used `str.lower()`, you were using a method that came within the `str` class. You can learn more in Python’s documentation of [`str`](https://docs.python.org/3/library/stdtypes.html#str).
+* `list` is also a class. Looking at that documentation for `list`, you can see the methods that are contained therein, like `list.append()`. You can learn more in Python’s documentation of [`list`](https://docs.python.org/3/library/stdtypes.html#list).
+* `dict` is also a class within Python. You can learn more in Python’s documentation of [`dict`](https://docs.python.org/3/library/stdtypes.html#dict).
+* To see how you have been using classes all along, go to your console and type `code type.py` and then code as follows:
+
+  ```
+  print(type(50))
+  ```
+
+  Notice how by executing this code, it will display that the class of `50` is `int`.
+* We can also apply this to `str` as follows:
+
+  ```
+  print(type("hello, world"))
+  ```
+
+  Notice how executing this code will indicate this is of the class `str`.
+* We can also apply this to `list` as follows:
+
+  ```
+  print(type([]))
+  ```
+
+  Notice how executing this code will indicate this is of the class `list`.
+* We can also apply this to a `list` using the name of Python’s built-in `list` class as follows:
+
+  ```
+  print(type(list()))
+  ```
+
+  Notice how executing this code will indicate this is of the class `list`.
+* We can also apply this to `dict` as follows:
+
+  ```
+  print(type({}))
+  ```
+
+  Notice how executing this code will indicate this is of the class `dict`.
+* We can also apply this to a `dict` using the name of Python’s built in `dict` class as follows:
+
+  ```
+  print(type(dict()))
+  ```
+
+  Notice how executing this code will indicate this is of the class `dict`.
+
+## Class Methods
+
+* Sometimes, we want to add functionality to a class itself, not to instances of that class.
+* `@classmethod` is a function that we can use to add functionality to a class as a whole.
+* Here’s an example of *not* using a class method. In your terminal window, type `code hat.py` and code as follows:
+
+  ```
+  import random
+
+
+  class Hat:
+      def __init__(self):
+          self.houses = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]
+
+      def sort(self, name):
+          print(name, "is in", random.choice(self.houses))
+
+
+  hat = Hat()
+  hat.sort("Harry")
+  ```
+
+  Notice how when we pass the name of the student to the sorting hat, it will tell us what house is assigned to the student. Notice that `hat = Hat()` instantiates a `hat`. The `sort` functionality is always handled by the *instance* of the class `Hat`. By executing `hat.sort("Harry")`, we pass the name of the student to the `sort` method of the particular instance of `Hat`, which we’ve called `hat`.
+* We may want, though, to run the `sort` function without creating a particular instance of the sorting hat (there’s only one, after all!). We can modify our code as follows:
+
+  ```
+  import random
+
+
+  class Hat:
+
+      houses = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]
+
+      @classmethod
+      def sort(cls, name):
+          print(name, "is in", random.choice(cls.houses))
+
+
+  Hat.sort("Harry")
+  ```
+
+  Notice how the `__init__` method is removed because we don’t need to instantiate a hat anywhere in our code. `self`, therefore, is no longer relevant and is removed. We specify this `sort` as a `@classmethod`, replacing `self` with `cls`. Finally, notice how `Hat` is capitalized by convention near the end of this code, because this is the name of our class.
+* Returning back to `students.py` we can modify our code as follows, addressing some missed opportunities related to `@classmethod`s:
+
+  ```
+  class Student:
+      def __init__(self, name, house):
+          self.name = name
+          self.house = house
+
+      def __str__(self):
+          return f"{self.name} from {self.house}"
+
+      @classmethod
+      def get(cls):
+          name = input("Name: ")
+          house = input("House: ")
+          return cls(name, house)
+
+
+  def main():
+      student = Student.get()
+      print(student)
+
+
+  if __name__ == "__main__":
+      main()
+  ```
+
+  Notice that `get_student` is removed and a `@classmethod` called `get` is created. This method can now be called without having to create a student first.
+
+## Static Methods
+
+* It turns out that besides `@classmethod`s, which are distinct from instance methods, there are other types of methods as well.
+* Using `@staticmethod` may be something you might wish to explore. While not covered explicitly in this course, you are welcome to go and learn more about static methods and their distinction from class methods.
+
+## Inheritance
+
+* Inheritance is, perhaps, the most powerful feature of object-oriented programming.
+* It just so happens that you can create a class that “inherits” methods, variables, and attributes from another class.
+* In the terminal, execute `code wizard.py`. Code as follows:
+
+  ```
+  class Wizard:
+      def __init__(self, name):
+          if not name:
+              raise ValueError("Missing name")
+          self.name = name
+
+      ...
+
+
+  class Student(Wizard):
+      def __init__(self, name, house):
+          super().__init__(name)
+          self.house = house
+
+      ...
+
+
+  class Professor(Wizard):
+      def __init__(self, name, subject):
+          super().__init__(name)
+          self.subject = subject
+
+      ...
+
+
+  wizard = Wizard("Albus")
+  student = Student("Harry", "Gryffindor")
+  professor = Professor("Severus", "Defense Against the Dark Arts")
+  ...
+  ```
+
+  Notice that there is a class above called `Wizard` and a class called `Student`. Further, notice that there is a class called `Professor`. Both students and professors have names. Also, both students and professors are wizards. Therefore, both `Student` and `Professor` inherit the characteristics of `Wizard`. Within the “child” class `Student`, `Student` can inherit from the “parent” or “super” class `Wizard` as the line `super().__init__(name)` runs the `init` method of `Wizard`. Finally, notice that the last lines of this code create a wizard called Albus, a student called Harry, and so on.
+
+## Inheritance and Exceptions
+
+* While we have just introduced inheritance, we have been using this all along during our use of exceptions.
+* It just so happens that exceptions come in a hierarchy, where there are children, parent, and grandparent classes. These are illustrated below:
+
+  ```
+  BaseException
+   +-- KeyboardInterrupt
+   +-- Exception
+        +-- ArithmeticError
+        |    +-- ZeroDivisionError
+        +-- AssertionError
+        +-- AttributeError
+        +-- EOFError
+        +-- ImportError
+        |    +-- ModuleNotFoundError
+        +-- LookupError
+        |    +-- KeyError
+        +-- NameError
+        +-- SyntaxError
+        |    +-- IndentationError
+        +-- ValueError
+   ...
+  ```
+* You can learn more in Python’s documentation of [exceptions](https://docs.python.org/3/library/exceptions.html).
+
+## Operator Overloading
+
+* Some operators such as `+` and `-` can be “overloaded” such that they can have more abilities beyond simple arithmetic.
+* In your terminal window, type `code vault.py`. Then, code as follows:
+
+  ```
+  class Vault:
+      def __init__(self, galleons=0, sickles=0, knuts=0):
+          self.galleons = galleons
+          self.sickles = sickles
+          self.knuts = knuts
+
+      def __str__(self):
+          return f"{self.galleons} Galleons, {self.sickles} Sickles, {self.knuts} Knuts"
+
+      def __add__(self, other):
+          galleons = self.galleons + other.galleons
+          sickles = self.sickles + other.sickles
+          knuts = self.knuts + other.knuts
+          return Vault(galleons, sickles, knuts)
+
+
+  potter = Vault(100, 50, 25)
+  print(potter)
+
+  weasley = Vault(25, 50, 100)
+  print(weasley)
+
+  total = potter + weasley
+  print(total)
+  ```
+
+  Notice how the `__str__` method returns a formatted string. Further, notice how the `__add__` method allows for the addition of the values of two vaults. `self` is what is on the left of the `+` operand. `other` is what is right of the `+`.
+* You can learn more in Python’s documentation of [operator overloading](https://docs.python.org/3/reference/datamodel.html#special-method-names).
 
 ## Summing Up
 
-In this lesson, you learned more syntax related to Python. Further, you learned how to integrate this knowledge with data in the form of flat-file and relational databases. Finally, you learned about *SQL*. Specifically, we discussed…
+Now, you’ve learned a whole new level of capability through object-oriented programming.
 
-* Flat-file databases
-* Relational databases
-* SQL commands such as `SELECT`, `CREATE`, `INSERT`, `DELETE`, and `UPDATE`.
-* Primary and foreign keys
-* `JOIN`s
-* Indexes
-* Using SQL in Python
-* Race conditions
-* SQL injection attacks
-
-See you next time!
+* Object-oriented programming
+* Classes
+* `raise`
+* Class Methods
+* Static Methods
+* Inheritance
+* Operator Overloading

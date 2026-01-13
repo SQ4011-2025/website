@@ -1,1075 +1,915 @@
-# Lecture 9 Notes
+# Week 9 Notes
 
-* [Welcome!](#welcome)
-* [The Internet](#the-internet)
-* [Routers](#routers)
-* [DNS](#dns)
-* [DHCP](#dhcp)
-* [HTTPS](#https)
-* [HTML](#html)
-* [Regular Expressions](#regular-expressions)
-* [CSS](#css)
-* [Frameworks](#frameworks)
-* [JavaScript](#javascript)
-* [Summing Up](#summing-up)
+**CS50p 2025 - Week 9**
 
-## Welcome!
+Source: https://cs50.harvard.edu/python/notes/9/
 
-* In previous weeks, we introduced you to Python, a high-level programming language that utilized the same building blocks we learned in C. Today, we will extend those building blocks further in HTML, CSS, and JavaScript.
+---
 
-## The Internet
+# Lecture 9
 
-* The internet is a technology that we all use.
-* Using our skills from previous weeks, we can build our own web pages and applications.
-* The *ARPANET* connected the first points on the internet to one another.
-* Dots between two points could be considered *routers*.
+* [Et Cetera](#et-cetera)
+* [`set`](#set)
+* [Global Variables](#global-variables)
+* [Constants](#constants)
+* [Type Hints](#type-hints)
+* [Docstrings](#docstrings)
+* [`argparse`](#argparse)
+* [Unpacking](#unpacking)
+* [`args` and `kwargs`](#args-and-kwargs)
+* [`map`](#map)
+* [List Comprehensions](#list-comprehensions)
+* [`filter`](#filter)
+* [Dictionary Comprehensions](#dictionary-comprehensions)
+* [`enumerate`](#enumerate)
+* [Generators and Iterators](#generators-and-iterators)
+* [Congratulations!](#congratulations)
+* [This was CS50!](#this-was-cs50)
 
-## Routers
+## Et Cetera
 
-* To route data from one place to another, we need to make *routing decisions*. That is, someone needs to program how data is transferred from point A to point B.
-* You can imagine how data could take multiple paths from point A and point B, such that when a router is congested, data can flow through another path. *Packets* of data are transferred from one router to another, from one computer to another.
-* *TCP/IP* are two protocols that allow computers to transfer data between them over the internet.
-* *IP* or *internet protocol* is a way by which computers can identify one another across the internet. Every computer has a unique address in the world. Addresses are in this form:
+* Over the many past lessons, we have covered so much related to Python!
+* In this lesson, we will be focusing upon many of the “et cetera” items not previously discussed. “Et cetera” literally means “and the rest”!
+* Indeed, if you look at the Python documentation, you will find quite “the rest” of other features.
 
+## `set`
+
+* In math, a set would be considered a set of numbers without any duplicates.
+* In the text editor window, code as follows:
+
   ```
-  #.#.#.#
+  students = [
+      {"name": "Hermione", "house": "Gryffindor"},
+      {"name": "Harry", "house": "Gryffindor"},
+      {"name": "Ron", "house": "Gryffindor"},
+      {"name": "Draco", "house": "Slytherin"},
+      {"name": "Padma", "house": "Ravenclaw"},
+  ]
+
+  houses = []
+  for student in students:
+      if student["house"] not in houses:
+          houses.append(student["house"])
 
+  for house in sorted(houses):
+      print(house)
   ```
-* Numbers range from `0` to `255`. IP addresses are 32-bits, meaning that these addresses could accommodate over 4 billion addresses. Newer versions of IP addresses, implementing 128-bits, can accommodate far more computers!
-* In the real world, servers do a lot of work for us.
-* Packets are structured as follows:
 
+  Notice how we have a list of dictionaries, each being a student. An empty list called `houses` is created. We iterate through each `student` in `students`. If a student’s `house` is not in `houses`, we append to our list of `houses`.
+* It turns out we can use the built-in `set` features to eliminate duplicates.
+* In the text editor window, code as follows:
+
   ```
-  0                   1                   2                   3  
-  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |Version|  IHL  |Type of Service|          Total Length         |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |         Identification        |Flags|      Fragment Offset    |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |  Time to Live |    Protocol   |         Header Checksum       |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                       Source Address                          |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                    Destination Address                        |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                    Options                    |    Padding    |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  students = [
+      {"name": "Hermione", "house": "Gryffindor"},
+      {"name": "Harry", "house": "Gryffindor"},
+      {"name": "Ron", "house": "Gryffindor"},
+      {"name": "Draco", "house": "Slytherin"},
+      {"name": "Padma", "house": "Ravenclaw"},
+  ]
 
+  houses = set()
+  for student in students:
+      houses.add(student["house"])
+
+  for house in sorted(houses):
+      print(house)
   ```
-* Packets are standardized. The source and destination are held within each packet.
-* *TCP*, or transmission control protocol, helps keep track of the sequence of packets being sent.
-* Further, TCP is used to distinguish web services from one another. For example, `80` is used to denote HTTP and `443` is used to denote HTTPS. These numbers are *port numbers*.
-* When information is sent from one location to another, a source IP address, a destination IP address, and a TCP port number are sent.
-* These protocols are also used to fragment large files into multiple parts or packets. For example, a large photo of a cat can be sent in multiple packets. When a packet is lost, TCP/IP can request missing packets again from the origin server.
-* TCP will acknowledge when all the data has been transmitted and received.
 
-## DNS
+  Notice how no checking needs to be included to ensure there are no duplicates. The `set` object takes care of this for us automatically.
+* You can learn more in Python’s documentation of [`set`](https://docs.python.org/3/library/stdtypes.html#set).
 
-* It would be very tedious if you needed to remember an IP address to visit a website.
-* *DNS*, or *domain name systems*, is a collection of servers on the internet that are used to route website addresses like *harvard.edu* to a specific IP address.
-* DNS is simply a table or database that links specific, fully qualified domain names to specific IP addresses.
+## Global Variables
 
-## DHCP
+* In other programming languages, there is the notion of global variables that are accessible to any function.
+* We can leverage this ability within Python. In the text editor window, code as follows:
 
-* *DHCP* is a protocol that ascertains the IP address of your device.
-* Further, this protocol defines the default gateway and nameservers your device uses.
+  ```
+  balance = 0
 
-## HTTPS
 
-* *HTTP* or *hypertext transfer protocol* is an application-level protocol that developers use to build powerful and useful things through the transfer of data from one place to another. *HTTPS* is a secure version of this protocol.
-* When you see an address such as `https://www.example.com` you are actually implicitly visiting that address with a `/` at the end of it.
-* The *path* is what exists after that slash. For example, `https://www.example.com/folder/file.html` visits `example.com` and browses to the `folder` directory, and then visits the file named `file.html`.
-* The `.com` is called a *top-level domain* that is used to denote the location or type of organization associated with this address.
-* `https` in this address is the protocol that is used to connect to that web address. By protocol, we mean that HTTP utilizes `GET` or `POST` *requests* to ask for information from a server. For example, you can launch Google Chrome, right-click, and click `inspect`. When you open the `developer tools` and visit `Network`, selecting `Preserve log`, you will see `Request Headers`. You’ll see mentions of `GET`. This is possible in other browsers as well, using slightly different methods.
-* For example, when issuing a GET request, your computer may send the following to a server:
+  def main():
+      print("Balance:", balance)
 
-  ```
-  GET / HTTP/2
-  Host: www.harvard.edu
 
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that this requests via HTTP the content served on www.harvard.edu.
-* Generally, after making a request to a server, you will receive the following in `Response Headers`:
+  Notice how we create a global variable called `balance`, outside of any function.
+* Since no errors are presented by executing the code above, you’d think all is well. However, it is not! In the text editor window, code as follows:
 
   ```
-  HTTP/2 200
-  Content-Type: text/html
+  balance = 0
 
-  ```
-* This approach to inspecting these logs may be a bit more complicated than need be. You can analyze the work of HTTP protocols in [The Sandbox)](https://classroom.github.com/a/zT0wsGr1). For example, type the following in your terminal window:
 
-  ```
-  curl -I https://www.google.com/
+  def main():
+      print("Balance:", balance)
+      deposit(100)
+      withdraw(50)
+      print("Balance:", balance)
 
-  ```
 
-  Notice that the output of this command returns all the header values of the responses of the server.
-* Via developer tools in your web browser, you can see all the HTTP requests when browsing to the above website.
-* Further, execute the following command in your terminal window:
+  def deposit(n):
+      balance += n
 
-  ```
-  curl -I https://google.com
 
-  ```
+  def withdraw(n):
+      balance -= n
 
-  Notice that you will see a `301` response, providing a hint to a browser of where it can find the correct website.
-* Similarly, execute the following in your terminal window:
 
+  if __name__ == "__main__":
+      main()
   ```
-  curl -I http://www.google.com/
 
+  Notice how we now add the functionality to add and withdraw funds to and from `balance`. However, executing this code, we are presented with an error! We see an error called `UnboundLocalError`. You might be able to guess that, at least in the way we’ve currently coded `balance` and our `deposit` and `withdraw` functions, we can’t reassign it a new value inside a function.
+* To interact with a global variable inside a function, the solution is to use the `global` keyword. In the text editor window, code as follows:
+
   ```
+  balance = 0
+
+
+  def main():
+      print("Balance:", balance)
+      deposit(100)
+      withdraw(50)
+      print("Balance:", balance)
+
+
+  def deposit(n):
+      global balance
+      balance += n
+
 
-  Notice that the `s` in `https` has been removed. The server response will show that the response is `301`, meaning that the website has permanently moved.
-* Similar to `301`, a code of `404` means that a specified URL has not been found. There are numerous other response codes, such as:
+  def withdraw(n):
+      global balance
+      balance -= n
 
+
+  if __name__ == "__main__":
+      main()
   ```
-  200 OK
-  301 Moved Permanently
-  302 Found
-  304 Not Modified
-  307 Temporary Redirect
-  401 Unauthorized
-  403 Forbidden
-  404 Not Found
-  418 I'm a Teapot
-  500 Internal Server Error
-  503 Service Unavailable
 
+  Notice how the `global` keyword tells each function that `balance` does not refer to a local variable: instead, it refers to the global variable we originally placed at the top of our code. Now, our code functions!
+* Utilizing our powers from our experience with object-oriented programming, we can modify our code to use a class instead of a global variable. In the text editor window, code as follows:
+
   ```
-* It’s worth mentioning that `500` errors are always your fault as the developer when they concern a product or application of your creation. This will be especially important for next week’s problem set, and potentially for your final project!
+  class Account:
+      def __init__(self):
+          self._balance = 0
 
-## HTML
+      @property
+      def balance(self):
+          return self._balance
 
-* *HTML* or *hypertext markup language* is made up of *tags*, each of which may have some *attributes* that describe it.
-* In your terminal, type `code hello.html` and write code as follows:
+      def deposit(self, n):
+          self._balance += n
 
-  ```
-  <!DOCTYPE html>
+      def withdraw(self, n):
+          self._balance -= n
 
-  <!-- Demonstrates HTML -->
 
-  <html lang="en">
-      <head>
-          <title>hello, title</title>
-      </head>
-      <body>
-          hello, body
-      </body>
-  </html>
+  def main():
+      account = Account()
+      print("Balance:", account.balance)
+      account.deposit(100)
+      account.withdraw(50)
+      print("Balance:", account.balance)
 
+
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that the `html` tag both opens and closes this file. Further, notice the `lang` attribute, which modifies the behavior of the `html` tag. Also, notice that there are both `head` tags and `body` tags. Indentation is not required but does suggest a hierarchy.
-* You can serve your code by typing `http-server`. This served content is now available on a very long URL. If you click it, you can visit the website generated by your own code.
-* When you visit this URL, notice that the file name `hello.html` appears at the end of this URL. Further, notice, based upon the URL, that the server is serving via port 8080.
-* The hierarchy of tags can be represented as follows:
+  Notice how we use `account = Account()` to create an account. Classes allow us to solve this issue of needing a global variable more cleanly because these instance variables are accessible to all the methods of this class utilizing `self`.
+* Generally speaking, global variables should be used quite sparingly, if at all!
 
-  ![html code next to a hierarchy showing parent and child nodes](images/week_8/Week8Slide065.png)
-* Knowledge of this hierarchy will be useful later as we learn JavaScript.
-* The browser will read your HTML file top to bottom and left to right.
-* Because whitespace and indentation are effectively ignored in HTML, you will need to use `<p>` paragraph tags to open and close a paragraph. Consider the following:
+## Constants
 
+* Some languages allow you to create variables that are unchangeable, called “constants”. Constants allow one to program defensively and reduce the opportunities for important values to be altered.
+* In the text editor window, code as follows:
+
   ```
-  <!DOCTYPE html>
+  MEOWS = 3
 
-  <!-- Demonstrates paragraphs -->
+  for _ in range(MEOWS):
+      print("meow")
+  ```
 
-  <html lang="en">
-      <head>
-          <title>paragraphs</title>
-      </head>
-      <body>
-          <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus convallis scelerisque quam, vel hendrerit lectus viverra eu. Praesent posuere eget lectus ut faucibus. Etiam eu velit laoreet, gravida lorem in, viverra est. Cras ut purus neque. In porttitor non lorem id lobortis. Mauris gravida metus libero, quis maximus dui porta at. Donec lacinia felis consectetur venenatis scelerisque. Nulla eu nisl sollicitudin, varius velit sit amet, vehicula erat. Curabitur sollicitudin felis sit amet orci mattis, a tempus nulla pulvinar. Aliquam erat volutpat.
-          </p>
-          <p>
-              Mauris ut dui in eros semper hendrerit. Morbi vel elit mi. Sed sit amet ex non quam dignissim dignissim et vel arcu. Pellentesque eget elementum orci. Morbi ac cursus ex. Pellentesque quis turpis blandit orci dapibus semper sed non nunc. Nulla et dolor nec lacus finibus volutpat. Sed non lorem diam. Donec feugiat interdum interdum. Vivamus et justo in enim blandit fermentum vel at elit. Phasellus eu ante vitae ligula varius aliquet. Etiam id posuere nibh.
-          </p>
-          <p>
-              Aenean venenatis convallis ante a rhoncus. Nullam in metus vel diam vehicula tincidunt. Donec lacinia metus sem, sit amet egestas elit blandit sit amet. Nunc egestas sem quis nisl mattis semper. Pellentesque ut magna congue lorem eleifend sodales. Donec tortor tortor, aliquam vitae mollis sed, interdum ut lectus. Mauris non purus quis ipsum lacinia tincidunt.
-          </p>
-          <p>
-              Integer at justo lacinia libero blandit aliquam ut ut dui. Quisque tincidunt facilisis venenatis. Nullam dictum odio quis lorem luctus, vel malesuada dolor luctus. Aenean placerat faucibus enim a facilisis. Maecenas eleifend quis massa sed eleifend. Ut ultricies, dui ac vulputate hendrerit, ex metus iaculis diam, vitae fermentum libero dui et ante. Phasellus suscipit, arcu ut consequat sagittis, massa urna accumsan massa, eu aliquet nulla lorem vitae arcu. Pellentesque rutrum felis et metus porta semper. Nam ac consectetur mauris.
-          </p>
-          <p>
-              Suspendisse rutrum vestibulum odio, sed venenatis purus condimentum sed. Morbi ornare tincidunt augue eu auctor. Vivamus sagittis ac lectus at aliquet. Nulla urna mauris, interdum non nibh in, vehicula porta enim. Donec et posuere sapien. Pellentesque ultrices scelerisque ipsum, vel fermentum nibh tincidunt et. Proin gravida porta ipsum nec scelerisque. Vestibulum fringilla erat at turpis laoreet, nec hendrerit nisi scelerisque.
-          </p>
-          <p>
-              Sed quis malesuada mi. Nam id purus quis augue sagittis pharetra. Nulla facilisi. Maecenas vel fringilla ante. Cras tristique, arcu sit amet blandit auctor, urna elit ultricies lacus, a malesuada eros dui id massa. Aliquam sem odio, pretium vel cursus eget, scelerisque at urna. Vestibulum posuere a turpis consectetur consectetur. Cras consequat, risus quis tempor egestas, nulla ipsum ornare erat, nec accumsan nibh lorem nec risus. Integer at iaculis lacus. Integer congue nunc massa, quis molestie felis pellentesque vestibulum. Nulla odio tortor, aliquam nec quam in, ornare aliquet sapien.
-          </p>
-      </body>
-  </html>
+  Notice `MEOWS` is our constant in this case. Constants are typically denoted by capital variable names and are placed at the top of our code. Though this *looks* like a constant, in reality, Python actually has no mechanism to prevent us from changing that value within our code! Instead, you’re on the honor system: if a variable name is written in all caps, just don’t change it!
+* One can create a class “constant”, now in quotes because we know Python doesn’t quite support “constants”. In the text editor window, code as follows:
 
   ```
+  class Cat:
+      MEOWS = 3
 
-  Notice that paragraphs start with a `<p>` tag and end with a `</p>` tag.
-* HTML allows for the representation of headings:
+      def meow(self):
+          for _ in range(Cat.MEOWS):
+              print("meow")
 
-  ```
-  <!DOCTYPE html>
 
-  <!-- Demonstrates headings (for chapters, sections, subsections, etc.) -->
+  cat = Cat()
+  cat.meow()
+  ```
 
-  <html lang="en">
+  Because `MEOWS` is defined outside of any particular class method, all of them have access to that value via `Cat.MEOWS`.
 
-      <head>
-          <title>headings</title>
-      </head>
+## Type Hints
 
-      <body>
+* In other programming languages, one expresses explicitly what variable type you want to use.
+* As we saw earlier in the course, Python does not require the explicit declaration of types.
+* Nevertheless, it’s good practice need to ensure all of your variables are of the right type.
+* `mypy` is a program that can help you test to make sure all your variables are of the right type.
+* You can install `mypy` by executing in your terminal window: `pip install mypy`.
 
-          <h1>One</h1>
-          <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus convallis scelerisque quam, vel hendrerit lectus viverra eu. Praesent posuere eget lectus ut faucibus. Etiam eu velit laoreet, gravida lorem in, viverra est. Cras ut purus neque. In porttitor non lorem id lobortis. Mauris gravida metus libero, quis maximus dui porta at. Donec lacinia felis consectetur venenatis scelerisque. Nulla eu nisl sollicitudin, varius velit sit amet, vehicula erat. Curabitur sollicitudin felis sit amet orci mattis, a tempus nulla pulvinar. Aliquam erat volutpat.
-          </p>
+In the text editor window, code as follows:
 
-          <h2>Two</h2>
-          <p>
-              Mauris ut dui in eros semper hendrerit. Morbi vel elit mi. Sed sit amet ex non quam dignissim dignissim et vel arcu. Pellentesque eget elementum orci. Morbi ac cursus ex. Pellentesque quis turpis blandit orci dapibus semper sed non nunc. Nulla et dolor nec lacus finibus volutpat. Sed non lorem diam. Donec feugiat interdum interdum. Vivamus et justo in enim blandit fermentum vel at elit. Phasellus eu ante vitae ligula varius aliquet. Etiam id posuere nibh.
-          </p>
+```
+  def meow(n):
+      for _ in range(n):
+          print("meow")
 
-          <h3>Three</h3>
-          <p>
-              Aenean venenatis convallis ante a rhoncus. Nullam in metus vel diam vehicula tincidunt. Donec lacinia metus sem, sit amet egestas elit blandit sit amet. Nunc egestas sem quis nisl mattis semper. Pellentesque ut magna congue lorem eleifend sodales. Donec tortor tortor, aliquam vitae mollis sed, interdum ut lectus. Mauris non purus quis ipsum lacinia tincidunt.
-          </p>
 
-          <h4>Four</h4>
-          <p>
-              Integer at justo lacinia libero blandit aliquam ut ut dui. Quisque tincidunt facilisis venenatis. Nullam dictum odio quis lorem luctus, vel malesuada dolor luctus. Aenean placerat faucibus enim a facilisis. Maecenas eleifend quis massa sed eleifend. Ut ultricies, dui ac vulputate hendrerit, ex metus iaculis diam, vitae fermentum libero dui et ante. Phasellus suscipit, arcu ut consequat sagittis, massa urna accumsan massa, eu aliquet nulla lorem vitae arcu. Pellentesque rutrum felis et metus porta semper. Nam ac consectetur mauris.
-          </p>
+  number = input("Number: ")
+  meow(number)
+```
 
-          <h5>Five</h5>
-          <p>
-              Suspendisse rutrum vestibulum odio, sed venenatis purus condimentum sed. Morbi ornare tincidunt augue eu auctor. Vivamus sagittis ac lectus at aliquet. Nulla urna mauris, interdum non nibh in, vehicula porta enim. Donec et posuere sapien. Pellentesque ultrices scelerisque ipsum, vel fermentum nibh tincidunt et. Proin gravida porta ipsum nec scelerisque. Vestibulum fringilla erat at turpis laoreet, nec hendrerit nisi scelerisque.
-          </p>
+You may already see that `number = input("Number: )"` returns a `string`, not an `int`. But `meow` will likely want an `int`!
 
-          <h6>Six</h6>
-          <p>
-              Sed quis malesuada mi. Nam id purus quis augue sagittis pharetra. Nulla facilisi. Maecenas vel fringilla ante. Cras tristique, arcu sit amet blandit auctor, urna elit ultricies lacus, a malesuada eros dui id massa. Aliquam sem odio, pretium vel cursus eget, scelerisque at urna. Vestibulum posuere a turpis consectetur consectetur. Cras consequat, risus quis tempor egestas, nulla ipsum ornare erat, nec accumsan nibh lorem nec risus. Integer at iaculis lacus. Integer congue nunc massa, quis molestie felis pellentesque vestibulum. Nulla odio tortor, aliquam nec quam in, ornare aliquet sapien.
-          </p>
+* A type hint can be added to give Python a hint of what type of variable `meow` should expect. In the text editor window, code as follows:
 
-      </body>
+  ```
+  def meow(n: int):
+      for _ in range(n):
+          print("meow")
 
-  </html>
 
+  number = input("Number: ")
+  meow(number)
   ```
 
-  Notice that `<h1>`, `<h2>`, and `<h3>` denote different levels of headings.
-* We can also create unordered lists within HTML:
+  Notice, though, that our program still throws an error.
+* After installing `mypy`, execute `mypy meows.py` in the terminal window. `mypy` will provide some guidance about how to fix this error.
+* You can annotate all your variables. In the text editor window, code as follows:
 
   ```
-  <!DOCTYPE html>
+  def meow(n: int):
+      for _ in range(n):
+          print("meow")
 
-  <!-- Demonstrates (ordered) lists -->
 
-  <html lang="en">
-      <head>
-          <title>list</title>
-      </head>
-      <body>
-          <ul>
-              <li>foo</li>
-              <li>bar</li>
-              <li>baz</li>
-          </ul>
-      </body>
-  </html>
+  number: int = input("Number: ")
+  meow(number)
+  ```
 
+  Notice how `number` is now provided a type hint.
+* Again, executing `mypy meows.py` in the terminal window provides much more specific feedback to you, the programmer.
+* We can fix our final error by coding as follows:
+
   ```
+  def meow(n: int):
+      for _ in range(n):
+          print("meow")
 
-  Notice that the `<ul>` tag creates an unordered list containing three items.
-* We can also create ordered lists within HTML:
 
+  number: int = int(input("Number: "))
+  meow(number)
   ```
-  <!DOCTYPE html>
+
+  Notice how running `mypy` now produces no errors because we cast our input to an integer.
+* Let’s introduce a new error by assuming that `meow` will return to us a string, or `str`. In the text editor window, code as follows:
 
-  <!-- Demonstrates (ordered) lists -->
+  ```
+  def meow(n: int):
+      for _ in range(n):
+          print("meow")
 
-  <html lang="en">
-      <head>
-          <title>list</title>
-      </head>
-      <body>
-          <ol>
-              <li>foo</li>
-              <li>bar</li>
-              <li>baz</li>
-          </ol>
-      </body>
-  </html>
 
+  number: int = int(input("Number: "))
+  meows: str = meow(number)
+  print(meows)
   ```
 
-  Notice that the `<ol>` tag creates an ordered list containing three items.
-* We can also create a table in HTML:
+  Notice how the `meow` function has only a side effect. Because we only attempt to print “meow”, not return a value, an error is thrown when we try to store the return value of `meow` in `meows`.
+* We can further use type hints to check for errors, this time annotating the return values of functions. In the text editor window, code as follows:
 
   ```
-  <!DOCTYPE html>
+  def meow(n: int) -> None:
+      for _ in range(n):
+          print("meow")
 
-  <!-- Demonstrates table -->
+
+  number: int = int(input("Number: "))
+  meows: str = meow(number)
+  print(meows)
+  ```
 
-  <html lang="en">
-      <head>
-          <title>table</title>
-      </head>
-      <body>
-          <table>
-              <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-              </tr>
-              <tr>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-              </tr>
-              <tr>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>9</td>
-              </tr>
-              <tr>
-                  <td>*</td>
-                  <td>0</td>
-                  <td>#</td>
-              </tr>
-          </table>
-      </body>
-  </html>
+  Notice how the notation `-> None` tells `mypy` that there is no return value.
+* We can modify our code to return a string if we wish:
 
   ```
+  def meow(n: int) -> str:
+      return "meow\n" * n
 
-  Tables also have tags that open and close each element within. Also, notice the syntax for comments in HTML.
-* Images can also be utilized within HTML:
 
+  number: int = int(input("Number: "))
+  meows: str = meow(number)
+  print(meows, end="")
   ```
-  <!DOCTYPE html>
 
-  <!-- Demonstrates image -->
+  Notice how we store in `meows` multiple `str`s. Running `mypy` produces no errors.
+* You can learn more in Python’s documentation of [Type Hints](https://docs.python.org/3/library/typing.html).
+* You can learn more about [`mypy`](https://mypy.readthedocs.io/) through the program’s own documentation.
 
-  <html lang="en">
-      <head>
-          <title>image</title>
-      </head>
-      <body>
-          <img alt="photo of bridge" src="bridge.png">
-      </body>
-  </html>
+## Docstrings
 
+* A standard way of commenting your function’s purpose is to use a docstring. In the text editor window, code as follows:
+
   ```
+  def meow(n):
+      """Meow n times."""
+      return "meow\n" * n
 
-  Notice that `src="bridge.png"` indicates the path where the image file can be located.
-* Videos can also be included in HTML:
 
+  number = int(input("Number: "))
+  meows = meow(number)
+  print(meows, end="")
   ```
-  <!DOCTYPE html>
 
-  <!-- Demonstrates video -->
+  Notice how the three double quotes designate what the function does.
+* You can use docstrings to standardize how you document the features of a function. In the text editor window, code as follows:
 
-  <html lang="en">
-      <head>
-          <title>video</title>
-      </head>
-      <body>
-          <video controls muted>
-              <source src="video.mp4" type="video/mp4">
-          </video>
-      </body>
-  </html>
-
   ```
+  def meow(n):
+      """
+      Meow n times.
+
+      :param n: Number of times to meow
+      :type n: int
+      :raise TypeError: If n is not an int
+      :return: A string of n meows, one per line
+      :rtype: str
+      """
+      return "meow\n" * n
 
-  Notice that the `type` attribute designates that this is a video of type `mp4`. Further, notice how `controls` and `muted` are passed to `video`.
-* You can also link between various web pages:
 
+  number = int(input("Number: "))
+  meows = meow(number)
+  print(meows, end="")
   ```
-  <!DOCTYPE html>
 
-  <!-- Demonstrates link -->
+  Notice how multiple docstring arguments are included. For example, it describes the parameters taken by the function and what is returned by the function.
+* Established tools, such as [Sphinx](https://www.sphinx-doc.org/en/master/index.html), can be used to parse docstrings and automatically create documentation for us in the form of web pages and PDF files such that you can publish and share with others.
+* You can learn more in Python’s documentation of [docstrings](https://peps.python.org/pep-0257/).
 
-  <html lang="en">
-      <head>
-          <title>link</title>
-      </head>
-      <body>
-         Visit <a href="https://www.bbc.com/news">BBC news</a>.
-      </body>
-  </html>
+## `argparse`
 
+* Suppose we want to use command-line arguments in our program. In the text editor window, code as follows:
+
+  ```
+  import sys
+
+  if len(sys.argv) == 1:
+      print("meow")
+  elif len(sys.argv) == 3 and sys.argv[1] == "-n":
+      n = int(sys.argv[2])
+      for _ in range(n):
+          print("meow")
+  else:
+      print("usage: meows.py [-n NUMBER]")
   ```
 
-  Notice that the `<a>` or *anchor* tag is used to make `BBC news` a linkable text.
-* You can also create forms reminiscent of Google’s search:
+  Notice how `sys` is imported, from which we get access to `sys.argv`, an array of command-line arguments given to our program when run. We can use several `if` statements to check whether the user has run our program properly.
+* Let’s assume that this program will be getting much more complicated. How could we check all the arguments that could be inserted by the user? We might give up if we have more than a few command-line arguments!
+* Luckily, `argparse` is a library that handles all the parsing of complicated strings of command-line arguments. In the text editor window, code as follows:
 
   ```
-  <!DOCTYPE html>
+  import argparse
 
-  <!-- Demonstrates form -->
+  parser = argparse.ArgumentParser()
+  parser.add_argument("-n")
+  args = parser.parse_args()
 
-  <html lang="en">
-      <head>
-          <title>search</title>
-      </head>
-      <body>
-          <form action="https://www.google.com/search" method="get">
-              <input name="q" type="search">
-              <input type="submit" value="Google Search">
-          </form>
-      </body>
-  </html>
+  for _ in range(int(args.n)):
+      print("meow")
+  ```
 
+  Notice how `argparse` is imported instead of `sys`. An object called `parser` is created from an `ArgumentParser` class. That class’s `add_argument` method is used to tell `argparse` what arguments we should expect from the user when they run our program. Finally, running the parser’s `parse_args` method ensures that all of the arguments have been included properly by the user.
+* We can also program more cleanly, such that our user can get some information about the proper usage of our code when they fail to use the program correctly. In the text editor window, code as follows:
+
   ```
+  import argparse
 
-  Notice that a `form` tag opens and provides the attribute of what `action` it will take. The `input` field is included, passing the name `q` and the type as `search`.
-* We can make this search better as follows:
+  parser = argparse.ArgumentParser(description="Meow like a cat")
+  parser.add_argument("-n", help="number of times to meow")
+  args = parser.parse_args()
 
+  for _ in range(int(args.n)):
+      print("meow")
   ```
-  <!DOCTYPE html>
+
+  Notice how the user is provided some documentation. Specifically, a `help` argument is provided. Now, if the user executes `python meows.py --help` or `-h`, the user will be presented with some clues about how to use this program.
+* We can further improve this program. In the text editor window, code as follows:
 
-  <!-- Demonstrates additional form attributes -->
+  ```
+  import argparse
 
-  <html lang="en">
-      <head>
-          <title>search</title>
-      </head>
-      <body>
-          <form action="https://www.google.com/search" method="get">
-              <input autocomplete="off" autofocus name="q" placeholder="Query" type="search">
-              <button>Google Search</button>
-          </form>
-      </body>
-  </html>
+  parser = argparse.ArgumentParser(description="Meow like a cat")
+  parser.add_argument("-n", default=1, help="number of times to meow", type=int)
+  args = parser.parse_args()
 
+  for _ in range(args.n):
+      print("meow")
   ```
 
-  Notice that `autocomplete` is turned `off`. `autofocus` is enabled.
-* We’ve seen just a few of many HTML elements you can add to your site. If you have an idea for something to add to your site that we haven’t seen yet (a button, an audio file, etc.) try Googling “X in HTML” to find the right syntax! Similarly, you can use [The Sandbox)](https://classroom.github.com/a/zT0wsGr1) to help you discover more HTML features!
+  Notice how not only is help documentation included, but you can provide a `default` value when no arguments are provided by the user.
+* You can learn more in Python’s documentation of [`argparse`](https://docs.python.org/3/library/argparse.html).
 
-## Regular Expressions
+## Unpacking
 
-* *Regular expressions* or *regexes* are a means by which to ensure that user-provided data fits a specific format.
-* We can implement our own registration page that utilizes regexes as follows:
+* Would it not be nice to be able to split a single variable into two variables? In the text editor window, code as follows:
 
   ```
-  <!DOCTYPE html>
+  first, _ = input("What's your name? ").split(" ")
+  print(f"hello, {first}")
+  ```
+
+  Notice how this program tries to get a user’s first name by naively splitting on a single space.
+* It turns out there are other ways to unpack variables. You can write more powerful and elegant code by understanding how to unpack variables in seemingly more advanced ways. In the text editor window, code as follows:
 
-  <!-- Demonstrates type="email" -->
+  ```
+  def total(galleons, sickles, knuts):
+      return (galleons * 17 + sickles) * 29 + knuts
 
-  <html lang="en">
-      <head>
-          <title>register</title>
-      </head>
-      <body>
-          <form>
-              <input autocomplete="off" autofocus name="email" placeholder="Email" type="email">
-              <button>Register</button>
-          </form>
-      </body>
-  </html>
 
+  print(total(100, 50, 25), "Knuts")
   ```
 
-  Notice that the `input` tag includes attributes that designate that this is of type `email`. The browser knows to double-check that the input is an email address.
-* While the browser uses these built-in attributes to check for an email address, we can add a `pattern` attribute to ensure that only specific data ends up in the email address:
+  Notice how this returns the total value of Knuts.
+* What if we wanted to store our coins in a list? In the text editor window, code as follows:
 
   ```
-  <!DOCTYPE html>
+  def total(galleons, sickles, knuts):
+      return (galleons * 17 + sickles) * 29 + knuts
 
-  <!-- Demonstrates pattern attribute -->
 
-  <html lang="en">
-      <head>
-          <title>register</title>
-      </head>
-      <body>
-          <form>
-              <input autocomplete="off" autofocus name="email" pattern=".+@.+\.edu" placeholder="Email" type="email">
-              <button>Register</button>
-          </form>
-      </body>
-  </html>
+  coins = [100, 50, 25]
 
+  print(total(coins[0], coins[1], coins[2]), "Knuts")
   ```
 
-  Notice that the `pattern` attribute is handed a regular expression to denote that the email address must include an `@` symbol and a `.edu`.
-* You can learn more about regular expressions from [Mozilla’s documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions). Further, you can check out [this cheatsheet](https://cheatography.com/davechild/cheat-sheets/regular-expressions/).
+  Notice how a list called `coins` is created. We can pass each value in by indexing using `0`, `1`, and so on.
+* This is getting quite verbose. Wouldn’t it be nice if we could simply pass the list of coins to our function?
+* To enable the possibility of passing the entire list, we can use unpacking. In the text editor window, code as follows:
+
+  ```
+  def total(galleons, sickles, knuts):
+      return (galleons * 17 + sickles) * 29 + knuts
 
-## CSS
 
-* `CSS`, or *cascading style sheet*, is a markup language that allows you to fine-tune the aesthetics of your HTML files.
-* CSS is filled with *properties*, which include key-value pairs.
-* In your terminal, type `code home.html` and write code as follows:
+  coins = [100, 50, 25]
 
+  print(total(*coins), "Knuts")
   ```
-  <!DOCTYPE html>
 
-  <!-- Demonstrates inline CSS with P tags -->
+  Notice how a `*` unpacks the sequence of the list of coins and passes in each of its individual elements to `total`.
+* Suppose that we could pass in the names of the currency in any order? In the text editor window, code as follows:
 
-  <html lang="en">
-      <head>
-          <title>css</title>
-      </head>
-      <body>
-          <p style="font-size: large; text-align: center;">
-              John Harvard
-          </p>
-          <p style="font-size: medium; text-align: center;">
-              Welcome to my home page!
-          </p>
-          <p style="font-size: small; text-align: center;">
-              Copyright &#169; John Harvard
-          </p>
-      </body>
-  </html>
+  ```
+  def total(galleons, sickles, knuts):
+      return (galleons * 17 + sickles) * 29 + knuts
 
+
+  print(total(galleons=100, sickles=50, knuts=25), "Knuts")
   ```
 
-  Notice that some `style` attributes are provided to the `<p>` tags. The `font-size` is set to `large`, `medium`, or `small`. Then `text-align` is set to center.
-* While correct, the above is not well-designed. We can remove redundancy by modifying our code as follows:
+  Notice how this still calculates correctly.
+* When you start talking about “names” and “values,” dictionaries might start coming to mind! You can implement this as a dictionary. In the text editor window, code as follows:
 
   ```
-  <!DOCTYPE html>
+  def total(galleons, sickles, knuts):
+      return (galleons * 17 + sickles) * 29 + knuts
 
-  <!-- Removes outer DIV -->
 
-  <html lang="en">
-      <head>
-          <title>css</title>
-      </head>
-      <body style="text-align: center">
-          <div style="font-size: large">
-              John Harvard
-          </div>
-          <div style="font-size: medium">
-              Welcome to my home page!
-          </div>
-          <div style="font-size: small">
-              Copyright &#169; John Harvard
-          </div>
-      </body>
-  </html>
+  coins = {"galleons": 100, "sickles": 50, "knuts": 25}
 
+  print(total(coins["galleons"], coins["sickles"], coins["knuts"]), "Knuts")
   ```
 
-  Notice that `<div>` tags are used to divide up this HTML file into specific regions. `text-align: center` is invoked on the entire body of the HTML. Because everything inside `body` is a child of `body`, the `center` attribute cascades down to those children.
-* It turns out that there are newer semantic tags included in HTML. We can modify our code as follows:
+  Notice how a dictionary called `coins` is provided. We can index into it using keys, such as “galleons” or “sickles”.
+* Since the `total` function expects three arguments, we cannot pass in a dictionary. We can use unpacking to help with this. In the text editor window, code as follows:
 
   ```
-  <!DOCTYPE html>
+  def total(galleons, sickles, knuts):
+      return (galleons * 17 + sickles) * 29 + knuts
 
-  <!-- Uses semantic tags instead of DIVs -->
 
-  <html lang="en">
-      <head>
-          <title>css</title>
-      </head>
-      <body style="text-align: center">
-          <header style="font-size: large">
-              John Harvard
-          </header>
-          <main style="font-size: medium">
-              Welcome to my home page!
-          </main>
-          <footer style="font-size: small">
-              Copyright &#169; John Harvard
-          </footer>
-      </body>
-  </html>
+  coins = {"galleons": 100, "sickles": 50, "knuts": 25}
 
+  print(total(**coins), "Knuts")
   ```
+
+  Notice how `**` allows you to unpack a dictionary. When unpacking a dictionary, it provides both the keys and values.
 
-  Notice that the `header` and `footer` both have different styles assigned to them.
-* This practice of placing the style and information all in the same location is not good practice. We could move the elements of style to the top of the file as follows:
+## `args` and `kwargs`
 
+* Recall the `print` documentation we looked at earlier in this course:
+
   ```
-  <!-- Demonstrates class selectors -->
+  print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
+  ```
+* `args` are positional arguments, such as those we provide to print like `print("Hello", "World")`.
+* `kwargs` are named arguments, or “keyword arguments”, such as those we provide to print like `print(end="")`.
+* As we see in the prototype for the `print` function above, we can tell our function to expect a presently unknown number positional arguments. We can also tell it to expect a presently unknown number of keyword arguments. In the text editor window, code as follows:
 
-  <html lang="en">
-      <head>
-          <style>
+  ```
+  def f(*args, **kwargs):
+      print("Positional:", args)
 
-              .centered
-              {
-                  text-align: center;
-              }
 
-              .large
-              {
-                  font-size: large;
-              }
+  f(100, 50, 25)
+  ```
 
-              .medium
-              {
-                  font-size: medium;
-              }
+  Notice how executing this code will be printed as positional arguments.
+* We can even pass in named arguments. In the text editor window, code as follows:
 
-              .small
-              {
-                  font-size: small;
-              }
+  ```
+  def f(*args, **kwargs):
+      print("Named:", kwargs)
 
-          </style>
-          <title>css</title>
-      </head>
-      <body class="centered">
-          <header class="large">
-              John Harvard
-          </header>
-          <main class="medium">
-              Welcome to my home page!
-          </main>
-          <footer class="small">
-              Copyright &#169; John Harvard
-          </footer>
-      </body>
-  </html>
 
+  f(galleons=100, sickles=50, knuts=25)
   ```
+
+  Notice how the named values are provided in the form of a dictionary.
+* Thinking about the `print` function above, you can see how `*objects` takes any number of positional arguments.
+* You can learn more in Python’s documentation of [`print`](https://docs.python.org/3/library/functions.html#print).
 
-  Notice all the style tags are placed up in the `head` in the `style` tag wrapper. Also, notice that we’ve assigned *classes*, called `centered`, `large`, `medium`, and `small` to our elements, and that we select those classes by placing a dot before the name, as in `.centered`
-* It turns out that we can move all our style code into a special file called a *CSS* file. We can create a file called `style.css` and paste our classes there:
+## `map`
 
+* Early on, we began with procedural programming.
+* We later revealed Python is an object oriented programming language.
+* We saw hints of functional programming, where functions have side effects without a return value. We can illustrate this in the text editor window, type `code yell.py` and code as follows:
+
   ```
-  .centered
-  {
-      text-align: center;
-  }
+  def main():
+      yell("This is CS50")
 
-  .large
-  {
-      font-size: large;
-  }
 
-  .medium
-  {
-      font-size: medium;
-  }
+  def yell(word):
+      print(word.upper())
 
-  .small
-  {
-      font-size: small;
-  }
 
+  if __name__ == "__main__":
+      main()
   ```
 
-  Notice that this is verbatim what appeared in our HTML file.
-* We then can tell the browser where to locate the CSS for this HTML file:
+  Notice how the `yell` function is simply yelled.
+* Wouldn’t it be nice to yell a list of unlimited words? Modify your code as follows:
 
   ```
-  <!DOCTYPE html>
+  def main():
+      yell(["This", "is", "CS50"])
+
+
+  def yell(words):
+      uppercased = []
+      for word in words:
+          uppercased.append(word.upper())
+      print(*uppercased)
 
-  <!-- Demonstrates external stylesheets -->
 
-  <html lang="en">
-      <head>
-          <link href="style.css" rel="stylesheet">
-          <title>css</title>
-      </head>
-      <body class="centered">
-          <header class="large">
-              John Harvard
-          </header>
-          <main class="medium">
-              Welcome to my home page!
-          </main>
-          <footer class="small">
-              Copyright &#169; John Harvard
-          </footer>
-      </body>
-  </html>
+  if __name__ == "__main__":
+      main()
+  ```
 
+  Notice we accumulate the uppercase words, iterating over each of the words and “uppercasing” them. The uppercase list is printed utilizing the `*` to unpack it.
+* Removing the brackets, we can pass the words in as arguments. In the text editor window, code as follows:
+
   ```
+  def main():
+      yell("This", "is", "CS50")
 
-  Notice that `style.css` is linked to this HTML file as a stylesheet, telling the browser where to locate the styles we created.
 
-## Frameworks
+  def yell(*words):
+      uppercased = []
+      for word in words:
+          uppercased.append(word.upper())
+      print(*uppercased)
 
-* Similar to third-party libraries we can leverage in Python, there are third-party libraries called *frameworks* that we can utilize with our HTML files.
-* *Bootstrap* is one of these frameworks that we can use to beautify our HTML and easily perfect design elements such that our pages are more readable.
-* Bootstrap can be utilized by adding the following `link` tag in the `head` of your html file:
 
+  if __name__ == "__main__":
+      main()
   ```
-  <head>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-      <title>bootstrap</title>
-  </head>
+
+  Notice how `*words` allows for many arguments to be taken by the function.
+* `map` allows you to map a function to a sequence of values. In practice, we can code as follows:
 
   ```
-* Consider the following HTML:
+  def main():
+      yell("This", "is", "CS50")
+
+
+  def yell(*words):
+      uppercased = map(str.upper, words)
+      print(*uppercased)
+
 
+  if __name__ == "__main__":
+      main()
   ```
-  <!DOCTYPE html>
 
-  <!-- Demonstrates table -->
+  Notice how `map` takes two arguments. First, it takes a function we want applied to every element of a list. Second, it takes that list itself, to which we’ll apply the aforementioned function. Hence, all words in `words` will be handed to the `str.upper` function and returned to `uppercased`.
+* You can learn more in Python’s documentation of [`map`](https://docs.python.org/3/library/functions.html#map).
 
-  <html lang="en">
-      <head>
-          <title>phonebook</title>
-      </head>
-      <body>
-          <table>
-              <thead>
-                  <tr>
-                      <th>Name</th>
-                      <th>Number</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>Carter</td>
-                      <td>+1-617-495-1000</td>
-                  </tr>
-                  <tr>
-                      <td>David</td>
-                      <td>+1-617-495-1000</td>
-                  </tr>
-                  <tr>
-                      <td>John</td>
-                      <td>+1-949-468-2750</td>
-                  </tr>
-              </tbody>
-          </table>
-      </body>
-  </html>
+## List Comprehensions
 
+* List comprehensions allow you to create a list on the fly in one elegant one-liner.
+* We can implement this in our code as follows:
+
   ```
+  def main():
+      yell("This", "is", "CS50")
+
+
+  def yell(*words):
+      uppercased = [arg.upper() for arg in words]
+      print(*uppercased)
 
-  Notice how, when looking at a served version of this page, it’s quite plain.
-* Now consider the following HTML that implements the use of Bootstrap:
 
+  if __name__ == "__main__":
+      main()
   ```
-  <!DOCTYPE html>
 
-  <!-- Demonstrates table with Bootstrap -->
+  Notice how instead of using `map`, we write a Python expression within square brackets. For each argument, `.upper` is applied to it.
+* Taking this concept further, let’s pivot toward another program.
+* In the text editor window, type `code gryffindors.py` and code as follows:
 
-  <html lang="en">
-      <head>
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-          <title>phonebook</title>
-      </head>
-      <body>
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Number</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>Carter</td>
-                      <td>+1-617-495-1000</td>
-                  </tr>
-                  <tr>
-                      <td>David</td>
-                      <td>+1-949-468-2750</td>
-                  </tr>
-              </tbody>
-          </table>
-      </body>
-  </html>
+  ```
+  students = [
+      {"name": "Hermione", "house": "Gryffindor"},
+      {"name": "Harry", "house": "Gryffindor"},
+      {"name": "Ron", "house": "Gryffindor"},
+      {"name": "Draco", "house": "Slytherin"},
+  ]
 
+  gryffindors = []
+  for student in students:
+      if student["house"] == "Gryffindor":
+          gryffindors.append(student["name"])
+
+  for gryffindor in sorted(gryffindors):
+      print(gryffindor)
   ```
 
-  Notice how much prettier this website is now.
-* Similarly, consider the following expansion of our search page created earlier:
+  Notice we have a conditional while we’re creating our list. *If* the student’s house is Gryffindor, we append the student to the list of names. Finally, we print all the names.
+* More elegantly, we can simplify this code with a list comprehension as follows:
 
   ```
-  <!DOCTYPE html>
+  students = [
+      {"name": "Hermione", "house": "Gryffindor"},
+      {"name": "Harry", "house": "Gryffindor"},
+      {"name": "Ron", "house": "Gryffindor"},
+      {"name": "Draco", "house": "Slytherin"},
+  ]
 
-  <!-- Demonstrates layout with Bootstrap -->
+  gryffindors = [
+      student["name"] for student in students if student["house"] == "Gryffindor"
+  ]
 
-  <html lang="en">
-      <head>
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-          <title>search</title>
-      </head>
-      <body>
+  for gryffindor in sorted(gryffindors):
+      print(gryffindor)
+  ```
 
-          <div class="container-fluid">
+  Notice how the list comprehension is on a single line!
 
-              <ul class="m-3 nav">
-                  <li class="nav-item">
-                      <a class="nav-link text-dark" href="https://about.google/">About</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link text-dark" href="https://store.google.com/">Store</a>
-                  </li>
-                  <li class="nav-item ms-auto">
-                      <a class="nav-link text-dark" href="https://www.google.com/gmail/">Gmail</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link text-dark" href="https://www.google.com/imghp">Images</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link text-dark" href="https://www.google.com/intl/en/about/products">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x3-gap-fill" viewBox="0 0 16 16">
-                              <path d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2z"/>
-                          </svg>
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="btn btn-primary" href="https://accounts.google.com/ServiceLogin" role="button">Sign in</a>
-                  </li>
-              </ul>
+## `filter`
 
-              <div class="text-center">
+* Using Python’s `filter` function allows us to return a subset of a sequence for which a certain condition is true.
+* In the text editor window, code as follows:
 
-                  <!-- https://knowyourmeme.com/memes/happy-cat -->
-                  <img alt="Happy Cat" class="img-fluid w-25" src="cat.gif">
+  ```
+  students = [
+      {"name": "Hermione", "house": "Gryffindor"},
+      {"name": "Harry", "house": "Gryffindor"},
+      {"name": "Ron", "house": "Gryffindor"},
+      {"name": "Draco", "house": "Slytherin"},
+  ]
 
-                  <form action="https://www.google.com/search" class="mt-4" method="get">
-                      <input autocomplete="off" autofocus class="form-control form-control-lg mb-4 mx-auto w-50" name="q" placeholder="Query" type="search">
-                      <button class="btn btn-light">Google Search</button>
-                      <button class="btn btn-light" name="btnI">I'm Feeling Lucky</button>
-                  </form>
 
-              </div>
+  def is_gryffindor(s):
+      return s["house"] == "Gryffindor"
 
-          </div>
 
-      </body>
-  </html>
+  gryffindors = filter(is_gryffindor, students)
 
+  for gryffindor in sorted(gryffindors, key=lambda s: s["name"]):
+      print(gryffindor["name"])
   ```
 
-  This version of the page is exceedingly stylized, thanks to Bootstrap.
-* You can learn more about this in the [Bootstrap Documentation](https://getbootstrap.com/docs/).
+  Notice how a function called `is_gryffindor` is created. This is our filtering function that will take a student `s`, and return `True` or `False` depending on whether the student’s house is Gryffindor. You can see the new `filter` function takes two arguments. First, it takes the function that will be applied to each element in a sequence—in this case, `is_gryffindor`. Second, it takes the sequence to which it will apply the filtering function—in this case, `students`. In `gryffindors`, we should see only those students who are in Gryffindor.
+* `filter` can also use lambda functions as follows:
 
-## JavaScript
+  ```
+  students = [
+      {"name": "Hermione", "house": "Gryffindor"},
+      {"name": "Harry", "house": "Gryffindor"},
+      {"name": "Ron", "house": "Gryffindor"},
+      {"name": "Draco", "house": "Slytherin"},
+  ]
 
-* JavaScript is another programming language that allows for interactivity within web pages.
-* Consider the following implementation of `hello.html` that includes both JavaScript and HTML:
 
-  ```
-  <!DOCTYPE html>
+  gryffindors = filter(lambda s: s["house"] == "Gryffindor", students)
 
-  <!-- Demonstrates onsubmit -->
+  for gryffindor in sorted(gryffindors, key=lambda s: s["name"]):
+      print(gryffindor["name"])
+  ```
 
-  <html lang="en">
-      <head>
-          <script>
+  Notice how the same list of students is provided.
+* You can learn more in Python’s documentation of [`filter`](https://docs.python.org/3/library/functions.html#filter).
 
-              function greet()
-              {
-                  alert('hello, ' + document.querySelector('#name').value);
-              }
+## Dictionary Comprehensions
 
-          </script>
-          <title>hello</title>
-      </head>
-      <body>
-          <form onsubmit="greet(); return false;">
-              <input autocomplete="off" autofocus id="name" placeholder="Name" type="text">
-              <input type="submit">
-          </form>
-      </body>
-  </html>
+* We can apply the same idea behind list comprehensions to dictionaries. In the text editor window, code as follows:
 
   ```
+  students = ["Hermione", "Harry", "Ron"]
 
-  Notice how this form uses an `onsubmit` property to trigger a `script` found at the top of the file. The script uses `alert` to create an alert pop-up. `#name.value` goes to the textbox on the page and obtains the value typed by the user.
-* Generally, it’s considered bad design to mix onsubmit and JavaScript. We can advance our code as follows:
+  gryffindors = []
 
+  for student in students:
+      gryffindors.append({"name": student, "house": "Gryffindor"})
+
+  print(gryffindors)
   ```
-  <!DOCTYPE html>
+
+  Notice how this code doesn’t (yet!) use any comprehensions. Instead, it follows the same paradigms we have seen before.
+* We can now apply dictionary comprehensions by modifying our code as follows:
 
-  <!-- Demonstrates DOMContentLoaded -->
+  ```
+  students = ["Hermione", "Harry", "Ron"]
 
-  <html lang="en">
-      <head>
-          <script>
+  gryffindors = [{"name": student, "house": "Gryffindor"} for student in students]
 
-              document.addEventListener('DOMContentLoaded', function() {
-                  document.querySelector('form').addEventListener('submit', function(e) {
-                      alert('hello, ' + document.querySelector('#name').value);
-                      e.preventDefault();
-                  });
-              });
+  print(gryffindors)
+  ```
 
-          </script>
-          <title>hello</title>
-      </head>
-      <body>
-          <form>
-              <input autocomplete="off" autofocus id="name" placeholder="Name" type="text">
-              <input type="submit">
-          </form>
-      </body>
-  </html>
+  Notice how all the prior code is simplified into a single line where the structure of the dictionary is provided for each `student` in `students`.
+* We can even simplify further as follows:
 
   ```
+  students = ["Hermione", "Harry", "Ron"]
 
-  Notice that this version of the code creates an `addEventListener` to listen to the form `submit` being triggered. Notice how `DOMContentLoaded` ensures that the whole page is loaded before executing the JavaScript.
-* We can advance this code as follows:
+  gryffindors = {student: "Gryffindor" for student in students}
 
+  print(gryffindors)
   ```
-  <!DOCTYPE html>
 
-  <!-- Demonstrates keyup and template literals -->
+  Notice how the dictionary will be constructed with key-value pairs.
 
-  <html lang="en">
-      <head>
-          <script>
+## `enumerate`
 
-              document.addEventListener('DOMContentLoaded', function() {
-                  let input = document.querySelector('input');
-                  input.addEventListener('keyup', function(event) {
-                      let name = document.querySelector('p');
-                      if (input.value) {
-                          name.innerHTML = `hello, ${input.value}`;
-                      }
-                      else {
-                          name.innerHTML = 'hello, whoever you are';
-                      }
-                  });
-              });
+* We may wish to provide some ranking of each student. In the text editor window, code as follows:
 
-          </script>
-          <title>hello</title>
-      </head>
-      <body>
-          <form>
-              <input autocomplete="off" autofocus placeholder="Name" type="text">
-          </form>
-          <p></p>
-      </body>
-  </html>
+  ```
+  students = ["Hermione", "Harry", "Ron"]
 
+  for i in range(len(students)):
+      print(i + 1, students[i])
   ```
 
-  Notice that the DOM is dynamically updated in memory as the user types out a name. If there is a value inside `input`, upon the `keyup` on the keyboard, the DOM is updated. Otherwise, default text is presented.
-* JavaScript allows you to dynamically read and modify the html document loaded into memory such that the user need not reload to see changes.
-* Consider the following HTML:
+  Notice how each student is enumerated when running this code.
+* Utilizing enumeration, we can do the same:
 
   ```
-  <!DOCTYPE html>
+  students = ["Hermione", "Harry", "Ron"]
+
+  for i, student in enumerate(students):
+      print(i + 1, student)
+  ```
+
+  Notice how enumerate presents the index and the value of each `student`.
+* You can learn more in Python’s documentation of [`enumerate`](https://docs.python.org/3/library/functions.html#enumerate).
 
-  <!-- Demonstrates programmatic changes to style -->
+## Generators and Iterators
 
-  <html lang="en">
-      <head>
-          <title>background</title>
-      </head>
-      <body>
-          <button id="red">R</button>
-          <button id="green">G</button>
-          <button id="blue">B</button>
-          <script>
+* In Python, there is a way to protect against your system running out of resources the problems they are addressing become too large.
+* In the United States, it’s customary to “count sheep” in one’s mind when one is having a hard time falling asleep.
+* In the text editor window, type `code sleep.py` and code as follows:
 
-              let body = document.querySelector('body');
-              document.querySelector('#red').addEventListener('click', function() {
-                  body.style.backgroundColor = 'red';
-              });
-              document.querySelector('#green').addEventListener('click', function() {
-                  body.style.backgroundColor = 'green';
-              });
-              document.querySelector('#blue').addEventListener('click', function() {
-                  body.style.backgroundColor = 'blue';
-              });
+  ```
+  n = int(input("What's n? "))
+  for i in range(n):
+      print("🐑" * i)
+  ```
 
-          </script>
-      </body>
-  </html>
+  Notice how this program will count the number of sheep you ask of it.
+* We can make our program more sophisticated by adding a `main` function by coding as follows:
 
   ```
+  def main():
+      n = int(input("What's n? "))
+      for i in range(n):
+          print("🐑" * i)
 
-  Notice that JavaScript listens for when a specific button is clicked. Upon such a click, certain style attributes on the page are changed. `body` is defined as the body of the page. Then, an event listener waits for the clicking of one of the buttons. Then, the `body.style.backgroundColor` is changed.
-* Similarly, consider the following:
 
+  if __name__ == "__main__":
+      main()
   ```
-  <!DOCTYPE html>
+
+  Notice how a `main` function is provided.
+* We have been getting into the habit of abstracting away parts of our code.
+* We can call a sheep function by modifying our code as follows:
 
-  <html lang="en">
-      <head>
-          <script>
+  ```
+  def main():
+      n = int(input("What's n? "))
+      for i in range(n):
+          print(sheep(i))
 
-              // Toggles visibility of greeting
-              function blink()
-              {
-                  let body = document.querySelector('body');
-                  if (body.style.visibility == 'hidden')
-                  {
-                      body.style.visibility = 'visible';
-                  }
-                  else
-                  {
-                      body.style.visibility = 'hidden';
-                  }
-              }
 
-              // Blink every 500ms
-              window.setInterval(blink, 500);
+  def sheep(n):
+      return "🐑" * n
 
-          </script>
-          <title>blink</title>
-      </head>
-      <body>
-          hello, world
-      </body>
-  </html>
 
+  if __name__ == "__main__":
+      main()
   ```
 
-  This example blinks a text at a set interval. Notice that `window.setInterval` takes in two arguments: A function to be called and a waiting period (in milliseconds) between function calls.
-* Consider the following implementation of JavaScript that autocompletes text:
+  Notice how the `main` function does the iteration.
+* We can provide the `sheep` function more abilities. In the text editor window, code as follows:
 
   ```
-  <!DOCTYPE html>
+  def main():
+      n = int(input("What's n? "))
+      for s in sheep(n):
+          print(s)
 
-  <html lang="en">
 
-      <head>
-          <title>autocomplete</title>
-      </head>
+  def sheep(n):
+      flock = []
+      for i in range(n):
+          flock.append("🐑" * i)
+      return flock
 
-      <body>
+
+  if __name__ == "__main__":
+      main()
+  ```
 
-          <input autocomplete="off" autofocus placeholder="Query" type="text">
+  Notice how we create a flock of sheep and return the `flock`.
+* Executing our code, you might try different numbers of sheep such as `10`, `1000`, and `10000`. What if you asked for `1000000` sheep, your program might completely hang or crash. Because you have attempted to generate a massive list of sheep, your computer may be struggling to complete the computation.
+* The `yield` generator can solve this problem by returning a small bit of the results at a time. In the text editor window, code as follows:
 
-          <ul></ul>
+  ```
+  def main():
+      n = int(input("What's n? "))
+      for s in sheep(n):
+          print(s)
 
-          <script src="large.js"></script>
-          <script>
-        
-              let input = document.querySelector('input');
-              input.addEventListener('keyup', function(event) {
-                  let html = '';
-                  if (input.value) {
-                      for (word of WORDS) {
-                          if (word.startsWith(input.value)) {
-                              html += `<li>${word}</li>`;
-                          }
-                      }
-                  }
-                  document.querySelector('ul').innerHTML = html;
-              });
 
-          </script>
+  def sheep(n):
+      for i in range(n):
+          yield "🐑" * i
 
-      </body>
-  </html>
 
+  if __name__ == "__main__":
+      main()
   ```
+
+  Notice how `yield` provides only one value at a time while the `for` loop keeps working.
+* You can learn more in Python’s documentation of [generators](https://docs.python.org/3/howto/functional.html#generators).
+* You can learn more in Python’s documentation of [iterators](https://docs.python.org/3/howto/functional.html#iterators).
+
+## Congratulations!
 
-  This is a JavaScript implementation of autocomplete. This pulls from a file (not pictured here) called `large.js` that is a list of words.
-* The capabilities of JavaScript are many and can be found in the [JavaScript Documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
+* As you exit from this course, you have more of a mental model and toolbox to address programming-related problems.
+* First, you learned about functions and variables.
+* Second, you learned about conditionals.
+* Third, you learned about loops.
+* Fourth, you learned about exceptions.
+* Fifth, you learned about libraries.
+* Sixth, you learned about unit tests.
+* Seventh, you learned about file I/O.
+* Eighth, you learned about regular expressions.
+* Most recently, you learned about object-oriented programming.
+* Today, you learned about many other tools you can use.
 
-## Summing Up
+## This was CS50!
 
-In this lesson, you learned how to create your own HTML files, style them, leverage third-party frameworks, and utilize JavaScript. Specifically, we discussed…
+* Creating a final program together, type `code say.py` in your terminal window and code as follows:
 
-* TCP/IP
-* DNS
-* HTML
-* Regular expressions
-* CSS
-* Frameworks
-* JavaScript
+  ```
+  import cowsay
+  import pyttsx3
+
+  engine = pyttsx3.init()
+  this = input("What's this? ")
+  cowsay.cow(this)
+  engine.say(this)
+  engine.runAndWait()
+  ```
 
-See you next time!
+  Notice how running this program provides you with a spirited send-off.
+* Our great hope is that you will use what you learned in this course to address real problems in the world, making our globe a better place.
+* This was CS50!

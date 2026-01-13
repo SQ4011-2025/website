@@ -1,1058 +1,375 @@
-# Lecture 5 Notes
+# Week 5 Notes
 
--   [Welcome!](#welcome)
--   [Pixel Art](#pixel-art)
--   [Hexadecimal](#hexadecimal)
--   [Memory](#memory)
--   [Pointers](#pointers)
--   [Strings](#strings)
--   [Pointer Arithmetic](#pointer-arithmetic)
--   [String Comparison](#string-comparison)
--   [Copying and malloc](#copying-and-malloc)
--   [Valgrind](#valgrind)
--   [Garbage Values](#garbage-values)
--   [Pointer Fun with Binky](#pointer-fun-with-binky)
--   [Swapping](#swapping)
--   [Overflow](#overflow)
--   [`scanf`](#scanf)
--   [File I/O](#file-io)
--   [Summing Up](#summing-up)
+**CS50p 2025 - Week 5**
 
-## Welcome! {#welcome}
+Source: https://cs50.harvard.edu/python/notes/5/
 
--   In previous weeks, we talked about images being made of smaller building blocks called pixels.
--   Today, we will go into further detail about the zeros and ones that make up these images. In particular, we will be going deeper into the fundamental building blocks that make up files, including images.
--   Further, we will discuss how to access the underlying data stored in computer memory.
--   As we begin today, know that the concepts covered in this lecture may take some time to fully *click*.
+---
 
-## Pixel Art {#pixel-art}
+# Lecture 5
 
--   Pixels are squares, individual dots, of color that are arranged on an up-down, left-right grid.
+* [Unit Tests](#unit-tests)
+* [`assert`](#assert)
+* [`pytest`](#pytest)
+* [Testing Strings](#testing-strings)
+* [Organizing Tests into Folders](#organizing-tests-into-folders)
+* [Summing Up](#summing-up)
 
--   You can imagine an image as a map of bits, where zeros represent black and ones represent white.
+## Unit Tests
 
-    ![Zeros and ones being converted to a black and white smiley](images/week_4/Week4Slide015.png)
+* Up until now, you have been likely testing your own code using `print` statements.
+* Alternatively, you may have been relying upon CS50 to test your code for you!
+* It’s most common in industry to write code to test your own programs.
+* In your console window, type `code calculator.py`. Note that you may have previously coded this file in a previous lecture. In the text editor, make sure that your code appears as follows:
 
-## Hexadecimal {#hexadecimal}
+  ```
+  def main():
+      x = int(input("What's x? "))
+      print("x squared is", square(x))
 
--   *RGB*, or *red, green, blue*, are numbers that represent the amount of each of these colors. In Adobe Photoshop, you can see these settings as follows:
 
-    ![A photoshop panel with RGB values and hexadecimal input](images/week_4/Week4Slide016.png)
+  def square(n):
+      return n * n
 
-    Notice how the amount of red, blue, and green changes the color selected.
 
--   You can see from the image above that color is not just represented by three values. At the bottom of the window, there is a special value made up of numbers and characters. `255` is represented as `FF`. Why might this be?
+  if __name__ == "__main__":
+      main()
+  ```
 
--   *Hexadecimal* is a system of counting that has 16 counting values. They are as follows:
+  Notice that you could plausibly test the above code on your own using some obvious numbers such as `2`. However, consider why you might want to create a test that ensures that the above code functions appropriately.
+* Following convention, let’s create a new test program by typing `code test_calculator.py` and modify your code in the text editor as follows:
 
-    ```         
-      0 1 2 3 4 5 6 7 8 9 A B C D E F
-    ```
+  ```
+  from calculator import square
 
-    Notice that `F` represents `15`.
 
--   Hexadecimal is also known as *base-16*.
+  def main():
+      test_square()
 
--   When counting in hexadecimal, each column is a power of 16.
 
--   The number `0` is represented as `00`.
+  def test_square():
+      if square(2) != 4:
+          print("2 squared was not 4")
+      if square(3) != 9:
+          print("3 squared was not 9")
 
--   The number `1` is represented as `01`.
 
--   The number `9` is represented by `09`.
+  if __name__ == "__main__":
+      main()
+  ```
 
--   The number `10` is represented as `0A`.
+  Notice that we are importing the `square` function from `calculator.py` on the first line of code.
+* In the console window, type `python test_calculator.py`. You’ll notice that nothing is being outputted. It could be that everything is running fine! Alternatively, it could be that our test function did not discover one of the “corner cases” that could produce an error.
+* Right now, our code tests two conditions. If we wanted to test many more conditions, our test code could easily become bloated. How could we expand our test capabilities without expanding our test code?
 
--   The number `15` is represented as `0F`.
+## `assert`
 
--   The number `16` is represented as `10`.
+* Python’s `assert` command allows us to tell the interpreter that something, some assertion, is true. We can apply this to our test code as follows:
 
--   The number `255` is represented as `FF`, because 16 x 15 (or `F`) is 240. Add 15 more to make 255. This is the highest number you can count using a two-digit hexadecimal system.
+  ```
+  from calculator import square
 
--   Hexadecimal is useful because it can be represented using fewer digits. Hexadecimal allows us to represent information more succinctly.
 
-## Memory {#memory}
+  def main():
+      test_square()
 
--   In weeks past, you may recall our artist rendering of concurrent blocks of memory. Applying hexadecimal numbering to each of these blocks of memory, you can visualize these as follows:
 
-    ![Blocks of memory numbered in hex](images/week_4/Week4Slide065.png)
+  def test_square():
+      assert square(2) == 4
+      assert square(3) == 9
 
--   You can imagine how there may be confusion regarding whether the `10` block above may represent a location in memory or the value `10`. Accordingly, by convention, all hexadecimal numbers are often represented with the `0x` prefix as follows:
 
-    ![blocks of memory numbered in hex with 0x](images/week_4/Week4Slide066.png)
+  if __name__ == "__main__":
+      main()
+  ```
 
--   In your terminal window, type `code addresses.c` and write your code as follows:
+  Notice that we are definitively asserting what `square(2)` and `square(3)` should equal. Our code is reduced from four test lines down to two.
+* We can purposely break our calculator code by modifying it as follows:
 
-    ```         
-    // Prints an integer
+  ```
+  def main():
+      x = int(input("What's x? "))
+      print("x squared is", square(x))
 
-    #include <stdio.h>
 
-    int main(void)
-    {
-        int n = 50;
-        printf("%i\n", n);
-    }
-    ```
+  def square(n):
+      return n + n
 
-    Notice how `n` is stored in memory with the value `50`.
 
--   You can visualize how this program stores this value as follows:
+  if __name__ == "__main__":
+      main()
+  ```
 
-    ![the value 50 stored in a memory location with hex](images/week_4/Week4Slide070.png)
+  Notice that we have changed the `*` operator to a `+` in the square function.
+* Now running `python test_calculator.py` in the console window, you will notice that an `AssertionError` is raised by the interpreter. Essentially, this is the interpreter telling us that one of our conditions was not met.
+* One of the challenges that we are now facing is that our code could become even more burdensome if we wanted to provide more descriptive error output to our users. Plausibly, we could code as follows:
 
-## Pointers {#pointers}
+  ```
+  from calculator import square
 
--   The C language has two powerful operators that relate to memory:
 
-    ```         
-      & Provides the address of something stored in memory.
-      * Instructs the compiler to go to a location in memory.
-    ```
+  def main():
+      test_square()
 
--   We can leverage this knowledge by modifying our code as follows:
 
-    ```         
-    // Prints an integer's address
+  def test_square():
+      try:
+          assert square(2) == 4
+      except AssertionError:
+          print("2 squared is not 4")
+      try:
+          assert square(3) == 9
+      except AssertionError:
+          print("3 squared is not 9")
+      try:
+          assert square(-2) == 4
+      except AssertionError:
+          print("-2 squared is not 4")
+      try:
+          assert square(-3) == 9
+      except AssertionError:
+          print("-3 squared is not 9")
+      try:
+          assert square(0) == 0
+      except AssertionError:
+          print("0 squared is not 0")
 
-    #include <stdio.h>
 
-    int main(void)
-    {
-        int n = 50;
-        printf("%p\n", &n);
-    }
-    ```
+  if __name__ == "__main__":
+      main()
+  ```
 
-    Notice the `%p`, which allows us to view the address of a location in memory. `&n` can be literally translated as “the address of `n`.” Executing this code will return an address of memory beginning with `0x`.
+  Notice that running this code will produce multiple errors. However, it’s not producing all the errors above. This is a good illustration that it’s worth testing multiple cases such that you might catch situations where there are coding mistakes.
+* The above code illustrates a major challenge: How could we make it easier to test your code without dozens of lines of code like the above?
 
--   A *pointer* is a variable that stores the address of something. Most succinctly, a pointer is an address in your computer’s memory.
+You can learn more in Python’s documentation of [`assert`](https://docs.python.org/3/reference/simple_stmts.html#assert).
 
--   Consider the following code:
+## `pytest`
 
-    ```         
-    int n = 50;
-    int *p = &n;
-    ```
+* `pytest` is a third-party library that allows you to unit test your program. That is, you can test your functions within your program.
+* To utilize `pytest` please type `pip install pytest` into your console window.
+* Before applying `pytest` to our own program, modify your `test_square` function as follows:
 
-    Notice that `p` is a pointer that contains the address of an integer `n`.
+  ```
+  from calculator import square
 
--   Modify your code as follows:
 
-    ```         
-    // Stores and prints an integer's address
+  def main():
+      test_square()
 
-    #include <stdio.h>
 
-    int main(void)
-    {
-        int n = 50;
-        int *p = &n;
-        printf("%p\n", p);
-    }
-    ```
+  def test_square():
+      assert square(2) == 4
+      assert square(3) == 9
+      assert square(-2) == 4
+      assert square(-3) == 9
+      assert square(0) == 0
+  ```
 
-    Notice that this code has the same effect as our previous code. We have simply leveraged our new knowledge of the `&` and `*` operators.
+  Notice how the above code asserts all the conditions that we want to test.
+* `pytest` allows us to run our program directly through it, such that we can more easily view the results of our test conditions.
+* In the terminal window, type `pytest test_calculator.py`. You’ll immediately notice that output will be provided. Notice the red `F` near the top of the output, indicating that something in your code failed. Further, notice that the red `E` provides some hints about the errors in your `calculator.py` program. Based upon the output, you can imagine a scenario where `3 * 3` has outputted `6` instead of `9`. Based on the results of this test, we can go correct our `calculator.py` code as follows:
 
--   To illustrate the use of the `*` operator, consider the following:
+  ```
+  def main():
+      x = int(input("What's x? "))
+      print("x squared is", square(x))
 
-    ```         
-    // Stores and prints an integer via its address
 
-    #include <stdio.h>
+  def square(n):
+      return n * n
 
-    int main(void)
-    {
-        int n = 50;
-        int *p = &n;
-        printf("%i\n", *p);
-    }
-    ```
 
-    Notice that the `printf` line prints the integer at the location of `p`. `int *p` creates a pointer whose job is to store the memory address of an integer.
+  if __name__ == "__main__":
+      main()
+  ```
 
--   You can visualize our code as follows:
+  Notice that we have changed the `+` operator to a `*` in the square function, returning it to a working state.
+* Re-running `pytest test_calculator.py`, notice how no errors are produced. Congratulations!
+* At the moment, it is not ideal that `pytest` will stop running after the first failed test. Again, let’s return our `calculator.py` code back to its broken state:
 
-    ![Same value of 50 in a memory location with a pointer value stored elsewhere](images/week_4/Week4Slide078.png)
+  ```
+  def main():
+      x = int(input("What's x? "))
+      print("x squared is", square(x))
 
-    Notice the pointer seems rather large. Indeed, a pointer is usually stored as an 8-byte value. `p` is storing the address of the `50`.
 
--   You can more accurately visualize a pointer as one address that points to another:
+  def square(n):
+      return n + n
 
-    ![A pointer as an arrow, pointing from one location of memory to another](images/week_4/Week4Slide079.png)
 
-## Strings {#strings}
+  if __name__ == "__main__":
+      main()
+  ```
 
--   Now that we have a mental model for pointers, we can peel back a level of simplification that was offered earlier in this course.
+  Notice that we have changed the `*` operator to a `+` in the square function, returning it to a broken state.
+* To improve our test code, let’s modify `test_calculator.py` to divide the code into different groups of tests:
 
--   Modify your code as follows:
+  ```
+  from calculator import square
 
-    ```         
-    // Prints a string
 
-    #include <cs50.h>
-    #include <stdio.h>
+  def test_positive():
+      assert square(2) == 4
+      assert square(3) == 9
 
-    int main(void)
-    {
-        string s = "HI!";
-        printf("%s\n", s);
-    }
-    ```
 
-    Notice that a string `s` is printed.
+  def test_negative():
+      assert square(-2) == 4
+      assert square(-3) == 9
 
--   Recall that a string is simply an array of characters. For example, `string s = "HI!"` can be represented as follows:
 
-    ![The string HI with an exclamation point stored in memory](images/week_4/Week4Slide085.png)
+  def test_zero():
+      assert square(0) == 0
+  ```
 
--   However, what is `s` really? Where is the `s` stored in memory? As you can imagine, `s` needs to be stored somewhere. You can visualize the relationship of `s` to the string as follows:
+  Notice that we have divided the same five tests into three different functions. Testing frameworks like `pytest` will run each function, even if there was a failure in one of them. Re-running `pytest test_calculator.py`, you will notice that many more errors are being displayed. More error output allows you to further explore what might be producing the problems within your code.
+* Having improved our test code, return your `calculator.py` code to fully working order:
 
-    ![Same string HI with a pointer pointing to it](images/week_4/Week4Slide086.png)
+  ```
+  def main():
+      x = int(input("What's x? "))
+      print("x squared is", square(x))
 
-    Notice how a pointer called `s` tells the compiler where the first byte of the string exists in memory.
 
--   Modify your code as follows:
+  def square(n):
+      return n * n
 
-    ```         
-    // Prints a string's address as well the addresses of its chars
 
-    #include <cs50.h>
-    #include <stdio.h>
+  if __name__ == "__main__":
+      main()
+  ```
 
-    int main(void)
-    {
-        string s = "HI!";
-        printf("%p\n", s);
-        printf("%p\n", &s[0]);
-        printf("%p\n", &s[1]);
-        printf("%p\n", &s[2]);
-        printf("%p\n", &s[3]);
-    }
-    ```
+  Notice that we have changed the `+` operator to a `*` in the square function, returning it to a working state.
+* Re-running `pytest test_calculator.py`, you will notice that no errors are found.
+* Finally, we can test that our program handles exceptions. Let’s modify `test_calculator.py` to do just that.
 
-    Notice the above prints the memory locations of each character in the string `s`. The `&` symbol is used to show the address of each element of the string. When running this code, notice that elements `0`, `1`, `2`, and `3` are next to one another in memory.
+```
+  import pytest
 
--   Likewise, you can modify your code as follows:
+  from calculator import square
 
-    ```         
-    // Declares a string with CS50 Library
 
-    #include <cs50.h>
-    #include <stdio.h>
+  def test_positive():
+      assert square(2) == 4
+      assert square(3) == 9
 
-    int main(void)
-    {
-        string s = "HI!";
-        printf("%s\n", s);
-    }
-    ```
 
-    Notice that this code will present the string that starts at the location of `s`. This code effectively removes the training wheels of the `string` data type offered by `cs50.h`. This is raw C code, without the scaffolding of the cs50 library.
+  def test_negative():
+      assert square(-2) == 4
+      assert square(-3) == 9
 
--   Taking off the training wheels, you can modify your code again:
 
-    ```         
-    // Declares a string without CS50 Library
+  def test_zero():
+      assert square(0) == 0
 
-    #include <stdio.h>
 
-    int main(void)
-    {
-        char *s = "HI!";
-        printf("%s\n", s);
-    }
-    ```
+  def test_str():
+      with pytest.raises(TypeError):
+          square("cat")
+```
 
-    Notice that `cs50.h` is removed. A string is implemented as a `char *`.
+Notice that instead of using `assert`, we are taking advantage of a function within the `pytest` library itself called `raises` which allows you to express that you expect an error to be raised. We need to go to the top of our program and add `import pytest` and then call `pytest.raises` with the type of error we are expecting.
 
--   You can imagine how a string, as a data type, is created.
+* Again, re-running `pytest test_calculator.py`, you will notice that no errors are found.
+* In summary, it’s up to you as a coder to define as many test conditions as you see fit!
 
--   Last week, we learned how to create your own data type as a struct.
+You can learn more in Pytest’s documentation of [`pytest`](https://docs.pytest.org/en/7.1.x/getting-started.html).
 
--   The cs50 library includes a struct as follows: `typedef char *string`
+## Testing Strings
 
--   This struct, when using the cs50 library, allows one to use a custom data type called `string`.
+* Going back in time, consider the following code `hello.py`:
 
-## Pointer Arithmetic {#pointer-arithmetic}
+  ```
+  def main():
+      name = input("What's your name? ")
+      hello(name)
 
--   Pointer arithmetic is the ability to do math on locations of memory.
 
--   You can modify your code to print out each memory location in the string as follows:
+  def hello(to="world"):
+      print("hello,", to)
 
-    ```         
-    // Prints a string's chars
 
-    #include <stdio.h>
+  if __name__ == "__main__":
+      main()
+  ```
 
-    int main(void)
-    {
-        char *s = "HI!";
-        printf("%c\n", s[0]);
-        printf("%c\n", s[1]);
-        printf("%c\n", s[2]);
-    }
-    ```
+  Notice that we may wish to test the result of the `hello` function.
+* Consider the following code for `test_hello.py`:
 
-    Notice that we are printing each character at the location of `s`.
+  ```
+  from hello import hello
 
--   Further, you can modify your code as follows:
 
-    ```         
-    // Prints a string's chars via pointer arithmetic
+  def test_hello():
+      assert hello("David") == "hello, David"
+      assert hello() == "hello, world"
+  ```
 
-    #include <stdio.h>
+  Looking at this code, do you think that this approach to testing will work well? Why might this test not work well? Notice that the `hello` function in `hello.py` prints something: That is, it does not return a value!
+* We can change our `hello` function within `hello.py` as follows:
 
-    int main(void)
-    {
-        char *s = "HI!";
-        printf("%c\n", *s);
-        printf("%c\n", *(s + 1));
-        printf("%c\n", *(s + 2));
-    }
-    ```
+  ```
+  def main():
+      name = input("What's your name? ")
+      print(hello(name))
 
-    Notice that the first character at the location of `s` is printed. Then, the character at the location `s + 1` is printed, and so on.
 
--   Likewise, consider the following:
+  def hello(to="world"):
+      return f"hello, {to}"
 
-    ```         
-    // Prints substrings via pointer arithmetic
 
-    #include <stdio.h>
+  if __name__ == "__main__":
+      main()
+  ```
 
-    int main(void)
-    {
-        char *s = "HI!";
-        printf("%s\n", s);
-        printf("%s\n", s + 1);
-        printf("%s\n", s + 2);
-    }
-    ```
+  Notice that we changed our `hello` function to return a string. This effectively means that we can now use `pytest` to test the `hello` function.
+* Running `pytest test_hello.py`, our code will pass all tests!
+* As with our previous test case in this lesson, we can break out our tests separately:
 
-    Notice that this code prints the values stored at various memory locations starting with `s`.
+  ```
+  from hello import hello
 
-## String Comparison {#string-comparison}
 
--   A string of characters is simply an array of characters identified by the location of its first byte.
+  def test_default():
+      assert hello() == "hello, world"
 
--   Earlier in the course, we considered the comparison of integers. We could represent this in code by typing `code compare.c` into the terminal window as follows:
 
-    ```         
-    // Compares two integers
+  def test_argument():
+      assert hello("David") == "hello, David"
+  ```
 
-    #include <cs50.h>
-    #include <stdio.h>
+  Notice that the above code separates our test into multiple functions such that they will all run, even if an error is produced.
 
-    int main(void)
-    {
-        // Get two integers
-        int i = get_int("i: ");
-        int j = get_int("j: ");
+## Organizing Tests into Folders
 
-        // Compare integers
-        if (i == j)
-        {
-            printf("Same\n");
-        }
-        else
-        {
-            printf("Different\n");
-        }
-    }
-    ```
+* Unit testing code using multiple tests is so common that you have the ability to run a whole folder of tests with a single command.
+* First, in the terminal window, execute `mkdir test` to create a folder called `test`.
+* Then, to create a test within that folder, type in the terminal window `code test/test_hello.py`. Notice that `test/` instructs the terminal to create `test_hello.py` in the folder called `test`.
+* In the text editor window, modify the file to include the following code:
 
-    Notice that this code takes two integers from the user and compares them.
+  ```
+  from hello import hello
+    
+    
+  def test_default():
+      assert hello() == "hello, world"
+    
+    
+  def test_argument():
+      assert hello("David") == "hello, David"
+  ```
 
--   In the case of strings, however, one cannot compare two strings using the `==` operator.
+  Notice that we are creating a test just as we did before.
+* `pytest` will not allow us to run tests as a folder simply with this file (or a whole set of files) alone without a special `__init__` file. In your terminal window, create this file by typing `code test/__init__.py`. Note the `test/` as before, as well as the double underscores on either side of `init`. Even leaving this `__init__.py` file empty, `pytest` is informed that the whole folder containing `__init__.py` has tests that can be run.
+* Now, typing `pytest test` in the terminal, you can run the entire `test` folder of code.
 
--   Utilizing the `==` operator in an attempt to compare strings will attempt to compare the memory locations of the strings instead of the characters therein. Accordingly, we recommended the use of `strcmp`.
+You can learn more in Pytest’s documentation of [import mechanisms](https://docs.pytest.org/en/7.1.x/explanation/pythonpath.html?highlight=folder#pytest-import-mechanisms-and-sys-path-pythonpath).
 
--   To illustrate this, modify your code as follows:
+## Summing Up
 
-    ```         
-    // Compares two strings' addresses
+Testing your code is a natural part of the programming process. Unit tests allow you to test specific aspects of your code. You can create your own programs that test your code. Alternatively, you can utilize frameworks like `pytest` to run your unit tests for you. In this lecture, you learned about…
 
-    #include <cs50.h>
-    #include <stdio.h>
-
-    int main(void)
-    {
-        // Get two strings
-        char *s = get_string("s: ");
-        char *t = get_string("t: ");
-
-        // Compare strings' addresses
-        if (s == t)
-        {
-            printf("Same\n");
-        }
-        else
-        {
-            printf("Different\n");
-        }
-    }
-    ```
-
-    Noticing that typing in `HI!` for both strings still results in the output of `Different`.
-
--   Why are these strings seemingly different? You can use the following to visualize why:
-
-    ![two strings stored separately in memory](images/week_4/Week4Slide115.png)
-
--   Therefore, the code for `compare.c` above is actually attempting to see if the memory addresses are different, not the strings themselves.
-
--   Using `strcmp`, we can correct our code:
-
-    ```         
-    // Compares two strings using strcmp
-
-    #include <cs50.h>
-    #include <stdio.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Get two strings
-        char *s = get_string("s: ");
-        char *t = get_string("t: ");
-
-        // Compare strings
-        if (strcmp(s, t) == 0)
-        {
-            printf("Same\n");
-        }
-        else
-        {
-            printf("Different\n");
-        }
-    }
-    ```
-
-    Notice that `strcmp` can return `0` if the strings are the same.
-
--   To further illustrate how these two strings are living in two locations, modify your code as follows:
-
-    ```         
-    // Prints two strings
-
-    #include <cs50.h>
-    #include <stdio.h>
-
-    int main(void)
-    {
-        // Get two strings
-        char *s = get_string("s: ");
-        char *t = get_string("t: ");
-
-        // Print strings
-        printf("%s\n", s);
-        printf("%s\n", t);
-    }
-    ```
-
-    Notice how we now have two separate strings stored, likely at two separate locations.
-
--   You can see the locations of these two stored strings with a small modification:
-
-    ```         
-    // Prints two strings' addresses
-
-    #include <cs50.h>
-    #include <stdio.h>
-
-    int main(void)
-    {
-        // Get two strings
-        char *s = get_string("s: ");
-        char *t = get_string("t: ");
-
-        // Print strings' addresses
-        printf("%p\n", s);
-        printf("%p\n", t);
-    }
-    ```
-
-    Notice that the `%s` has been changed to `%p` in the print statement.
-
-## Copying and malloc {#copying-and-malloc}
-
--   A common need in programming is to copy one string to another.
-
--   In your terminal window, type `code copy.c` and write code as follows:
-
-    ```         
-    // Capitalizes a string
-
-    #include <cs50.h>
-    #include <ctype.h>
-    #include <stdio.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Get a string
-        string s = get_string("s: ");
-
-        // Copy string's address
-        string t = s;
-
-        // Capitalize first letter in string
-        t[0] = toupper(t[0]);
-
-        // Print string twice
-        printf("s: %s\n", s);
-        printf("t: %s\n", t);
-    }
-    ```
-
-    Notice that `string t = s` copies the address of `s` to `t`. This does not accomplish what we are desiring. The string is not copied – only the address is. Further, notice the inclusion of `ctype.h`.
-
--   You can visualize the above code as follows:
-
-    ![two pointers pointing at the same memory location with a string](images/week_4/Week4Slide124.png)
-
-    Notice that `s` and `t` are still pointing at the same blocks of memory. This is not an authentic copy of a string. Instead, these are two pointers pointing at the same string.
-
--   Before we address this challenge, it’s important to ensure that we don’t experience a *segmentation fault* through our code, where we attempt to copy `string s` to `string t`, where `string t` does not exist. We can employ the `strlen` function as follows to assist with that:
-
-    ```         
-    // Capitalizes a string, checking length first
-
-    #include <cs50.h>
-    #include <ctype.h>
-    #include <stdio.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Get a string
-        string s = get_string("s: ");
-
-        // Copy string's address
-        string t = s;
-
-        // Capitalize first letter in string
-        if (strlen(t) > 0)
-        {
-            t[0] = toupper(t[0]);
-        }
-
-        // Print string twice
-        printf("s: %s\n", s);
-        printf("t: %s\n", t);
-    }
-    ```
-
-    Notice that `strlen` is used to make sure `string t` exists. If it does not, nothing will be copied.
-
--   To be able to make an authentic copy of the string, we will need to introduce two new building blocks. First, `malloc` allows you, the programmer, to allocate a block of a specific size of memory. Second, `free` allows you to tell the compiler to *free up* that block of memory you previously allocated.
-
--   We can modify our code to create an authentic copy of our string as follows:
-
-    ```         
-    // Capitalizes a copy of a string
-
-    #include <cs50.h>
-    #include <ctype.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Get a string
-        char *s = get_string("s: ");
-
-        // Allocate memory for another string
-        char *t = malloc(strlen(s) + 1);
-
-        // Copy string into memory, including '\0'
-        for (int i = 0; i <= strlen(s); i++)
-        {
-            t[i] = s[i];
-        }
-
-        // Capitalize copy
-        t[0] = toupper(t[0]);
-
-        // Print strings
-        printf("s: %s\n", s);
-        printf("t: %s\n", t);
-    }
-    ```
-
-    Notice that `malloc(strlen(s) + 1)` creates a block of memory that is the length of the string `s` plus one. This allows for the inclusion of the *null* `\0` character in our final copied string. Then, the `for` loop walks through the string `s` and assigns each value to that same location on the string `t`.
-
--   It turns out that our code is inefficient. Modify your code as follows:
-
-    ```         
-    // Capitalizes a copy of a string, defining n in loop too
-
-    #include <cs50.h>
-    #include <ctype.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Get a string
-        char *s = get_string("s: ");
-
-        // Allocate memory for another string
-        char *t = malloc(strlen(s) + 1);
-
-        // Copy string into memory, including '\0'
-        for (int i = 0, n = strlen(s); i <= n; i++)
-        {
-            t[i] = s[i];
-        }
-
-        // Capitalize copy
-        t[0] = toupper(t[0]);
-
-        // Print strings
-        printf("s: %s\n", s);
-        printf("t: %s\n", t);
-    }
-    ```
-
-    Notice that `n = strlen(s)` is defined now in the left-hand side of the `for loop`. It’s best not to call unneeded functions in the middle condition of the `for` loop, as it will run over and over again. When moving `n = strlen(s)` to the left-hand side, the function `strlen` only runs once.
-
--   The `C` Language has a built-in function to copy strings called `strcpy`. It can be implemented as follows:
-
-    ```         
-    // Capitalizes a copy of a string using strcpy
-
-    #include <cs50.h>
-    #include <ctype.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Get a string
-        char *s = get_string("s: ");
-
-        // Allocate memory for another string
-        char *t = malloc(strlen(s) + 1);
-
-        // Copy string into memory
-        strcpy(t, s);
-
-        // Capitalize copy
-        t[0] = toupper(t[0]);
-
-        // Print strings
-        printf("s: %s\n", s);
-        printf("t: %s\n", t);
-    }
-    ```
-
-    Notice that `strcpy` does the same work that our `for` loop previously did.
-
--   Both `get_string` and `malloc` return `NULL`, a special value in memory, in the event that something goes wrong. You can write code that can check for this `NULL` condition as follows:
-
-    ```         
-    // Capitalizes a copy of a string without memory errors
-
-    #include <cs50.h>
-    #include <ctype.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Get a string
-        char *s = get_string("s: ");
-        if (s == NULL)
-        {
-            return 1;
-        }
-
-        // Allocate memory for another string
-        char *t = malloc(strlen(s) + 1);
-        if (t == NULL)
-        {
-            return 1;
-        }
-
-        // Copy string into memory
-        strcpy(t, s);
-
-        // Capitalize copy
-        if (strlen(t) > 0)
-        {
-            t[0] = toupper(t[0]);
-        }
-
-        // Print strings
-        printf("s: %s\n", s);
-        printf("t: %s\n", t);
-
-        // Free memory
-        free(t);
-        return 0;
-    }
-    ```
-
-    Notice that if the string obtained is of length `0` or malloc fails, `NULL` is returned. Further, notice that `free` lets the computer know you are done with this block of memory you created via `malloc`.
-
-## Valgrind {#valgrind}
-
--   *Valgrind* is a tool that can check to see if there are memory-related issues with your programs wherein you utilized `malloc`. Specifically, it checks to see if you `free` all the memory you allocated.
-
--   Consider the following code for `memory.c`:
-
-    ```         
-    // Demonstrates memory errors via valgrind
-
-    #include <stdio.h>
-    #include <stdlib.h>
-
-    int main(void)
-    {
-        int *x = malloc(3 * sizeof(int));
-        x[1] = 72;
-        x[2] = 73;
-        x[3] = 33;
-    }
-    ```
-
-    Notice that running this program does not cause any errors. While `malloc` is used to allocate enough memory for an array, the code fails to `free` that allocated memory.
-
--   If you type `make memory` followed by `valgrind ./memory`, you will get a report from valgrind that will report where memory has been lost as a result of your program. One error that valgrind reveals is that we attempted to assign the value of `33` at the 4th position of the array, where we only allocated an array of size `3`. Another error is that we never freed `x`.
-
--   You can modify your code to free the memory of `x` as follows:
-
-    ```         
-    // Demonstrates memory errors via valgrind
-
-    #include <stdio.h>
-    #include <stdlib.h>
-
-    int main(void)
-    {
-        int *x = malloc(3 * sizeof(int));
-        x[1] = 72;
-        x[2] = 73;
-        x[3] = 33;
-        free(x);
-    }
-    ```
-
-    Notice that running valgrind again now results in no memory leaks.
-
-## Garbage Values {#garbage-values}
-
--   When you ask the compiler for a block of memory, there is no guarantee that this memory will be empty.
-
--   It’s very possible that the memory you allocated was previously utilized by the computer. Accordingly, you may see *junk* or *garbage values*. This is a result of you getting a block of memory but not initializing it. For example, consider the following code for `garbage.c`:
-
-    ```         
-    #include <stdio.h>
-    #include <stdlib.h>
-
-    int main(void)
-    {
-        int scores[1024];
-        for (int i = 0; i < 1024; i++)
-        {
-            printf("%i\n", scores[i]);
-        }
-    }
-    ```
-
-    Notice that running this code will allocate `1024` locations in memory for your array, but the `for` loop will likely show that not all values therein are `0`. It’s always best practice to be aware of the potential for garbage values when you do not initialize blocks of memory to some other value like zero or otherwise.
-
-## Pointer Fun with Binky {#pointer-fun-with-binky}
-
--   We watched a [video from Stanford University](https://www.youtube.com/watch?v=5VnDaHBi8dM) that helped us visualize and understand pointers.
-
-## Swapping {#swapping}
-
--   In the real world, a common need in programming is to swap two values. Naturally, it’s hard to swap two variables without a temporary holding space. In practice, you can type `code swap.c` and write code as follows to see this in action:
-
-    ```         
-    // Fails to swap two integers
-
-    #include <stdio.h>
-
-    void swap(int a, int b);
-
-    int main(void)
-    {
-        int x = 1;
-        int y = 2;
-
-        printf("x is %i, y is %i\n", x, y);
-        swap(x, y);
-        printf("x is %i, y is %i\n", x, y);
-    }
-
-    void swap(int a, int b)
-    {
-        int tmp = a;
-        a = b;
-        b = tmp;
-    }
-    ```
-
-    Notice that while this code runs, it does not work. The values, even after being sent to the `swap` function, do not swap. Why?
-
--   When you pass values to a function, you are only providing copies. The *scope* of `x` and `y` is limited to the main function as the code is presently written. That is, the values of `x` and `y` created in the curly `{}` braces of the `main` function only have the scope of the `main` function. In our code above, `x` and `y` are being passed by *value*.
-
--   Consider the following image:
-
-    ![a rectangle with machine code at top followed by globals heap and stack](images/week_4/Week4Slide163.png)
-
-    Notice that *global* variables, which we have not used in this course, live in one place in memory. Various functions are stored in the `stack` in another area of memory.
-
--   Now, consider the following image:
-
-    ![a rectangle with main function at bottom and swap function directly above it](images/week_4/Week4Slide167.png)
-
-    Notice that `main` and `swap` have two separate *frames* or areas of memory. Therefore, we cannot simply pass the values from one function to another to change them.
-
--   Modify your code as follows:
-
-    ```         
-    // Swaps two integers using pointers
-
-    #include <stdio.h>
-
-    void swap(int *a, int *b);
-
-    int main(void)
-    {
-        int x = 1;
-        int y = 2;
-
-        printf("x is %i, y is %i\n", x, y);
-        swap(&x, &y);
-        printf("x is %i, y is %i\n", x, y);
-    }
-
-    void swap(int *a, int *b)
-    {
-        int tmp = *a;
-        *a = *b;
-        *b = tmp;
-    }
-    ```
-
-    Notice that variables are not passed by *value* but by *reference*. That is, the addresses of `a` and `b` are provided to the function. Therefore, the `swap` function can know where to make changes to the actual `a` and `b` from the main function.
-
--   You can visualize this as follows:
-
-    ![a and b stored in main function being passed by reference to the swap function](images/week_4/Week4Slide198.png)
-
-## Overflow {#overflow}
-
--   A *heap overflow* is when you overflow the heap, touching areas of memory you are not supposed to.
--   A *stack overflow* is when too many functions are called, overflowing the amount of memory available.
--   Both of these are considered *buffer overflows*.
-
-## `scanf` {#scanf}
-
--   Functions like `get_int` to simplify the act of getting input from the user.
-
--   `scanf` is a built-in function that can get user input.
-
--   We can reimplement `get_int` rather easily using `scanf` as follows:
-
-    ```         
-    // Gets an int from user using scanf
-
-    #include <stdio.h>
-
-    int main(void)
-    {
-        int n;
-        printf("n: ");
-        scanf("%i", &n);
-        printf("n: %i\n", n);
-    }
-    ```
-
-    Notice that the value of `n` is stored at the location of `n` in the line `scanf("%i", &n)`.
-
--   However, attempting to reimplement `get_string` is not easy. Consider the following:
-
-    ```         
-    // Dangerously gets a string from user using scanf with array
-
-    #include <stdio.h>
-
-    int main(void)
-    {
-        char s[4];
-        printf("s: ");
-        scanf("%s", s);
-        printf("s: %s\n", s);
-    }
-    ```
-
-    Notice that no `&` is required because strings are special. Still, this program will not function correctly every time it is run. Nowhere in this program do we allocate the amount of memory required for our string. Indeed, we don’t know how long of a string may be inputted by the user! Further, we don’t know what garbage values may exist at the memory location.
-
--   Further, your code could be modified as follows. However, we have to pre-allocate a certain amount of memory for a string:
-
-    ```         
-    // Using malloc
-
-    #include <stdio.h>
-    #include <stdlib.h>
-
-    int main(void)
-    {
-        char *s = malloc(4);
-        if (s == NULL)
-        {
-            return 1;
-        }
-        printf("s: ");
-        scanf("%s", s);
-        printf("s: %s\n", s);
-        free(s);
-        return 0;
-    }
-    ```
-
-    Notice that if a string that is four bytes is provided you *might* get an error.
-
--   Simplifying our code as follows, we can further understand this essential problem of pre-allocation:
-
-    ```         
-    #include <stdio.h>
-
-    int main(void)
-    {
-        char s[4];
-        printf("s: ");
-        scanf("%s", s);
-        printf("s: %s\n", s);
-    }
-    ```
-
-    Notice that if we pre-allocate an array of size `4`, we can type `cat` and the program functions. However, a string larger than this *could* create an error.
-
--   Sometimes, the compiler or the system running it may allocate more memory than we indicate. Fundamentally, though, the above code is unsafe. We cannot trust that the user will input a string that fits into our pre-allocated memory.
-
-## File I/O {#file-io}
-
--   You can read from and manipulate files. While this topic will be discussed further in a future week, consider the following code for `phonebook.c`:
-
-    ```         
-    // Saves names and numbers to a CSV file
-
-    #include <cs50.h>
-    #include <stdio.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Open CSV file
-        FILE *file = fopen("phonebook.csv", "a");
-
-        // Get name and number
-        char *name = get_string("Name: ");
-        char *number = get_string("Number: ");
-
-        // Print to file
-        fprintf(file, "%s,%s\n", name, number);
-
-        // Close file
-        fclose(file);
-    }
-    ```
-
-    Notice that this code uses pointers to access the file.
-
--   You can create a file called `phonebook.csv` in advance of running the above code or download [phonebook.csv](https://raw.githubusercontent.com/SQ4007-2025/website/master/data/phonebook.csv?download) (right click, save as...). After running the above program and inputting a name and phone number, you will notice that this data persists in your CSV file.
-
--   If we want to ensure that `phonebook.csv` exists prior to running the program, we can modify our code as follows:
-
-    ```         
-    // Saves names and numbers to a CSV file
-
-    #include <cs50.h>
-    #include <stdio.h>
-    #include <string.h>
-
-    int main(void)
-    {
-        // Open CSV file
-        FILE *file = fopen("phonebook.csv", "a");
-        if (!file)
-        {
-            return 1;
-        }
-
-        // Get name and number
-        char *name = get_string("Name: ");
-        char *number = get_string("Number: ");
-
-        // Print to file
-        fprintf(file, "%s,%s\n", name, number);
-
-        // Close file
-        fclose(file);
-    }
-    ```
-
-    Notice that this program protects against a `NULL` pointer by invoking `return 1`.
-
--   We can implement our own copy program by typing `code cp.c` and writing code as follows:
-
-    ```         
-    // Copies a file
-
-    #include <stdio.h>
-    #include <stdint.h>
-
-    typedef uint8_t BYTE;
-
-    int main(int argc, char *argv[])
-    {
-        FILE *src = fopen(argv[1], "rb");
-        FILE *dst = fopen(argv[2], "wb");
-
-        BYTE b;
-
-        while (fread(&b, sizeof(b), 1, src) != 0)
-        {
-            fwrite(&b, sizeof(b), 1, dst);
-        }
-
-        fclose(dst);
-        fclose(src);
-    }
-    ```
-
-    Notice that this file creates our own data type called a BYTE , which is the size of a uint8_t. Then, the file reads a `BYTE` and writes it to a file.
-
--   BMPs are also assortments of data that we can examine and manipulate. This week, you will be doing just that in your problem sets!
-
-## Summing Up {#summing-up}
-
-In this lesson, you learned about pointers that provide you with the ability to access and manipulate data at specific memory locations. Specifically, we delved into…
-
--   Pixel art
--   Hexadecimal
--   Memory
--   Pointers
--   Strings
--   Pointer Arithmetic
--   String Comparison
--   Copying
--   malloc and Valgrind
--   Garbage values
--   Swapping
--   Overflow
--   `scanf`
--   File I/O
-
-See you next time!
+* Unit tests
+* `assert`
+* `pytest`
