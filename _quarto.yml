@@ -85,7 +85,7 @@ website:
         contents:
           - href: notes/notes_0.md
             text: "Notes 00 🐍"
-          - href: notes/notes_1.md
+          - href: notes/notes_1.qmd
             text: "Notes 01 🐍"
           - href: notes/notes_2.md
             text: "Notes 02 🐍"

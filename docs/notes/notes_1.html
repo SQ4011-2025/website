@@ -29,8 +29,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../notes/notes_2.html" rel="next">
-<link href="../notes/notes_0.html" rel="prev">
 <link href="../images/favicon.ico" rel="icon">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -74,6 +72,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <meta property="og:title" content="Programming Concepts">
@@ -257,7 +258,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/notes_0.html">Notes</a></li><li class="breadcrumb-item"><a href="../notes/notes_1.html">Notes 01 🐍</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -404,13 +405,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Notes</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/notes_0.html" class="sidebar-item-text sidebar-link">
@@ -419,7 +420,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/notes_1.html" class="sidebar-item-text sidebar-link active">
+  <a href="../notes/notes_1.md" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Notes 01 🐍</span></a>
   </div>
 </li>
@@ -705,10 +706,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#summing-up" id="toc-summing-up" class="nav-link" data-scroll-target="#summing-up">Summing Up</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/notes/notes_1.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/notes/notes_1.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/notes_0.html">Notes</a></li><li class="breadcrumb-item"><a href="../notes/notes_1.html">Notes 01 🐍</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
@@ -776,18 +777,31 @@ if x &gt; y:
 if x == y:
     print("x is equal to y")</code></pre>
 <p>Notice how you are providing a series of <code>if</code> statements. First, the first <code>if</code> statement is evaluated. Then, the second <code>if</code> statement runs its evaluation. Finally, the last <code>if</code> statement runs its evaluation. This flow of decisions is called “control flow.”</p></li>
-<li><p>Our code can be represented as follows:</p>
-<pre class="mermaid"><code>flowchart TD
-  A([start]) --&gt; B{x &lt; y}
-  B -- True --&gt; C["#quot;x is less than y#quot;"]
-  C --&gt; D{x &gt; y}
-  D -- True --&gt; E["#quot;x is greater than y#quot;"]
-  E --&gt; F{x == y}
-  F -- True --&gt; G["#quot;x is equal to y#quot;"]
-  G --&gt; H([stop])
-  B -- False --&gt; D
-  D -- False --&gt; F
-  F -- False --&gt; H</code></pre></li>
+<li><p>Our code can be represented as follows:</p></li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">    flowchart TD
+      A([start]) --&gt; B{x &lt; y}
+      B -- True --&gt; C["#quot;x is less than y#quot;"]
+      C --&gt; D{x &gt; y}
+      D -- True --&gt; E["#quot;x is greater than y#quot;"]
+      E --&gt; F{x == y}
+      F -- True --&gt; G["#quot;x is equal to y#quot;"]
+      G --&gt; H([stop])
+      B -- False --&gt; D
+      D -- False --&gt; F
+      F -- False --&gt; H
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
 <li><p>This program can be improved by not asking three consecutive questions. After all, not all three questions can have an outcome of <code>true</code>! Revise your program as follows:</p>
 <pre><code>x = int(input("What's x? "))
 y = int(input("What's y? "))
@@ -1488,18 +1502,6 @@ main()</code></pre>
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../notes/notes_0.html" class="pagination-link" aria-label="Notes 00 🐍">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Notes 00 🐍</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../notes/notes_2.html" class="pagination-link" aria-label="Notes 02 🐍">
-        <span class="nav-page-text">Notes 02 🐍</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1508,7 +1510,7 @@ main()</code></pre>
 </div>   
     <div class="nav-footer-center">
 <p>📊 <a href="https://thestatisticslab.com">The Statistics Lab</a></p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/notes/notes_1.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/notes/notes_1.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>🚀 Built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
