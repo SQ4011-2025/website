@@ -145,26 +145,26 @@ website:
             text: "Tutorial 10 🐍"
       - section: "Problem Sets"
         contents:
-          - href: homework/hw_1.md
-            text: "Problem Set 01 🐈"
-          - href: homework/hw_2.md
-            text: "Problem Set 02 🟢"
-          - href: homework/hw_3.md
-            text: "Problem Set 03 🟢"
-          - href: homework/hw_4.md
-            text: "Problem Set 04 🟢"
-          - href: homework/hw_5.md
-            text: "Problem Set 05 🟢"
-          - href: homework/hw_6.md
-            text: "Problem Set 06 🟢"
-          - href: homework/hw_7.md
+          - href: problems/pset_0/pset_0.md
+            text: "Problem Set 00 🐍"
+          - href: problems/pset_1/pset_1.md
+            text: "Problem Set 01 🐍"
+          - href: problems/pset_2/pset_2.md
+            text: "Problem Set 02 🐍"
+          - href: problems/pset_3/pset_3.md
+            text: "Problem Set 03 🐍"
+          - href: problems/pset_4/pset_4.md
+            text: "Problem Set 04 🐍"
+          - href: problems/pset_5/pset_5.md
+            text: "Problem Set 05 🐍"
+          - href: problems/pset_6/pset_6.md
+            text: "Problem Set 06 🐍"
+          - href: problems/pset_7/pset_7.md
             text: "Problem Set 07 🐍"
-          - href: homework/hw_8.md
-            text: "Problem Set 08 📊"
-          - href: homework/hw_9.md
-            text: "Problem Set 09 🌐"
-          - href: homework/hw_10.md
-            text: "Problem Set 10 🐍"
+          - href: problems/pset_8/pset_8.md
+            text: "Problem Set 08 🐍"
+          - href: problems/pset_9/pset_9.md
+            text: "Problem Set 09 🐍"
 
 format:
   html:
