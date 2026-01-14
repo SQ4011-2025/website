@@ -163,8 +163,6 @@ website:
             text: "Problem Set 07 🐍"
           - href: problems/pset_8/pset_8.md
             text: "Problem Set 08 🐍"
-          - href: problems/pset_9/pset_9.md
-            text: "Problem Set 09 🐍"
 
 format:
   html:

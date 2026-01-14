@@ -1,24 +1,11 @@
-# Problem Set 2
-
-**Week 2 Problem Set**
-
-Source: https://cs50.harvard.edu/python/psets/2/
-
----
-
-# Problem Set 2
+# Problem Set week 2
 
 ## What to Do
 
-1. Log into [cs50.dev](https://cs50.dev/), which is a cloud-based version of Visual Studio Code (VS Code) that provides you with your very own “codespace” with everything that you need for the course pre-installed. No need to download and install VS Code or Python on your own Mac or PC!
-2. Execute `update50` in your codespace’s terminal window to ensure that your codespace is up-to-date; if prompted, click **Rebuild now**.
-3. Submit all of the problems below:
-   * [camelCase](camel/)
-   * [Coke Machine](coke/)
-   * [Just setting up my twttr](twttr/)
-   * [Vanity Plates](plates/)
-   * [Nutrition Facts](nutrition/)
+Complete the following problems
 
-## When to Do It
-
-By [2025-12-31T23:59:00+00:00](https://time.cs50.io/20251231T235900Z).
+* [camelCase](2.2_camelcase.md)
+* [Coke Machine](2.3_coke_machine.md)
+* [Just setting up my twttr](2.4_just_setting_up_my_twttr.md)
+* [Vanity Plates](2.5_vanity_plates.md)
+* [Nutrition Facts](2.6_nutrition_facts.md)

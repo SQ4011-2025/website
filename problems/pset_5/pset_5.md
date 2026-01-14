@@ -1,25 +1,10 @@
-# Problem Set 5
-
-**Week 5 Problem Set**
-
-Source: https://cs50.harvard.edu/python/psets/5/
-
----
-
-# Problem Set 5
-
-For this problem set, you’ll reimplement some past programs in such a way that you can also write tests for your own code!
+# Problem Set week 5
 
 ## What to Do
 
-1. Log into [cs50.dev](https://cs50.dev/), which is a cloud-based version of Visual Studio Code (VS Code) that provides you with your very own “codespace” with everything that you need for the course pre-installed. No need to download and install VS Code or Python on your own Mac or PC!
-2. Execute `update50` in your codespace’s terminal window to ensure that your codespace is up-to-date; if prompted, click **Rebuild now**.
-3. Submit all of the problems below:
-   * [Testing my twttr](test_twttr/)
-   * [Back to the Bank](test_bank/)
-   * [Re-requesting a Vanity Plate](test_plates/)
-   * [Refueling](test_fuel/)
+Complete the following problems
 
-## When to Do It
-
-By [2025-12-31T23:59:00+00:00](https://time.cs50.io/20251231T235900Z).
+* [Testing my twttr](5.2_testing_my_twttr.md)
+* [Back to the Bank](5.3_back_to_the_bank.md)
+* [Re-requesting a Vanity Plate](5.4_re_requesting_a_vanity_plate.md)
+* [Refueling](5.5_refueling.md)
