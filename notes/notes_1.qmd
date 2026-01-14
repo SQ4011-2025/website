@@ -1,9 +1,5 @@
 # Week 1 Notes
 
-**CS50p 2025 - Week 1**
-
-Source: https://cs50.harvard.edu/python/notes/1/
-
 ------------------------------------------------------------------------
 
 # Lecture 1

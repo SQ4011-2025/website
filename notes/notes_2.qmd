@@ -1,9 +1,5 @@
 # Week 2 Notes
 
-**CS50p 2025 - Week 2**
-
-Source: https://cs50.harvard.edu/python/notes/2/
-
 ------------------------------------------------------------------------
 
 # Lecture 2

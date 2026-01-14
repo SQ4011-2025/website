@@ -1,9 +1,5 @@
 # Week 4 Notes
 
-**CS50p 2025 - Week 4**
-
-Source: https://cs50.harvard.edu/python/notes/4/
-
 ------------------------------------------------------------------------
 
 # Lecture 4
