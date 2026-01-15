@@ -1,6 +1,6 @@
 # Website for Course Name
 
-🔗 https://sq4007-2025.github.io/website/
+🔗 https://sq4011-2025.github.io/website/
 
 ## Colors
 

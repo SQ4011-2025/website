@@ -1213,7 +1213,7 @@
     "href": "module-links.html",
     "title": "Useful links",
     "section": "",
-    "text": "🔗 ℹ Reference manual for C header functions! - Probably very useful…\n🔗 🛝 Join “The Sandbox” coding environment (Github Codespace) - Once you “accept the assessment” you will be able to access and code in The Sandbox anytime (💡 Tip: Save the link).\n🔗 Discord - join the community - for live discussion and support (please set your server name to your real name, e.g. “Ed Harris”)\n🔗 YouTube - The Statistics Lab channel - for live streams and recordings\n🔗 Twitch - The Statistics Lab channel - for live streams and recordings\n🔗 🏠 Access Codespaces\n🔗 🎤 Statistics Lab & Code Club meetings\n🔗 🏢 Harper Adams VLE site for this module (HAU enrolled students only)",
+    "text": "🔗 Reference manual for Python - Probably very useful…\n🔗 🎤 HADC! & Code Club meetings\n🔗 🏢 Harper Adams VLE site for this module (HAU enrolled students only)",
     "crumbs": [
       "Useful links"
     ]
@@ -1223,28 +1223,21 @@
     "href": "module-extras.html",
     "title": "Extra Meetings",
     "section": "",
-    "text": "The Statistics Lab is a group of people (students, researchers, and staff) who are interested in statistics and data science. We meet every week to discuss practical statistics and data science topics."
+    "text": "HADC! is a group of people (students, researchers, and staff) who are interested in statistics and data science. We typically meet regularly to discuss practical statistics and data science topics. Check out the HADC! website for the schedule."
   },
   {
-    "objectID": "module-extras.html#the-statistics-lab-meetings",
-    "href": "module-extras.html#the-statistics-lab-meetings",
+    "objectID": "module-extras.html#harper-adams-data-club-hadc",
+    "href": "module-extras.html#harper-adams-data-club-hadc",
     "title": "Extra Meetings",
     "section": "",
-    "text": "The Statistics Lab is a group of people (students, researchers, and staff) who are interested in statistics and data science. We meet every week to discuss practical statistics and data science topics."
+    "text": "HADC! is a group of people (students, researchers, and staff) who are interested in statistics and data science. We typically meet regularly to discuss practical statistics and data science topics. Check out the HADC! website for the schedule."
   },
   {
     "objectID": "module-extras.html#code-club",
     "href": "module-extras.html#code-club",
     "title": "Extra Meetings",
     "section": "Code Club",
-    "text": "Code Club\nThe Code Club is an outreach-based initiative that aims to help schoolstudents learn programming and data science. Our first Code Club will be held regularly on  from xxx to yyy. This is an opportunity for you to help mentor younger students - it is fun, rewarding, and a great way to build your CV."
-  },
-  {
-    "objectID": "module-extras.html#hackathon",
-    "href": "module-extras.html#hackathon",
-    "title": "Extra Meetings",
-    "section": "Hackathon",
-    "text": "Hackathon\nOur first hackathon will be held on  from 10am to 12pm. This is an epic late-nighter where we work on our projects together"
+    "text": "Code Club\nThe Code Club is an outreach-based initiative that aims to help school students learn programming and data science. Our first Code Club will be held regularly (keep your eyes open for announcements). This is an opportunity for you to help mentor younger students - it is fun, rewarding, and a great way to build your CV."
   },
   {
     "objectID": "index.html",
@@ -1268,7 +1261,7 @@
     "href": "module-faq.html",
     "title": "FAQ",
     "section": "",
-    "text": "Immediate feedback is available for every commit to the Github Repository for each assessment (via the actions tab). Further feedback and marks will also be given overall four working weeks after the deadline (not accounting for the two weeks of winter holidays), for the week of January 19th 2026",
+    "text": "Feedback is available during class each week. Further feedback and marks will also be given overall four working weeks after the deadline.",
     "crumbs": [
       "FAQ"
     ]
@@ -1278,7 +1271,7 @@
     "href": "module-faq.html#when-will-i-get-feedback-for-assessment-1-problem-sets",
     "title": "FAQ",
     "section": "",
-    "text": "Immediate feedback is available for every commit to the Github Repository for each assessment (via the actions tab). Further feedback and marks will also be given overall four working weeks after the deadline (not accounting for the two weeks of winter holidays), for the week of January 19th 2026",
+    "text": "Feedback is available during class each week. Further feedback and marks will also be given overall four working weeks after the deadline.",
     "crumbs": [
       "FAQ"
     ]
@@ -1288,7 +1281,7 @@
     "href": "module-faq.html#what-is-the-deadline-for-problem-set-assessments",
     "title": "FAQ",
     "section": "What is the deadline for problem set assessments?",
-    "text": "What is the deadline for problem set assessments?\nSubmission Deadline: 15.00 on 2025-12-11 (Thursday, 11 Dec), by which time and date all of your problems sets must be completed and submitted to gain credit for them.\nThis is the ultimate deadline for problem sets, set by the university and it can be found in the SQ4007 Assessment (problem set) document linked on the Harper Adams module page.\nHowever, there are several suggested deadlines for each problem set, which might cause confusion. The weekly deadlines on the schedule are the (strongly) suggested pace of work to keep up with the module. They are not the ultimate deadline for the problem set assessment (i.e. you can submit your problem sets and still gain credit up to the ultimate deadline).",
+    "text": "What is the deadline for problem set assessments?\nThis is the ultimate deadline for problem sets, set by the university and it can be found in the SQ4007 Assessment (problem set) document linked on the Harper Adams module page. We strongly recommend keeping up with these assignments each week!",
     "crumbs": [
       "FAQ"
     ]
@@ -1298,27 +1291,7 @@
     "href": "module-faq.html#can-i-work-ahead-on-the-problem-sets",
     "title": "FAQ",
     "section": "Can I work ahead on the problem sets?",
-    "text": "Can I work ahead on the problem sets?\nYes, you can work ahead on the problem sets, in the sense it is possible and you are not restricted from doing so if they have already been posted in advance. However, we’d prefer you consider doing them on the suggested pace of work, as this will allow you to work as a cohort and make full use of the co-coding sessions during classtime and to interact with your classmates.\n\n\n\n\n\n\nHow do I log into The Sandbox coding environment?\n\n\n\n\n\n\n\n\n\nHow do I submit my problem set assignments?",
-    "crumbs": [
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "module-faq.html#how-do-i-log-into-the-sandbox-coding-environment",
-    "href": "module-faq.html#how-do-i-log-into-the-sandbox-coding-environment",
-    "title": "FAQ",
-    "section": "How do I log into The Sandbox coding environment?",
-    "text": "How do I log into The Sandbox coding environment?",
-    "crumbs": [
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "module-faq.html#how-do-i-submit-my-problem-set-assignments",
-    "href": "module-faq.html#how-do-i-submit-my-problem-set-assignments",
-    "title": "FAQ",
-    "section": "How do I submit my problem set assignments?",
-    "text": "How do I submit my problem set assignments?",
+    "text": "Can I work ahead on the problem sets?\nYes, you can work ahead on the problem sets, in the sense it is possible and you are not restricted from doing so if they have already been posted in advance. However, we’d prefer you consider doing them on the suggested pace of work, as this will allow you to work as a cohort and make full use of the co-coding sessions during classtime and to interact with your classmates.",
     "crumbs": [
       "FAQ"
     ]
@@ -1334,31 +1307,11 @@
     ]
   },
   {
-    "objectID": "module-faq.html#why-do-i-keep-running-out-of-github-codespace-time",
-    "href": "module-faq.html#why-do-i-keep-running-out-of-github-codespace-time",
-    "title": "FAQ",
-    "section": "Why do I keep running out of GitHub Codespace time?",
-    "text": "Why do I keep running out of GitHub Codespace time?\nThere are two types of Codespaces usage: compute and storage. Each month as you use Codespaces, your compute and storage usage is deducted from the quota of free usage that’s included in your personal GitHub account until either compute or storage is consumed.\nOnce one of those limits is reached, your use of GitHub Codespaces will be restricted. You will not be able to create new Codespaces or open existing Codespaces, until the monthly quota renews in the following month.\nStandard allowance is 15GB-hours of storage per month and 120 hours of compute time. If you sign up to GitHub Education, this increases to 20GB-hours and 180 hours of compute time. Highly recommend doing this - it can take 72 hours to be confirmed following application\n\nHow can I get the most out of my Codespace time?\nSome tips from GitHub for making allowed usage go further:\n\nYour codespaces consume compute usage while they are running. If you’re not using a codespace, stopping the codespace prevents unnecessary compute usage. See Stopping and starting a codespace.\nYou can reduce the idle timeout for Codespaces in your personal settings to less than the default 30 minutes. This will shorten the period of inactivity before your codespaces are automatically stopped. This can save on compute usage. See Setting your timeout period for GitHub Codespaces.\nYour codespaces consume storage while they exist. You should delete a codespace you have finished using and know that you will not use again. See Deleting a codespace.\nConfigure your retention period to ensure codespaces you forget to delete are deleted automatically. The default retention period is 30 days. See Configuring automatic deletion of your codespaces.\nVisual Studio Code extensions consume storage. Make sure you are only installing extensions that you need. You can find out how much space is being used by extensions by running this command in your codespace.\n\ndu -h -s ~/.vscode-remote/extensions\n\nMonitor your compute and storage usage by going to your billing page on GitHub, and reviewing the figures in the “Codespaces” section.",
-    "crumbs": [
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "module-faq.html#large-file-detected-week-8-movies---large-file-error",
-    "href": "module-faq.html#large-file-detected-week-8-movies---large-file-error",
-    "title": "FAQ",
-    "section": "Large file detected! Week 8 Movies - Large file error",
-    "text": "Large file detected! Week 8 Movies - Large file error\nIf you’ve tried the week 8 problem set and found yourself getting an error when trying to commit your work to your github repository (or are about to start this problem and want to avoid the error altogether), follow the steps here.",
-    "crumbs": [
-      "FAQ"
-    ]
-  },
-  {
     "objectID": "module-faq.html#can-i-just-code-on-my-own-computer",
     "href": "module-faq.html#can-i-just-code-on-my-own-computer",
     "title": "FAQ",
     "section": "Can I just code on my own computer?",
-    "text": "Can I just code on my own computer?\nThe short answer is, heck yeah!! But, you will still need to use our Github Codespaces to submit your work.\nHowever, installing and configuring programming and editing software on your own computer is sometimes complicated and irritating, even for very experienced people. Configuring all the tools we will be using in The Sandbox to be exactly the same on your own computer, operating system, etc., will require advanced skills. Still, you can do it if you want to; most of the tools are open source and free and will work for most tasks. Also, we are here to help support you if you want to try.\nIf you want to explore this path, here are the main things you need to do:\nFor a start…\n\nDownload and install Python (&gt; v3.11): https://www.python.org/downloads/\nDownload and install VS Code (other editors are okay too): https://code.visualstudio.com/download\nInstall C/C++ in VS Code: https://code.visualstudio.com/docs/languages/cpp\nInstall Git: https://happygitwithr.com/install-git.html\nInstall the CS50 library: https://github.com/cs50/libcs50",
+    "text": "Can I just code on my own computer?\nThe short answer is, heck yeah!!, with caveats.\nInstalling and configuring programming and editing software on your own computer is sometimes complicated and irritating, even for very experienced people. Configuring all the tools we will be using in The Sandbox to be exactly the same on your own computer, operating system, etc., will require advanced skills. Still, you can attempt to do it if you want to; most of the tools are open source and free and will work for most tasks. Also, we are here to help support you if you want to try.\nIf you want to explore this path, here are the main things you need to do:\nFor a start…\n\nDownload and install Python (&gt; v3.11): https://www.python.org/downloads/\nDownload and install VS Code (other editors are okay too): https://code.visualstudio.com/download\nInstall and set configure Git: https://happygitwithr.com/install-git.html",
     "crumbs": [
       "FAQ"
     ]
@@ -1378,7 +1331,7 @@
     "href": "module-syllabus.html",
     "title": "Syllabus",
     "section": "",
-    "text": "Dr. Ed Harris, Module Leader, Data Scientist, Statistician, and coffee enthusiast.\n\n\n\n\n\nDr. Megan Lewis, Assistant Lecturer, Data Scientist",
+    "text": "Dr. Ed Harris, Module Leader, Data Scientist, Statistician, and coffee enthusiast. NB Ed is away for the beginning of the Spring semester.",
     "crumbs": [
       "Syllabus"
     ]
@@ -1388,7 +1341,7 @@
     "href": "module-syllabus.html#your-instructors",
     "title": "Syllabus",
     "section": "",
-    "text": "Dr. Ed Harris, Module Leader, Data Scientist, Statistician, and coffee enthusiast.\n\n\n\n\n\nDr. Megan Lewis, Assistant Lecturer, Data Scientist",
+    "text": "Dr. Ed Harris, Module Leader, Data Scientist, Statistician, and coffee enthusiast. NB Ed is away for the beginning of the Spring semester.",
     "crumbs": [
       "Syllabus"
     ]
@@ -1398,7 +1351,7 @@
     "href": "module-syllabus.html#learning-objectives",
     "title": "Syllabus",
     "section": "Learning objectives",
-    "text": "Learning objectives\n\nAnalyse and solve problems using computational thinking, applying fundamental concepts of computer science\nDesign and implement algorithms in different programming languages\nEvaluate and improve the correctness, design, and style of code\nSynthesise knowledge of programming concepts to create apps\nApply the principles of data management for the storage and retrieval of information",
+    "text": "Learning objectives\n\nAnalyse and apply programming concepts to develop functional code, showcasing the ability to interpret and create basic programming structures.\nConstruct and execute scripts, using loops, conditionals, and data structures, demonstrating comprehension and practical application.\nEvaluate and debug code, applying systematic approaches to identify and resolve coding issues, enhancing code reliability and performance.\nCreate and manipulate classes and objects, illustrating understanding of object-oriented programming principles.\nSynthesise knowledge of programming to develop solutions for real-world problems, demonstrating creativity and adaptability in coding.",
     "crumbs": [
       "Syllabus"
     ]
@@ -1408,7 +1361,7 @@
     "href": "module-syllabus.html#meetings",
     "title": "Syllabus",
     "section": "Meetings",
-    "text": "Meetings\nMeetings will be held in person in Telford, Station Quarter. Autumn 2025: Check your personal schedule for room, day, time.\nNotes and brief lectures will introduce the weekly topic and sometimes involve live coding demonstration of key concepts. Lectures and notes should be reviewed prior to attending each weekly session.\nTutorials and activities will demonstrate concepts relevant to various scenarios, with a focus on the problem solving during our live sessions. Tutorials will often be demonstrated and should also be completed individually. That is, run the code yourself.\nFlipped classroom will be used exclusively for this module. This reverses traditional teaching by having students go through new material independently, through videos or readings, before class meetings. Then, class time is used for discussion, problem-solving, assessments, and applying ideas. This lets students work through content at their own pace and ensures that support from teachers and peers is available when tackling challenging concepts. The idea is to make learning more active, collaborative, and confidence-building. Also, it is usually more fun than traditional lectures!\nMaterial may be livestreamed to YouTube and recorded for later viewing.",
+    "text": "Meetings\nMeetings will be held in person in Telford, Station Quarter. Spring 2025: Check your personal schedule for room, day, time.\nNotes and brief lectures will introduce the weekly topic and sometimes involve live coding demonstration of key concepts. Lectures and notes should be reviewed prior to attending each weekly session.\nFlipped classroom will be used exclusively for this module. This reverses traditional teaching by having students go through new material independently, through videos or readings, before class meetings. Then, class time is used for discussion, problem-solving, assessments, and applying ideas. This lets students work through content at their own pace and ensures that support from teachers and peers is available when tackling challenging concepts. The idea is to make learning more active, collaborative, and confidence-building. Also, it is usually more fun than traditional lectures!\nMaterial may be livestreamed or otherwise recorded for later viewing.",
     "crumbs": [
       "Syllabus"
     ]
@@ -1418,7 +1371,7 @@
     "href": "module-syllabus.html#online-resources",
     "title": "Syllabus",
     "section": "Online resources",
-    "text": "Online resources\nAll lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the module website. This material is completely open and accessible to all without login or other barriers.\nHarper Adams module website (university enrolled students only, requires login)\n\nDiscord - join the community - for live discussion and support (please set your server name to your real name, e.g. “Ed Harris”)\nGitHub - the module repository - for the module materials\nYouTube - The Statistics Lab channel - for live streams and recordings\nTwitch - The Statistics Lab channel - for live streams and recordings\nTwitter - Follow Ed’s account - for information, and memes",
+    "text": "Online resources\nAll lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the module website. This material is completely open and accessible to all without login or other barriers.\nHarper Adams module website (university enrolled students only, requires login)",
     "crumbs": [
       "Syllabus"
     ]
@@ -1428,7 +1381,7 @@
     "href": "module-syllabus.html#assessments",
     "title": "Syllabus",
     "section": "Assessments",
-    "text": "Assessments\n\nAssessment 1\nProblem Sets: These problem sets will typically be distributed throughout the module and are designed to test the grasp and application of programming concepts ranging from basic syntax to topics like data structures and algorithms. Each set will consist of practical tasks involving various programming challenges.\n\n\nAssessment 2\nProject: This is an opportunity to apply programming skills in developing your own software solution. This project encourages creativity and innovation, allowing you to choose an appropriate programming language and build an application that is personally meaningful, solves real-world problems, or potentially impacts the community or world at large.\nFor the project you can opt to work individually or collaborate with up to two other classmates, with the expectation that each member contributes equally to the project design and implementation. The complexity of the project should reflect the size of the group, with group projects expected to be more intricate than individual ones. The final project is assessed based on the project complexity and scope, the effectiveness of the implemented solution, creativity, and the overall quality of the code. For group projects, the assessment also considers individual contributions and the collaborative effort. NB for group projects, the scope and ambition of the project should reflect the size of the group.",
+    "text": "Assessments\n\nAssessment 1\nProblem Sets: These problem sets will typically be distributed throughout the module and are designed to test the grasp and application of programming concepts ranging from basic syntax to topics like data structures and algorithms. Each set will consist of practical tasks involving various programming challenges.\n\n\nAssessment 2\nProgramming challenge: At the end of the module is the programming challenge, offering students the opportunity to apply their programming skills in developing their own software application. This project encourages creativity and innovation, allowing students to choose any programming language and build an application that is personally meaningful, solves real-world problems, or potentially impacts the community or world at large. While students can opt to work individually, collaboration with up to two classmates is permitted, with the expectation that each member contributes equally to the project’s design and implementation. The complexity of the project should reflect the size of the group, with group projects expected to be more intricate than individual ones. The programming challenge is assessed based on the problem complexity and scope, the effectiveness of the implemented solution, creativity, and the overall quality of the code. For group projects, the assessment also considers individual contributions and the collaborative effort. NB for group projects, the scope and ambition of the project should reflect the size of the group.",
     "crumbs": [
       "Syllabus"
     ]
@@ -1438,7 +1391,7 @@
     "href": "module-syllabus.html#readings-optional",
     "title": "Syllabus",
     "section": "Readings (optional)",
-    "text": "Readings (optional)\nWhile there is no textbook for this module, these readings may be useful.\n—\nArticles (Classic papers in programming and computing)\nBeck, K., Cunningham, W., 1989. A laboratory for teaching object oriented thinking. ACM SIGPLAN Notices. Cited by 916.\nBrewer, E., 2012. CAP twelve years later: How the “rules” have changed. Computer 45, 23–29. Cited by 1024.\nBrooks, F., 1987. No Silver Bullet Essence and Accidents of Software Engineering. Computer 20, 10–19. Cited by 6089.\nCodd, E.F., 1970. A relational model of data for large shared data banks. Commun. ACM 13, 377–387. Cited by 15263.\nDijkstra, E.W., 1988. On the cruelty of really teaching computing science. Cited by 668.\nDijkstra, E.W., 1972. The humble programmer. Commun. ACM 15, 859–866. Cited by 1550.\nDijkstra, E.W., 1968. Letters to the editor: go to statement considered harmful. Commun. ACM 11, 147–148. Cited by 2233.\nGoldberg, D., 1991. What every computer scientist should know about floating-point arithmetic. ACM Comput. Surv. 23, 5–48. Cited by 3169.\nHoare, C., 1969. An axiomatic basis for computer programming. Communications of the ACM. Cited by 9912.\nStroustrup, B., 1988. What is object-oriented programming? IEEE Software 5, 10–20. Cited by 409.\nThompson, K., 1984. Reflections on trusting trust. Commun. ACM 27, 761–763. Cited by 1213.\n\nBlogs (Classic writings by data science leaders)\nJulia Silge’s Blog :: Andrew Gelman’s Blog :: Simply Statistics :: R bloggers :: Ethan Mollick’s Blog\n\nBooks (Classic texts and essay collections about computing)\nBentley, J., 1988. More Programming Pearls: Confessions of a Coder: Confessions of a Coder. Addison-Wesley.\nBhargava, A., 2024. Grokking Algorithms. Manning.\nHermans, F., 2021. The Programmer’s Brain: What every programmer needs to know about cognition. Manning.\nHunt, A., Thomas, D., 1999. The Pragmatic Programmer: From Journeyman to Master. Addison-Wesley.\nKenett, R.S., Redman, T.C., 2019. The Real Work of Data Science: Turning data into information, better decisions, and stronger organizations. Wiley.\nMcConnell, S., 2004. Code Complete: A Practical Handbook of Software Construction, Second Edition. Microsoft Press.",
+    "text": "Readings (optional)\nWhile there is no textbook for this module, these readings may be useful.\nShaw, Z. (2024) Learn Python the Hard Way. 5th edition. Hoboken: Addison-Wesley Professional.\nSweigart, A. (2019) Automate the Boring Stuff with Python, 2nd Edition: Practical Programming for Total Beginners. 2nd edition. San Francisco: No Starch Press.",
     "crumbs": [
       "Syllabus"
     ]

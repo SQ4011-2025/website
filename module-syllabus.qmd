@@ -4,41 +4,31 @@ title: "Syllabus"
 
 ## Your instructors
 
-[![Dr. Ed Harris, Module Leader, Data Scientist, Statistician, and coffee enthusiast.](images/team/ed.png){fig-align="left" width="200"}](https://weharris.me)
-
-![Dr. Megan Lewis, Assistant Lecturer, Data Scientist](images/team/MeganLewis.jpeg){fig-align="left" width="200"}
+[![Dr. Ed Harris, Module Leader, Data Scientist, Statistician, and coffee enthusiast. NB Ed is away for the beginning of the Spring semester.](images/team/ed.png){fig-align="left" width="200"}](https://weharris.me)
 
 ## Learning objectives
 
-1.  Analyse and solve problems using computational thinking, applying fundamental concepts of computer science
-2.  Design and implement algorithms in different programming languages
-3.  Evaluate and improve the correctness, design, and style of code
-4.  Synthesise knowledge of programming concepts to create apps
-5.  Apply the principles of data management for the storage and retrieval of information
+1.	Analyse and apply programming concepts to develop functional code, showcasing the ability to interpret and create basic programming structures.
+2.	Construct and execute scripts, using loops, conditionals, and data structures, demonstrating comprehension and practical application.
+3.	Evaluate and debug code, applying systematic approaches to identify and resolve coding issues, enhancing code reliability and performance.
+4.	Create and manipulate classes and objects, illustrating understanding of object-oriented programming principles.
+5.	Synthesise knowledge of programming to develop solutions for real-world problems, demonstrating creativity and adaptability in coding.
 
 ## Meetings
 
-**Meetings** will be held in person in Telford, Station Quarter. Autumn 2025: Check your personal schedule for room, day, time.
+**Meetings** will be held in person in Telford, Station Quarter. Spring 2025: Check your personal schedule for room, day, time.
 
 **Notes and brief lectures** will introduce the weekly topic and sometimes involve live coding demonstration of key concepts. Lectures and notes should be reviewed prior to attending each weekly session.
 
-**Tutorials and activities** will demonstrate concepts relevant to various scenarios, with a focus on the problem solving during our live sessions. Tutorials will often be demonstrated and should also be completed individually. That is, run the code yourself.
-
 **Flipped classroom** will be used exclusively for this module. This reverses traditional teaching by having students go through new material independently, through videos or readings, before class meetings. Then, class time is used for discussion, problem-solving, assessments, and applying ideas. This lets students work through content at their own pace and ensures that support from teachers and peers is available when tackling challenging concepts. The idea is to make learning more active, collaborative, and confidence-building. Also, it is usually more fun than traditional lectures!
 
-Material may be livestreamed to YouTube and recorded for later viewing.
+Material may be livestreamed or otherwise recorded for later viewing.
 
 ## Online resources
 
 All lecture notes, assignment instructions, an up-to-date schedule, and other course materials may be found on the [module website](SQ4007-2025.github.io/website). This material is completely open and accessible to all without login or other barriers.
 
-[Harper Adams module website](https://vle.harper-adams.ac.uk/course/view.php?id=282) (university enrolled students only, requires login)
-
--   [Discord - join the community](https://discord.gg/QqHhD7S7vU) - for live discussion and support (please set your server name to your real name, e.g. "Ed Harris")
--   [GitHub - the module repository](https://github.com/SQ4007-2025) - for the module materials
--   [YouTube - The Statistics Lab channel](https://www.youtube.com/@thestatisticslab) - for live streams and recordings
--   [Twitch - The Statistics Lab channel](https://www.twitch.tv/thestatisticslab) - for live streams and recordings
--   [Twitter - Follow Ed's account](https://x.com/EdHarris9000) - for information, and memes
+[Harper Adams module website](https://vle.harper-adams.ac.uk/course/view.php?id=286) (university enrolled students only, requires login)
 
 ## Assessments
 
@@ -48,61 +38,16 @@ All lecture notes, assignment instructions, an up-to-date schedule, and other co
 
 ### Assessment 2
 
-**Project:** This is an opportunity to apply programming skills in developing your own software solution. This project encourages creativity and innovation, allowing you to choose an appropriate programming language and build an application that is personally meaningful, solves real-world problems, or potentially impacts the community or world at large.
-
-For the project you can opt to work individually or collaborate with up to two other classmates, with the expectation that each member contributes equally to the project design and implementation. The complexity of the project should reflect the size of the group, with group projects expected to be more intricate than individual ones. The final project is assessed based on the project complexity and scope, the effectiveness of the implemented solution, creativity, and the overall quality of the code. For group projects, the assessment also considers individual contributions and the collaborative effort. ***NB*** for group projects, the scope and ambition of the project should reflect the size of the group.
+**Programming challenge:** At the end of the module is the programming challenge, offering students the opportunity to apply their programming skills in developing their own software application. This project encourages creativity and innovation, allowing students to choose any programming language and build an application that is personally meaningful, solves real-world problems, or potentially impacts the community or world at large. While students can opt to work individually, collaboration with up to two classmates is permitted, with the expectation that each member contributes equally to the project's design and implementation. The complexity of the project should reflect the size of the group, with group projects expected to be more intricate than individual ones. The programming challenge is assessed based on the problem complexity and scope, the effectiveness of the implemented solution, creativity, and the overall quality of the code. For group projects, the assessment also considers individual contributions and the collaborative effort. ***NB*** for group projects, the scope and ambition of the project should reflect the size of the group.
 
 ## Readings (optional)
 
 While there is no textbook for this module, these readings may be useful.
 
-**---**
+Shaw, Z. (2024) Learn Python the Hard Way. 5th edition. Hoboken: Addison-Wesley Professional.
 
-**Articles** (Classic papers in programming and computing)
+Sweigart, A. (2019) Automate the Boring Stuff with Python, 2nd Edition: Practical Programming for Total Beginners. 2nd edition. San Francisco: No Starch Press.
 
-[Beck, K., Cunningham, W., 1989. A laboratory for teaching object oriented thinking. ACM SIGPLAN Notices. Cited by 916.](pdfs/Beck%20and%20Cunningham%20-%201989%20-%20A%20laboratory%20for%20teaching%20object%20oriented%20thinking.pdf)
-
-[Brewer, E., 2012. CAP twelve years later: How the "rules" have changed. Computer 45, 23–29. Cited by 1024.](pdfs/Brewer%20-%202012%20-%20CAP%20twelve%20years%20later%20How%20the%20rules%20have%20changed.pdf)
-
-[Brooks, F., 1987. No Silver Bullet Essence and Accidents of Software Engineering. Computer 20, 10–19. Cited by 6089.](pdfs/Brooks%20-%201987%20-%20No%20Silver%20Bullet%20Essence%20and%20Accidents%20of%20Software%20Engineering.pdf)
-
-[Codd, E.F., 1970. A relational model of data for large shared data banks. Commun. ACM 13, 377–387. Cited by 15263.](pdfs/Codd%20-%201970%20-%20A%20relational%20model%20of%20data%20for%20large%20shared%20data%20banks.pdf)
-
-[Dijkstra, E.W., 1988. On the cruelty of really teaching computing science. Cited by 668.](pdfs/Dijkstra%20-%20On%20the%20cruelty%20of%20really%20teaching%20computing%20science.pdf)
-
-[Dijkstra, E.W., 1972. The humble programmer. Commun. ACM 15, 859–866. Cited by 1550.](pdfs/Dijkstra%20-%201972%20-%20The%20humble%20programmer.pdf)
-
-[Dijkstra, E.W., 1968. Letters to the editor: go to statement considered harmful. Commun. ACM 11, 147–148. Cited by 2233.](pdfs/Dijkstra%20-%201968%20-%20Letters%20to%20the%20editor%20go%20to%20statement%20considered%20harmful.pdf)
-
-[Goldberg, D., 1991. What every computer scientist should know about floating-point arithmetic. ACM Comput. Surv. 23, 5–48. Cited by 3169.](pdfs/Goldberg%20-%201991%20-%20What%20every%20computer%20scientist%20should%20know%20about%20floating-point%20arithmetic.pdf)
-
-[Hoare, C., 1969. An axiomatic basis for computer programming. Communications of the ACM. Cited by 9912.](pdfs/Hoare%20-%201969%20-%20An%20axiomatic%20basis%20for%20computer%20programming.pdf)
-
-[Stroustrup, B., 1988. What is object-oriented programming? IEEE Software 5, 10–20. Cited by 409.](pdfs/Stroustrup%20-%201988%20-%20What%20is%20object-oriented%20programming.pdf)
-
-[Thompson, K., 1984. Reflections on trusting trust. Commun. ACM 27, 761–763. Cited by 1213.](pdfs/Thompson%20-%201984%20-%20Reflections%20on%20trusting%20trust.pdf)
-
-------------------------------------------------------------------------
-
-**Blogs** (Classic writings by data science leaders)
-
-[Julia Silge's Blog](https://juliasilge.com/blog/) :: [Andrew Gelman's Blog](https://statmodeling.stat.columbia.edu/) :: [Simply Statistics](https://simplystatistics.org/) :: [R bloggers](https://www.r-bloggers.com/) :: [Ethan Mollick's Blog](https://www.oneusefulthing.org/)
-
-------------------------------------------------------------------------
-
-**Books** (Classic texts and essay collections about computing)
-
-Bentley, J., 1988. More Programming Pearls: Confessions of a Coder: Confessions of a Coder. Addison-Wesley.
-
-Bhargava, A., 2024. Grokking Algorithms. Manning.
-
-Hermans, F., 2021. The Programmer’s Brain: What every programmer needs to know about cognition. Manning.
-
-Hunt, A., Thomas, D., 1999. The Pragmatic Programmer: From Journeyman to Master. Addison-Wesley.
-
-Kenett, R.S., Redman, T.C., 2019. The Real Work of Data Science: Turning data into information, better decisions, and stronger organizations. Wiley.
-
-McConnell, S., 2004. Code Complete: A Practical Handbook of Software Construction, Second Edition. Microsoft Press.
 
 ## Five tips for success
 
