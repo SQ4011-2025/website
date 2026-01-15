@@ -734,18 +734,31 @@ elif x &gt; y:
 elif x == y:
     print("x is equal to y")</code></pre>
 <p>Notice how the use of <code>elif</code> allows the program to make fewer decisions. First, the <code>if</code> statement is evaluated. If this statement is found to be true, all the <code>elif</code> statements will not be run at all. However, if the <code>if</code> statement is evaluated and found to be false, the first <code>elif</code> will be evaluated. If this is true, it will not run the final evaluation.</p></li>
-<li><p>Our code can be represented as follows:</p>
-<pre class="mermaid"><code>flowchart TD
-  A([start]) --&gt; B{x &lt; y}
-  B -- True --&gt; C["#quot;x is less than y#quot;"]
-  B -- False --&gt; D{x &gt; y}
-  D -- True --&gt; E["#quot;x is greater than y#quot;"]
-  D -- False --&gt; F{x == y}
-  F -- True --&gt; G["#quot;x is equal to y#quot;"]
-  G --&gt; H([stop])
-  F -- False --&gt; H
-  C --&gt; H
-  E --&gt; H</code></pre></li>
+<li><p>Our code can be represented as follows:</p></li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">    flowchart TD
+      A([start]) --&gt; B{x &lt; y}
+      B -- True --&gt; C["#quot;x is less than y#quot;"]
+      B -- False --&gt; D{x &gt; y}
+      D -- True --&gt; E["#quot;x is greater than y#quot;"]
+      D -- False --&gt; F{x == y}
+      F -- True --&gt; G["#quot;x is equal to y#quot;"]
+      G --&gt; H([stop])
+      F -- False --&gt; H
+      C --&gt; H
+      E --&gt; H
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
 <li><p>While your computer may not notice a difference speed-wise between our first program and this revised program, consider how an online server running billions or trillions of these types of calculations each day could definitely be impacted by such a small coding decision.</p></li>
 <li><p>There is one final improvement we can make to our program. Notice how logically <code>elif x == y</code> is not a necessary evaluation to run. After all, if logically x is not less than y AND x is not greater than y, x MUST equal y. Therefore, we don’t have to run <code>elif x == y</code>. We can create a “catch-all,” default outcome using an <code>else</code> statement. We can revise as follows:</p>
 <pre><code>x = int(input("What's x? "))
@@ -758,17 +771,28 @@ elif x &gt; y:
 else:
     print("x is equal to y")</code></pre>
 <p>Notice how the relative complexity of this program has decreased through our revision.</p></li>
-<li><p>Our code can be represented as follows:</p>
-<pre class="mermaid"><code>flowchart TD
-  A([start]) --&gt; B{x &lt; y}
-  B -- True --&gt; C["#quot;x is less than y#quot;"]
-  B -- False --&gt; D{x &gt; y}
-  D -- True --&gt; E["#quot;x is greater than y#quot;"]
-  D -- False --&gt; F["#quot;x is equal to y#quot;"]
-  F --&gt; G([stop])
-  C --&gt; G
-  E --&gt; G</code></pre></li>
+<li><p>Our code can be represented as follows:</p></li>
 </ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">    flowchart TD
+      A([start]) --&gt; B{x &lt; y}
+      B -- True --&gt; C["#quot;x is less than y#quot;"]
+      B -- False --&gt; D{x &gt; y}
+      D -- True --&gt; E["#quot;x is greater than y#quot;"]
+      D -- False --&gt; F["#quot;x is equal to y#quot;"]
+      F --&gt; G([stop])
+      C --&gt; G
+      E --&gt; G
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="or" class="level2">
 <h2 class="anchored" data-anchor-id="or">or</h2>
@@ -800,14 +824,25 @@ if x == y:
 else:
     print("x is not equal to y")</code></pre>
 <p>Notice that the <code>==</code> operator evaluates if what is on the left and right are equal to one another. The use of double equal signs is very important. If you use only one equal sign, an error will likely be thrown by the interpreter.</p></li>
-<li><p>Our code can be illustrated as follows:</p>
-<pre class="mermaid"><code>flowchart TD
-  A([start]) --&gt; B{x == y}
-  B -- True --&gt; C["#quot;x is equal to y#quot;"]
-  B -- False --&gt; E["#quot;x is not equal to y#quot;"]
-  C --&gt; F([stop])
-  E --&gt; F</code></pre></li>
+<li><p>Our code can be illustrated as follows:</p></li>
 </ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">    flowchart TD
+      A([start]) --&gt; B{x == y}
+      B -- True --&gt; C["#quot;x is equal to y#quot;"]
+      B -- False --&gt; E["#quot;x is not equal to y#quot;"]
+      C --&gt; F([stop])
+      E --&gt; F
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="and" class="level2">
 <h2 class="anchored" data-anchor-id="and">and</h2>

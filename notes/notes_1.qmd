@@ -97,7 +97,7 @@
 
 -   Our code can be represented as follows:
 
-    ``` mermaid
+    ```{mermaid}
     flowchart TD
       A([start]) --> B{x < y}
       B -- True --> C["#quot;x is less than y#quot;"]
@@ -131,7 +131,7 @@
 
 -   Our code can be represented as follows:
 
-    ``` mermaid
+    ```{mermaid}
     flowchart TD
       A([start]) --> B{x < y}
       B -- True --> C["#quot;x is less than y#quot;"]
@@ -189,7 +189,7 @@
 
 -   Our code can be illustrated as follows:
 
-    ``` mermaid
+    ```{mermaid}
     flowchart TD
       A([start]) --> B{x == y}
       B -- True --> C["#quot;x is equal to y#quot;"]
