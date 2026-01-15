@@ -20,7 +20,7 @@
 -   [`enumerate`](#enumerate)
 -   [Generators and Iterators](#generators-and-iterators)
 -   [Congratulations!](#congratulations)
--   [This was CS50!](#this-was-cs50)
+-   [This was Programming Concepts!](#this-was-programming-concepts)
 
 ## Et Cetera {#et-cetera}
 
@@ -592,7 +592,7 @@ You may already see that `number = input("Number: )"` returns a `string`, not an
 
     ```         
     def main():
-        yell("This is CS50")
+        yell("This is Programming Concepts")
 
 
     def yell(word):
@@ -609,7 +609,7 @@ You may already see that `number = input("Number: )"` returns a `string`, not an
 
     ```         
     def main():
-        yell(["This", "is", "CS50"])
+        yell(["This", "is", "Programming Concepts"])
 
 
     def yell(words):
@@ -649,7 +649,7 @@ You may already see that `number = input("Number: )"` returns a `string`, not an
 
     ```         
     def main():
-        yell("This", "is", "CS50")
+        yell("This", "is", "Programming Concepts")
 
 
     def yell(*words):
@@ -673,7 +673,7 @@ You may already see that `number = input("Number: )"` returns a `string`, not an
 
     ```         
     def main():
-        yell("This", "is", "CS50")
+        yell("This", "is", "Programming Concepts")
 
 
     def yell(*words):
@@ -959,7 +959,7 @@ You may already see that `number = input("Number: )"` returns a `string`, not an
 -   Most recently, you learned about object-oriented programming.
 -   Today, you learned about many other tools you can use.
 
-## This was CS50! {#this-was-cs50}
+## This was Programming Concepts! {#this-was-programming-concepts}
 
 -   Creating a final program together, type `code say.py` in your terminal window and code as follows:
 
@@ -978,4 +978,4 @@ You may already see that `number = input("Number: )"` returns a `string`, not an
 
 -   Our great hope is that you will use what you learned in this course to address real problems in the world, making our globe a better place.
 
--   This was CS50!
+-   This was Programming Concepts!

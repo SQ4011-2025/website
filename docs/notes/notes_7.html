@@ -916,7 +916,7 @@ if re.search(r"^\w+@\w+\.edu$", email, re.IGNORECASE):
 else:
     print("Invalid")</code></pre>
 <p>Notice how we added a third parameter <code>re.IGNORECASE</code>. Running this program with <code>MALAN@HARVARD.EDU</code>, the input is now considered valid.</p></li>
-<li><p>Consider the following email address <code>malan@cs50.harvard.edu</code>. Using our code above, this would be considered invalid. Why might that be?</p></li>
+<li><p>Consider the following email address <code>importantProfessor@harper-adams.edu</code>. Using our code above, this would be considered invalid. Why might that be?</p></li>
 <li><p>Since there is an additional <code>.</code>, the program considers this invalid.</p></li>
 <li><p>It turns out that we can, looking at our vocabulary from before, we can group together ideas.</p>
 <pre><code>A|B     either A or B
@@ -931,7 +931,7 @@ if re.search(r"^\w+@(\w+\.)?\w+\.edu$", email, re.IGNORECASE):
     print("Valid")
 else:
     print("Invalid")</code></pre>
-<p>Notice how the <code>(\w+\.)?</code> communicates to the interpreter that this new expression can be there once or not at all. Hence, both <code>malan@cs50.harvard.edu</code> and <code>malan@harvard.edu</code> are considered valid.</p></li>
+<p>Notice how the <code>(\w+\.)?</code> communicates to the interpreter that this new expression can be there once or not at all. Hence, both <code>importantProfessor@harper-adams.edu</code> and <code>importantProfessor@agridat.harper-adams.edu</code> are considered valid.</p></li>
 <li><p>Interestingly enough, the edits we have done so far to our code do not fully encompass all the checking that could be done to ensure a valid email address. Indeed, here is the full expression that one would have to type to ensure that a valid email is inputted:</p>
 <pre><code>^[a-zA-Z0-9.!#$%&amp;'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$</code></pre></li>
 <li><p>There are other functions within the <code>re</code> library you might find useful. <code>re.match</code> and <code>re.fullmatch</code> are ones you might find exceedingly useful.</p></li>
