@@ -103,46 +103,27 @@ website:
             text: "Notes 09 🐍"
       - section: "Code"
         contents:
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src1
-            text: "Code 01 🐈"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src2
-            text: "Code 02 🟢"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src3
-            text: "Code 03 🟢"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src4
-            text: "Code 04 🟢"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src5
-            text: "Code 05 🟢"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src6
-            text: "Code 06 🟢"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src7
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src0
+            text: "Code 00 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src1
+            text: "Code 01 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src2
+            text: "Code 02 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src3
+            text: "Code 03 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src4
+            text: "Code 04 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src5
+            text: "Code 05 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src6
+            text: "Code 06 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src7
             text: "Code 07 🐍"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src8
-            text: "Code 08 📊"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src9
-            text: "Code 09 🌐"
-          - href: https://github.com/SQ4007-2025/website/tree/master/code/src10
-            text: "Code 10 🐍"
-      - section: "Tutorials"
-        contents:
-          - href: tutorials/tutorial-week-2.qmd
-            text: "Tutorial 02 🟢"
-          - href: tutorials/tutorial-week-3.qmd
-            text: "Tutorial 03 🟢"
-          - href: tutorials/tutorial-week-4.qmd
-            text: "Tutorial 04 🟢"
-          - href: tutorials/tutorial-week-5.qmd
-            text: "Tutorial 05 🟢"
-          - href: tutorials/tutorial-week-6.qmd
-            text: "Tutorial 06 🟢"
-          - href: tutorials/tutorial-week-7.qmd
-            text: "Tutorial 07 🐍"
-          - href: tutorials/tutorial-week-8.qmd
-            text: "Tutorial 08 📊"
-          - href: tutorials/tutorial-week-9.qmd
-            text: "Tutorial 09 🌐"
-          - href: tutorials/tutorial-week-10.qmd
-            text: "Tutorial 10 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src8
+            text: "Code 08 🐍"
+          - href: https://github.com/SQ4011-2025/website/tree/master/code/src9
+            text: "Code 09 🐍"
+
       - section: "Problem Sets"
         contents:
           - href: problems/pset_0/pset_0.md
