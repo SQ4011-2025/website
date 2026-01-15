@@ -807,7 +807,7 @@ if len(sys.argv) == 2:
 <li><p>APIs or “application program interfaces” allow you to connect to the code of others.</p></li>
 <li><p><code>requests</code> is a package that allows your program to behave as a web browser would.</p></li>
 <li><p>In your terminal, type <code>pip install requests</code>. Then, type <code>code itunes.py</code>.</p></li>
-<li><p>It turns out that Apple iTunes has its own API that you can access in your programs. In your internet browser, you can visit <a href="https://itunes.apple.com/search?entity=song&amp;limit=1&amp;term=weezer" class="uri">https://itunes.apple.com/search?entity=song&amp;limit=1&amp;term=weezer</a> and a text file will be downloaded. David constructed this URL by reading Apple’s API documentation. Notice how this query is looking for a <code>song</code>, with a <code>limit</code> of one result, that relates to the <code>term</code> called <code>weezer</code>. Looking at this text file that is downloaded, you might find the format to be similar to that we’ve programmed previously in Python.</p></li>
+<li><p>It turns out that Apple iTunes has its own API that you can access in your programs. In your internet browser, you can visit <a href="https://itunes.apple.com/search?entity=song&amp;limit=1&amp;term=weezer" class="uri">https://itunes.apple.com/search?entity=song&amp;limit=1&amp;term=weezer</a> and a text file will be downloaded. This URL was constructed by reading Apple’s API documentation. Notice how this query is looking for a <code>song</code>, with a <code>limit</code> of one result, that relates to the <code>term</code> called <code>weezer</code>. Looking at this text file that is downloaded, you might find the format to be similar to that we’ve programmed previously in Python.</p></li>
 <li><p>The format in the downloaded text file is called JSON, a text-based format that is used to exchange text-based data between applications. Literally, Apple is providing a JSON file that we could interpret in our own Python program.</p></li>
 <li><p>In the terminal window, type <code>code itunes.py</code>. Code as follows:</p>
 <pre><code>import requests
@@ -818,7 +818,7 @@ if len(sys.argv) != 2:
 
 response = requests.get("https://itunes.apple.com/search?entity=song&amp;limit=1&amp;term=" + sys.argv[1])
 print(response.json())</code></pre>
-<p>Notice how the returned value of <code>requests.get</code> will be stored in <code>response</code>. David, having read the Apple documentation about this API, knows that what is returned is a JSON file. Running <code>python itunes.py weezer</code>, you will see the JSON file returned by Apple. However, the JSON response is converted by Python into a dictionary. Looking at the output, it can be quite dizzying!</p></li>
+<p>Notice how the returned value of <code>requests.get</code> will be stored in <code>response</code>. Having read the Apple documentation about this API, you’d know that what is returned is a JSON file. Running <code>python itunes.py weezer</code>, you will see the JSON file returned by Apple. However, the JSON response is converted by Python into a dictionary. Looking at the output, it can be quite dizzying!</p></li>
 <li><p>It turns out that Python has a built-in JSON library that can help us interpret the data received. Modify your code as follows:</p>
 <pre><code>import json
 import requests
