@@ -664,12 +664,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Problem Set 08 🐍</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../problems/pset_9/pset_9.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Problem Set 09 🐍</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -682,13 +676,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#nutrition-facts" id="toc-nutrition-facts" class="nav-link active" data-scroll-target="#nutrition-facts">Nutrition Facts</a></li>
-  <li><a href="#nutrition-facts-1" id="toc-nutrition-facts-1" class="nav-link" data-scroll-target="#nutrition-facts-1">Nutrition Facts</a>
+  <li><a href="#nutrition-facts" id="toc-nutrition-facts" class="nav-link active" data-scroll-target="#nutrition-facts">Nutrition Facts</a>
   <ul class="collapse">
-  <li><a href="#demo" id="toc-demo" class="nav-link" data-scroll-target="#demo">Demo</a></li>
+  <li><a href="#hints" id="toc-hints" class="nav-link" data-scroll-target="#hints">Hints</a></li>
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before You Begin</a></li>
   <li><a href="#how-to-test" id="toc-how-to-test" class="nav-link" data-scroll-target="#how-to-test">How to Test</a></li>
-  <li><a href="#how-to-submit" id="toc-how-to-submit" class="nav-link" data-scroll-target="#how-to-submit">How to Submit</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/problems/pset_2/2.6_nutrition_facts.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -702,15 +694,11 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="nutrition-facts" class="level1">
 <h1>Nutrition Facts</h1>
-<p><strong>Week 2, Problem 6</strong></p>
-<p>Source: https://cs50.harvard.edu/python/psets/2/nutrition/</p>
 <hr>
-</section>
-<section id="nutrition-facts-1" class="level1">
-<h1>Nutrition Facts</h1>
 <p>The U.S. Food &amp; Drug Adminstration (FDA) offers <a href="https://www.fda.gov/food/food-labeling-nutrition/nutrition-information-raw-fruits-vegetables-and-fish">downloadable/printable posters</a> that “show nutrition information for the 20 most frequently consumed raw fruits … in the United States. Retail stores are welcome to download the posters, print, display and/or distribute them to consumers in close proximity to the relevant foods in the stores.”</p>
 <p>In a file called <code>nutrition.py</code>, implement a program that prompts consumers users to input a fruit (case-insensitively) and then outputs the number of calories in one portion of that fruit, per the <a href="Nutrition-Information-for-Raw-Fruits---small-PDF-Poster.pdf">FDA’s poster for fruits</a>, which is also <a href="https://www.fda.gov/food/food-labeling-nutrition/raw-fruits-poster-text-version-accessible-version">available as text</a>. Capitalization aside, assume that users will input fruits exactly as written in the poster (e.g., <code>strawberries</code>, not <code>strawberry</code>). Ignore any input that isn’t a fruit.</p>
-<p>Hints</p>
+<section id="hints" class="level2">
+<h2 class="anchored" data-anchor-id="hints">Hints</h2>
 <ul>
 <li><p>Rather than use a conditional with 20 Boolean expressions, one for each fruit, better to use a <code>dict</code> to associate a fruit with its calories!</p></li>
 <li><p>If <code>k</code> is a <code>str</code> and <code>d</code> is a <code>dict</code>, you can check whether <code>k</code> is a key in <code>d</code> with code like:</p>
@@ -719,12 +707,10 @@ ul.task-list li input[type="checkbox"] {
 </code></pre></li>
 <li><p>Take care to output the fruit’s calories, not calories from fat!</p></li>
 </ul>
-<section id="demo" class="level2">
-<h2 class="anchored" data-anchor-id="demo">Demo</h2>
 </section>
 <section id="before-you-begin" class="level2">
 <h2 class="anchored" data-anchor-id="before-you-begin">Before You Begin</h2>
-<p>Log into <a href="https://cs50.dev/">cs50.dev</a>, click on your terminal window, and execute <code>cd</code> by itself. You should find that your terminal window’s prompt resembles the below:</p>
+<p>Execute <code>cd</code> by itself in your terminal window. You should find that your terminal window’s prompt resembles the below:</p>
 <pre><code>$
 </code></pre>
 <p>Next execute</p>
@@ -755,16 +741,6 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Run your program with <code>python nutrition.py</code>. Type <code>Tomato</code> and press Enter. Your program should output nothing.</p></li>
 </ul>
 <p>Be sure to try other fruits and vary the casing of your input. Your program should behave as expected, case-insensitively.</p>
-<p>You can execute the below to check your code using <code>check50</code>, a program that CS50 will use to test your code when you submit. But be sure to test it yourself as well!</p>
-<pre><code>check50 cs50/problems/2022/python/nutrition
-</code></pre>
-<p>Green smilies mean your program has passed a test! Red frownies will indicate your program output something unexpected. Visit the URL that <code>check50</code> outputs to see the input <code>check50</code> handed to your program, what output it expected, and what output your program actually gave.</p>
-</section>
-<section id="how-to-submit" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-submit">How to Submit</h2>
-<p>In your terminal, execute the below to submit your work.</p>
-<pre><code>submit50 cs50/problems/2022/python/nutrition
-</code></pre>
 
 
 </section>

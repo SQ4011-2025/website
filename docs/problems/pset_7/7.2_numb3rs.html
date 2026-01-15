@@ -664,12 +664,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Problem Set 08 🐍</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../problems/pset_9/pset_9.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Problem Set 09 🐍</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -682,13 +676,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#numb3rs" id="toc-numb3rs" class="nav-link active" data-scroll-target="#numb3rs">NUMB3RS</a></li>
-  <li><a href="#numb3rs-1" id="toc-numb3rs-1" class="nav-link" data-scroll-target="#numb3rs-1">NUMB3RS</a>
+  <li><a href="#numb3rs" id="toc-numb3rs" class="nav-link active" data-scroll-target="#numb3rs">NUMB3RS</a>
   <ul class="collapse">
-  <li><a href="#demo" id="toc-demo" class="nav-link" data-scroll-target="#demo">Demo</a></li>
+  <li><a href="#hints" id="toc-hints" class="nav-link" data-scroll-target="#hints">Hints</a></li>
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before You Begin</a></li>
   <li><a href="#how-to-test" id="toc-how-to-test" class="nav-link" data-scroll-target="#how-to-test">How to Test</a></li>
-  <li><a href="#how-to-submit" id="toc-how-to-submit" class="nav-link" data-scroll-target="#how-to-submit">How to Submit</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/problems/pset_7/7.2_numb3rs.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -702,12 +694,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="numb3rs" class="level1">
 <h1>NUMB3RS</h1>
-<p><strong>Week 7, Problem 2</strong></p>
-<p>Source: https://cs50.harvard.edu/python/psets/7/numb3rs/</p>
 <hr>
-</section>
-<section id="numb3rs-1" class="level1">
-<h1>NUMB3RS</h1>
 <p>In Season 5, Episode 23 of <a href="https://en.wikipedia.org/wiki/Numbers_(TV_series)">NUMB3RS</a>, a supposed <a href="https://en.wikipedia.org/wiki/IP_address">IP address</a> appears on screen, <code>275.3.6.28</code>, which isn’t actually a valid <a href="https://en.wikipedia.org/wiki/IPv4">IPv4</a> (or <a href="https://en.wikipedia.org/wiki/IPv6">IPv6</a>) address.</p>
 <p>An IPv4 address is a numeric identifier that a device (or, on TV, hacker) uses to communicate on the internet, akin to a postal address in the real world, typically formatted in <a href="https://en.wikipedia.org/wiki/Dot-decimal_notation">dot-decimal notation</a> as <code>#.#.#.#</code>. But each <code>#</code> should be a number between <code>0</code> and <code>255</code>, inclusive. Suffice it to say <code>275</code> is not in that range! If only NUMB3RS had validated the address in that scene!</p>
 <p>In a file called <code>numb3rs.py</code>, implement a function called <code>validate</code> that expects an IPv4 address as input as a <code>str</code> and then returns <code>True</code> or <code>False</code>, respectively, if that input is a valid IPv4 address or not.</p>
@@ -733,19 +720,18 @@ if __name__ == "__main__":
 <p>Either before or after you implement <code>validate</code> in <code>numb3rs.py</code>, additionally implement, in a file called <code>test_numb3rs.py</code>, <strong>two or more</strong> functions that collectively test your implementation of <code>validate</code> thoroughly, each of whose names should begin with <code>test_</code> so that you can execute your tests with:</p>
 <pre><code>pytest test_numb3rs.py
 </code></pre>
-<p>Hints</p>
+<section id="hints" class="level2">
+<h2 class="anchored" data-anchor-id="hints">Hints</h2>
 <ul>
 <li>Recall that the <code>re</code> module comes with quite a few functions, per <a href="https://docs.python.org/3/library/re.html">docs.python.org/3/library/re.html</a>, including <code>search</code>.</li>
 <li>Recall that regular expressions support quite a few special characters, per <a href="https://docs.python.org/3/library/re.html#regular-expression-syntax">docs.python.org/3/library/re.html#regular-expression-syntax</a>.</li>
 <li>Because backslashes in regular expressions could be mistaken for escape sequences (like <code>\n</code>), best to use <a href="https://docs.python.org/3/library/re.html#module-re">Python’s raw string notation for regular expression patterns</a>, else <code>pytest</code> will warn with <code>DeprecationWarning: invalid escape sequence</code>. Just as format strings are prefixed with <code>f</code>, so are raw strings prefixed with <code>r</code>. For instance, instead of <code>"harvard\.edu"</code>, use <code>r"harvard\.edu"</code>.</li>
 <li>Note that <code>re.search</code>, if passed a pattern with “capturing groups” (i.e., parentheses), returns a “match object,” per <a href="https://docs.python.org/3/library/re.html#match-objects">docs.python.org/3/library/re.html#match-objects</a>, wherein matches are 1-indexed, which you can access individually with <code>group</code>, per <a href="https://docs.python.org/3/library/re.html#re.Match.group">docs.python.org/3/library/re.html#re.Match.group</a>, or collectively with <code>groups</code>, per <a href="https://docs.python.org/3/library/re.html#re.Match.groups">docs.python.org/3/library/re.html#re.Match.groups</a>.</li>
 </ul>
-<section id="demo" class="level2">
-<h2 class="anchored" data-anchor-id="demo">Demo</h2>
 </section>
 <section id="before-you-begin" class="level2">
 <h2 class="anchored" data-anchor-id="before-you-begin">Before You Begin</h2>
-<p>Log into <a href="https://cs50.dev/">cs50.dev</a>, click on your terminal window, and execute <code>cd</code> by itself. You should find that your terminal window’s prompt resembles the below:</p>
+<p>Execute <code>cd</code> by itself in your terminal window. You should find that your terminal window’s prompt resembles the below:</p>
 <pre><code>$
 </code></pre>
 <p>Next execute</p>
@@ -786,19 +772,9 @@ if __name__ == "__main__":
 <li>Modify the <code>validate</code> function in the correct version of <code>numb3rs.py</code>. <code>validate</code> might, for example, only check whether the first byte of the IPv4 address is valid. Run your tests by executing <code>pytest test_numb3rs.py</code>. <code>pytest</code> should show that at least one of your tests has failed.</li>
 <li>Again modify the correct version of <code>numb3rs.py</code>. <code>validate</code> might, for example, mistakenly return <code>True</code> when the user inputs an incorrect IPv4 format. Run your tests by executing <code>pytest test_numb3rs.py</code>. <code>pytest</code> should show that at least one of your tests has failed.</li>
 </ul>
-<p>You can execute the below to check your code using <code>check50</code>, a program that CS50 will use to test your code when you submit. But be sure to test it yourself as well!</p>
-<pre><code>check50 cs50/problems/2022/python/numb3rs
-</code></pre>
-<p>Green smilies mean your program has passed a test! Red frownies will indicate your program output something unexpected. Visit the URL that <code>check50</code> outputs to see the input <code>check50</code> handed to your program, what output it expected, and what output your program actually gave.</p>
-</section>
-</section>
-<section id="how-to-submit" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-submit">How to Submit</h2>
-<p>In your terminal, execute the below to submit your work.</p>
-<pre><code>submit50 cs50/problems/2022/python/numb3rs
-</code></pre>
 
 
+</section>
 </section>
 </section>
 

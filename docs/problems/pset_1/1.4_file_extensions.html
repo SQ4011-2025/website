@@ -664,12 +664,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Problem Set 08 🐍</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../problems/pset_9/pset_9.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Problem Set 09 🐍</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -682,13 +676,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#file-extensions" id="toc-file-extensions" class="nav-link active" data-scroll-target="#file-extensions">File Extensions</a></li>
-  <li><a href="#file-extensions-1" id="toc-file-extensions-1" class="nav-link" data-scroll-target="#file-extensions-1">File Extensions</a>
+  <li><a href="#file-extensions" id="toc-file-extensions" class="nav-link active" data-scroll-target="#file-extensions">File Extensions</a>
   <ul class="collapse">
-  <li><a href="#demo" id="toc-demo" class="nav-link" data-scroll-target="#demo">Demo</a></li>
+  <li><a href="#hints" id="toc-hints" class="nav-link" data-scroll-target="#hints">Hints</a></li>
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before You Begin</a></li>
   <li><a href="#how-to-test" id="toc-how-to-test" class="nav-link" data-scroll-target="#how-to-test">How to Test</a></li>
-  <li><a href="#how-to-submit" id="toc-how-to-submit" class="nav-link" data-scroll-target="#how-to-submit">How to Submit</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/problems/pset_1/1.4_file_extensions.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -702,12 +694,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="file-extensions" class="level1">
 <h1>File Extensions</h1>
-<p><strong>Week 1, Problem 4</strong></p>
-<p>Source: https://cs50.harvard.edu/python/psets/1/extensions/</p>
 <hr>
-</section>
-<section id="file-extensions-1" class="level1">
-<h1>File Extensions</h1>
 <p>Even though Windows and macOS sometimes hide them, most files have <a href="https://en.wikipedia.org/wiki/Filename_extension">file extensions</a>, a suffix that starts with a period (<code>.</code>) at the end of their name. For instance, file names for <a href="https://en.wikipedia.org/wiki/GIF">GIFs</a> end with <code>.gif</code>, and file names for <a href="https://en.wikipedia.org/wiki/JPEG">JPEGs</a> end with <code>.jpg</code> or <code>.jpeg</code>. When you double-click on a file to open it, your computer uses its file extension to determine which program to launch.</p>
 <p>Web browsers, by contrast, rely on <a href="https://en.wikipedia.org/wiki/Media_type">media types</a>, formerly known as MIME types, to determine how to display files that live on the web. When you download a file from a web server, that server sends an <a href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields">HTTP header</a>, along with the file itself, indicating the file’s media type. For instance, the media type for a GIF is <code>image/gif</code>, and the media type for a JPEG is <code>image/jpeg</code>. To determine the media type for a file, a web server typically looks at the file’s extension, mapping one to the other.</p>
 <p>See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types</a> for common types.</p>
@@ -722,16 +709,15 @@ ul.task-list li input[type="checkbox"] {
 <li><code>.zip</code></li>
 </ul>
 <p>If the file’s name ends with some other suffix or has no suffix at all, output <code>application/octet-stream</code> instead, which is a common default.</p>
-<p>Hints</p>
+<section id="hints" class="level2">
+<h2 class="anchored" data-anchor-id="hints">Hints</h2>
 <ul>
 <li>Recall that a <code>str</code> comes with quite a few methods, per <a href="https://docs.python.org/3/library/stdtypes.html#string-methods">docs.python.org/3/library/stdtypes.html#string-methods</a>.</li>
 </ul>
-<section id="demo" class="level2">
-<h2 class="anchored" data-anchor-id="demo">Demo</h2>
 </section>
 <section id="before-you-begin" class="level2">
 <h2 class="anchored" data-anchor-id="before-you-begin">Before You Begin</h2>
-<p>Log into <a href="https://cs50.dev/">cs50.dev</a>, click on your terminal window, and execute <code>cd</code> by itself. You should find that your terminal window’s prompt resembles the below:</p>
+<p>Execute <code>cd</code> by itself in your terminal window. You should find that your terminal window’s prompt resembles the below:</p>
 <pre><code>$
 </code></pre>
 <p>Next execute</p>
@@ -758,16 +744,6 @@ ul.task-list li input[type="checkbox"] {
 </code></pre></li>
 </ul>
 <p>Be sure to test each of the other file formats, vary the casing of your input, and “accidentally” add spaces on either side of your input before pressing enter. Your program should behave as expected, case- and space-insensitively.</p>
-<p>You can execute the below to check your code using <code>check50</code>, a program that CS50 will use to test your code when you submit. But be sure to test it yourself as well!</p>
-<pre><code>check50 cs50/problems/2022/python/extensions
-</code></pre>
-<p>Green smilies mean your program has passed a test! Red frownies will indicate your program output something unexpected. Visit the URL that <code>check50</code> outputs to see the input <code>check50</code> handed to your program, what output it expected, and what output your program actually gave.</p>
-</section>
-<section id="how-to-submit" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-submit">How to Submit</h2>
-<p>In your terminal, execute the below to submit your work.</p>
-<pre><code>submit50 cs50/problems/2022/python/extensions
-</code></pre>
 
 
 </section>

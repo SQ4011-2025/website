@@ -664,12 +664,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Problem Set 08 🐍</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../problems/pset_9/pset_9.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Problem Set 09 🐍</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -682,13 +676,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#little-professor" id="toc-little-professor" class="nav-link active" data-scroll-target="#little-professor">Little Professor</a></li>
-  <li><a href="#little-professor-1" id="toc-little-professor-1" class="nav-link" data-scroll-target="#little-professor-1">Little Professor</a>
+  <li><a href="#little-professor" id="toc-little-professor" class="nav-link active" data-scroll-target="#little-professor">Little Professor</a>
   <ul class="collapse">
-  <li><a href="#demo" id="toc-demo" class="nav-link" data-scroll-target="#demo">Demo</a></li>
+  <li><a href="#hints" id="toc-hints" class="nav-link" data-scroll-target="#hints">Hints</a></li>
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before You Begin</a></li>
   <li><a href="#how-to-test" id="toc-how-to-test" class="nav-link" data-scroll-target="#how-to-test">How to Test</a></li>
-  <li><a href="#how-to-submit" id="toc-how-to-submit" class="nav-link" data-scroll-target="#how-to-submit">How to Submit</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/problems/pset_4/4.6_little_professor.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -702,12 +694,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="little-professor" class="level1">
 <h1>Little Professor</h1>
-<p><strong>Week 4, Problem 6</strong></p>
-<p>Source: https://cs50.harvard.edu/python/psets/4/professor/</p>
 <hr>
-</section>
-<section id="little-professor-1" class="level1">
-<h1>Little Professor</h1>
 <p>One of David’s first toys as a child, funny enough, was <a href="https://en.wikipedia.org/wiki/Little_Professor">Little Professor</a>, a “calculator” that would generate ten different math problems for David to solve. For instance, if the toy were to display <code>4 + 0 =</code> , David would (hopefully) answer with <code>4</code>. If the toy were to display <code>4 + 1 =</code> , David would (hopefully) answer with <code>5</code>. If David were to answer incorrectly, the toy would display <code>EEE</code>. And after three incorrect answers for the same problem, the toy would simply display the correct answer (e.g., <code>4 + 0 = 4</code> or <code>4 + 1 = 5</code>).</p>
 <p>In a file called <code>professor.py</code>, implement a program that:</p>
 <ul>
@@ -738,19 +725,18 @@ def generate_integer(level):
 if __name__ == "__main__":
     main()
 </code></pre>
-<p>Hints</p>
+<section id="hints" class="level2">
+<h2 class="anchored" data-anchor-id="hints">Hints</h2>
 <ul>
 <li><p>Note that you can raise an exception like <code>ValueError</code> with code like:</p>
 <pre><code>raise ValueError
 </code></pre></li>
 <li><p>Note that the <code>random</code> module comes with quite a few functions, per <a href="https://docs.python.org/3/library/random.html">docs.python.org/3/library/random.html</a>. Of particular interest, perhaps, are the functions specialized for returning integers, such as <code>randint</code> and <code>randrange</code>.</p></li>
 </ul>
-<section id="demo" class="level2">
-<h2 class="anchored" data-anchor-id="demo">Demo</h2>
 </section>
 <section id="before-you-begin" class="level2">
 <h2 class="anchored" data-anchor-id="before-you-begin">Before You Begin</h2>
-<p>Log into <a href="https://cs50.dev/">cs50.dev</a>, click on your terminal window, and execute <code>cd</code> by itself. You should find that your terminal window’s prompt resembles the below:</p>
+<p>Execute <code>cd</code> by itself in your terminal window. You should find that your terminal window’s prompt resembles the below:</p>
 <pre><code>$
 </code></pre>
 <p>Next execute</p>
@@ -789,16 +775,6 @@ if __name__ == "__main__":
 <p>and then move on to another question. Answer the remaining questions correctly. Your program should output a score of <code>9</code>.</p></li>
 <li><p>Run your program with <code>python professor.py</code>. Type <code>1</code> and press Enter. Answer all 10 questions correctly. Your program should output a score of <code>10</code>.</p></li>
 </ul>
-<p>You can execute the below to check your code using <code>check50</code>, a program that CS50 will use to test your code when you submit. But be sure to test it yourself as well!</p>
-<pre><code>check50 cs50/problems/2022/python/professor
-</code></pre>
-<p>Green smilies mean your program has passed a test! Red frownies will indicate your program output something unexpected. Visit the URL that <code>check50</code> outputs to see the input <code>check50</code> handed to your program, what output it expected, and what output your program actually gave.</p>
-</section>
-<section id="how-to-submit" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-submit">How to Submit</h2>
-<p>In your terminal, execute the below to submit your work.</p>
-<pre><code>submit50 cs50/problems/2022/python/professor
-</code></pre>
 
 
 </section>

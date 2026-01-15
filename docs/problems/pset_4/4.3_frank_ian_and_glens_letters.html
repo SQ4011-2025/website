@@ -664,12 +664,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Problem Set 08 🐍</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../problems/pset_9/pset_9.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Problem Set 09 🐍</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -682,13 +676,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#frank-ian-and-glens-letters" id="toc-frank-ian-and-glens-letters" class="nav-link active" data-scroll-target="#frank-ian-and-glens-letters">Frank, Ian and Glen’s Letters</a></li>
-  <li><a href="#frank-ian-and-glens-letters-1" id="toc-frank-ian-and-glens-letters-1" class="nav-link" data-scroll-target="#frank-ian-and-glens-letters-1">Frank, Ian and Glen’s Letters</a>
+  <li><a href="#frank-ian-and-glens-letters" id="toc-frank-ian-and-glens-letters" class="nav-link active" data-scroll-target="#frank-ian-and-glens-letters">Frank, Ian and Glen’s Letters</a>
   <ul class="collapse">
-  <li><a href="#demo" id="toc-demo" class="nav-link" data-scroll-target="#demo">Demo</a></li>
+  <li><a href="#hints" id="toc-hints" class="nav-link" data-scroll-target="#hints">Hints</a></li>
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before You Begin</a></li>
   <li><a href="#how-to-test" id="toc-how-to-test" class="nav-link" data-scroll-target="#how-to-test">How to Test</a></li>
-  <li><a href="#how-to-submit" id="toc-how-to-submit" class="nav-link" data-scroll-target="#how-to-submit">How to Submit</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/problems/pset_4/4.3_frank_ian_and_glens_letters.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -702,12 +694,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="frank-ian-and-glens-letters" class="level1">
 <h1>Frank, Ian and Glen’s Letters</h1>
-<p><strong>Week 4, Problem 3</strong></p>
-<p>Source: https://cs50.harvard.edu/python/psets/4/figlet/</p>
 <hr>
-</section>
-<section id="frank-ian-and-glens-letters-1" class="level1">
-<h1>Frank, Ian and Glen’s Letters</h1>
 <p><a href="https://en.wikipedia.org/wiki/FIGlet">FIGlet</a>, named after <a href="http://www.figlet.org/faq.html">Frank, Ian, and Glen’s letters</a>, is a program from the early 1990s for making large letters out of ordinary text, a form of <a href="https://en.wikipedia.org/wiki/ASCII_art">ASCII art</a>:</p>
 <pre><code> _ _ _          _   _     _
 | (_) | _____  | |_| |__ (_)___
@@ -728,7 +715,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Outputs that text in the desired font.</li>
 </ul>
 <p>If the user provides two command-line arguments and the first is not <code>-f</code> or <code>--font</code> or the second is not the name of a font, the program should exit via <code>sys.exit</code> with an error message.</p>
-<p>Hints</p>
+<section id="hints" class="level2">
+<h2 class="anchored" data-anchor-id="hints">Hints</h2>
 <ul>
 <li><p>You can install <code>pyfiglet</code> with:</p>
 <pre><code>pip install pyfiglet
@@ -749,13 +737,10 @@ figlet = Figlet()
 </code></pre></li>
 <li><p>Note that the <code>random</code> module comes with quite a few functions, per <a href="https://docs.python.org/3/library/random.html">docs.python.org/3/library/random.html</a>.</p></li>
 </ul>
-<section id="demo" class="level2">
-<h2 class="anchored" data-anchor-id="demo">Demo</h2>
-<p>This demo’s first output used a random font. Your output may vary.</p>
 </section>
 <section id="before-you-begin" class="level2">
 <h2 class="anchored" data-anchor-id="before-you-begin">Before You Begin</h2>
-<p>Log into <a href="https://cs50.dev/">cs50.dev</a>, click on your terminal window, and execute <code>cd</code> by itself. You should find that your terminal window’s prompt resembles the below:</p>
+<p>Execute <code>cd</code> by itself in your terminal window. You should find that your terminal window’s prompt resembles the below:</p>
 <pre><code>$
 </code></pre>
 <p>Next execute</p>
@@ -805,16 +790,6 @@ M   M o o o o
 M   M ooo ooo                     
 </code></pre></li>
 </ul>
-<p>You can execute the below to check your code using <code>check50</code>, a program that CS50 will use to test your code when you submit. But be sure to test it yourself as well!</p>
-<pre><code>check50 cs50/problems/2022/python/figlet
-</code></pre>
-<p>Green smilies mean your program has passed a test! Red frownies will indicate your program output something unexpected. Visit the URL that <code>check50</code> outputs to see the input <code>check50</code> handed to your program, what output it expected, and what output your program actually gave.</p>
-</section>
-<section id="how-to-submit" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-submit">How to Submit</h2>
-<p>In your terminal, execute the below to submit your work.</p>
-<pre><code>submit50 cs50/problems/2022/python/figlet
-</code></pre>
 
 
 </section>

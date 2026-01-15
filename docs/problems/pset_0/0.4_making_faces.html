@@ -664,12 +664,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Problem Set 08 🐍</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../problems/pset_9/pset_9.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Problem Set 09 🐍</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -682,13 +676,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#making-faces" id="toc-making-faces" class="nav-link active" data-scroll-target="#making-faces">Making Faces</a></li>
-  <li><a href="#making-faces-1" id="toc-making-faces-1" class="nav-link" data-scroll-target="#making-faces-1">Making Faces</a>
+  <li><a href="#making-faces" id="toc-making-faces" class="nav-link active" data-scroll-target="#making-faces">Making Faces</a>
   <ul class="collapse">
+  <li><a href="#hints" id="toc-hints" class="nav-link" data-scroll-target="#hints">Hints</a></li>
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before You Begin</a></li>
-  <li><a href="#demo" id="toc-demo" class="nav-link" data-scroll-target="#demo">Demo</a></li>
   <li><a href="#how-to-test" id="toc-how-to-test" class="nav-link" data-scroll-target="#how-to-test">How to Test</a></li>
-  <li><a href="#how-to-submit" id="toc-how-to-submit" class="nav-link" data-scroll-target="#how-to-submit">How to Submit</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/problems/pset_0/0.4_making_faces.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -702,21 +694,18 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="making-faces" class="level1">
 <h1>Making Faces</h1>
-<p><strong>Week 0, Problem 4</strong></p>
-<p>Source: https://cs50.harvard.edu/python/psets/0/faces/</p>
 <hr>
-</section>
-<section id="making-faces-1" class="level1">
-<h1>Making Faces</h1>
 <p>Before there were emoji, there were <a href="https://en.wikipedia.org/wiki/List_of_emoticons">emoticons</a>, whereby text like <code>:)</code> was a happy face and text like <code>:(</code> was a sad face. Nowadays, programs tend to convert emoticons to emoji automatically!</p>
 <p>In a file called <code>faces.py</code>, implement a function called <code>convert</code> that accepts a <code>str</code> as input and returns that same input with any <code>:)</code> converted to 🙂 (otherwise known as a <a href="https://emojipedia.org/slightly-smiling-face/">slightly smiling face</a>) and any <code>:(</code> converted to 🙁 (otherwise known as a <a href="https://emojipedia.org/slightly-frowning-face/">slightly frowning face</a>). All other text should be returned unchanged.</p>
 <p>Then, in that same file, implement a function called <code>main</code> that prompts the user for input, calls <code>convert</code> on that input, and prints the result. You’re welcome, but not required, to prompt the user explicitly, as by passing a <code>str</code> of your own as an argument to <code>input</code>. Be sure to call <code>main</code> at the bottom of your file.</p>
-<p>Hints</p>
+<section id="hints" class="level2">
+<h2 class="anchored" data-anchor-id="hints">Hints</h2>
 <ul>
 <li>Recall that <code>input</code> returns a <code>str</code>, per <a href="https://docs.python.org/3/library/functions.html#input">docs.python.org/3/library/functions.html#input</a>.</li>
 <li>Recall that a <code>str</code> comes with quite a few methods, per <a href="https://docs.python.org/3/library/stdtypes.html#string-methods">docs.python.org/3/library/stdtypes.html#string-methods</a>.</li>
 <li>An emoji is actually just a character, so you can quote it like any <code>str</code>, a la <code>"😐"</code>. And you can copy and paste the emoji from this page into your own code as needed.</li>
 </ul>
+</section>
 <section id="before-you-begin" class="level2">
 <h2 class="anchored" data-anchor-id="before-you-begin">Before You Begin</h2>
 <p>Execute <code>cd</code> by itself in your terminal window. You should find that your terminal window’s prompt resembles the below:</p>
@@ -734,9 +723,6 @@ ul.task-list li input[type="checkbox"] {
 </code></pre>
 <p>to make a file called <code>faces.py</code> where you’ll write your program.</p>
 </section>
-<section id="demo" class="level2">
-<h2 class="anchored" data-anchor-id="demo">Demo</h2>
-</section>
 <section id="how-to-test" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-test">How to Test</h2>
 <p>Here’s how to test your code manually:</p>
@@ -751,16 +737,6 @@ ul.task-list li input[type="checkbox"] {
 <pre><code>Hello 🙂 Goodbye 🙁
 </code></pre></li>
 </ul>
-<p>You can execute the below to check your code using <code>check50</code>, a program that CS50 will use to test your code when you submit. But be sure to test it yourself as well!</p>
-<pre><code>check50 cs50/problems/2022/python/faces
-</code></pre>
-<p>Green smilies mean your program has passed a test! Red frownies will indicate your program output something unexpected. Visit the URL that <code>check50</code> outputs to see the input <code>check50</code> handed to your program, what output it expected, and what output your program actually gave.</p>
-</section>
-<section id="how-to-submit" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-submit">How to Submit</h2>
-<p>In your terminal, execute the below to submit your work.</p>
-<pre><code>submit50 cs50/problems/2022/python/faces
-</code></pre>
 
 
 </section>

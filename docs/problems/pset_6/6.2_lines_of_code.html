@@ -664,12 +664,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Problem Set 08 🐍</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../problems/pset_9/pset_9.md" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Problem Set 09 🐍</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -682,13 +676,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#lines-of-code" id="toc-lines-of-code" class="nav-link active" data-scroll-target="#lines-of-code">Lines of Code</a></li>
-  <li><a href="#lines-of-code-1" id="toc-lines-of-code-1" class="nav-link" data-scroll-target="#lines-of-code-1">Lines of Code</a>
+  <li><a href="#lines-of-code" id="toc-lines-of-code" class="nav-link active" data-scroll-target="#lines-of-code">Lines of Code</a>
   <ul class="collapse">
-  <li><a href="#demo" id="toc-demo" class="nav-link" data-scroll-target="#demo">Demo</a></li>
+  <li><a href="#hints" id="toc-hints" class="nav-link" data-scroll-target="#hints">Hints</a></li>
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before You Begin</a></li>
   <li><a href="#how-to-test" id="toc-how-to-test" class="nav-link" data-scroll-target="#how-to-test">How to Test</a></li>
-  <li><a href="#how-to-submit" id="toc-how-to-submit" class="nav-link" data-scroll-target="#how-to-submit">How to Submit</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/SQ4011-2025/website/edit/master/problems/pset_6/6.2_lines_of_code.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/SQ4011-2025/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -702,12 +694,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="lines-of-code" class="level1">
 <h1>Lines of Code</h1>
-<p><strong>Week 6, Problem 2</strong></p>
-<p>Source: https://cs50.harvard.edu/python/psets/6/lines/</p>
 <hr>
-</section>
-<section id="lines-of-code-1" class="level1">
-<h1>Lines of Code</h1>
 <p>One way to measure the complexity of a program is to count its number of <a href="https://en.wikipedia.org/wiki/Source_lines_of_code">lines of code</a> (LOC), excluding blank lines and comments. For instance, a program like</p>
 <pre><code># Say hello
 
@@ -728,18 +715,17 @@ print(f"hello, {name}")
 <p>even though the former has (more than) twice as many lines of code. In fact, the former might arguably be simpler if it’s easier to read! So lines of code should be taken with a <a href="https://en.wikipedia.org/wiki/Grain_of_salt">grain of salt</a>.</p>
 <p>Even so, in a file called <code>lines.py</code>, implement a program that expects exactly one command-line argument, the name (or path) of a Python file, and outputs the number of lines of code in that file, excluding comments and blank lines. If the user does not specify exactly one command-line argument, or if the specified file’s name does not end in <code>.py</code>, or if the specified file does not exist, the program should instead exit via <code>sys.exit</code>.</p>
 <p>Assume that any line that starts with <code>#</code>, optionally preceded by whitespace, is a comment. (A <a href="https://peps.python.org/pep-0257/">docstring</a> should not be considered a comment.) Assume that any line that only contains whitespace is blank.</p>
-<p>Hints</p>
+<section id="hints" class="level2">
+<h2 class="anchored" data-anchor-id="hints">Hints</h2>
 <ul>
 <li>Recall that a <code>str</code> comes with quite a few methods, per <a href="https://docs.python.org/3/library/stdtypes.html#string-methods">docs.python.org/3/library/stdtypes.html#string-methods</a>, including <code>lstrip</code> and <code>startswith</code>.</li>
 <li>Note that <code>open</code> can <code>raise</code> a <code>FileNotFoundError</code>, per <a href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError">docs.python.org/3/library/exceptions.html#FileNotFoundError</a>.</li>
 <li>You might find it helpful to test your program on, e.g., some of <a href="https://cdn.cs50.net/python/2022/x/lectures/6/src6/">Week 6’s source code</a> as well as on programs of your own.</li>
 </ul>
-<section id="demo" class="level2">
-<h2 class="anchored" data-anchor-id="demo">Demo</h2>
 </section>
 <section id="before-you-begin" class="level2">
 <h2 class="anchored" data-anchor-id="before-you-begin">Before You Begin</h2>
-<p>Log into <a href="https://cs50.dev/">cs50.dev</a>, click on your terminal window, and execute <code>cd</code> by itself. You should find that your terminal window’s prompt resembles the below:</p>
+<p>Execute <code>cd</code> by itself in your terminal window. You should find that your terminal window’s prompt resembles the below:</p>
 <pre><code>$
 </code></pre>
 <p>Next execute</p>
@@ -772,16 +758,6 @@ print(f"hello, {name}")
 </code></pre></li>
 <li><p>Create additional python programs which vary in complexity: create some with comments, some docstrings, and some whitespace. For each of these files run <code>python lines.py FILENAME</code> where <code>FILENAME</code> is the name of the file. <code>lines.py</code> should output the number of lines, excluding comments and whitespace, present in the given file.</p></li>
 </ul>
-<p>You can execute the below to check your code using <code>check50</code>, a program that CS50 will use to test your code when you submit. But be sure to test it yourself as well!</p>
-<pre><code>check50 cs50/problems/2022/python/lines
-</code></pre>
-<p>Green smilies mean your program has passed a test! Red frownies will indicate your program output something unexpected. Visit the URL that <code>check50</code> outputs to see the input <code>check50</code> handed to your program, what output it expected, and what output your program actually gave.</p>
-</section>
-<section id="how-to-submit" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-submit">How to Submit</h2>
-<p>In your terminal, execute the below to submit your work.</p>
-<pre><code>submit50 cs50/problems/2022/python/lines
-</code></pre>
 
 
 </section>
